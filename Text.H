@@ -9,7 +9,7 @@ namespace dom
 {
 	class Document;
 
-	class Text : public virtual Node
+	class Text : public virtual Node	// Factory method product
 	{
 	public:
 		virtual ~Text()	{}
@@ -29,7 +29,7 @@ namespace dom
 	};
 };
 
-class Text_Impl : public virtual dom::Text, Node_Impl
+class Text_Impl : public virtual dom::Text, Node_Impl	// Factory method concrete product
 {
 protected:
 	Text_Impl(const std::string value, dom::Document * document);

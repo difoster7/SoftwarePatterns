@@ -12,7 +12,7 @@ namespace dom
 	class NodeList;
 	class Document;
 
-	class Element : public virtual Node
+	class Element : public virtual Node	// Factory method product
 	{
 	public:
 		virtual ~Element() {}
@@ -32,7 +32,7 @@ namespace dom
 	};
 };
 
-class Element_Impl : public virtual dom::Element, Node_Impl
+class Element_Impl : public virtual dom::Element, Node_Impl	// Factory method concrete product
 {
 private:
 	NamedNodeMap_Impl	attributes;

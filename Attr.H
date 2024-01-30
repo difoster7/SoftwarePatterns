@@ -10,7 +10,7 @@ namespace dom
 	class Document;
 	class Element;
 
-	class Attr : public virtual Node
+	class Attr : public virtual Node	// Factory method product
 	{
 	public:
 		virtual ~Attr() {}
@@ -22,7 +22,7 @@ namespace dom
 	};
 };
 
-class Attr_Impl : public virtual dom::Attr, Node_Impl
+class Attr_Impl : public virtual dom::Attr, Node_Impl	// Factory method concrete product
 {
 protected:
 	Attr_Impl(const std::string & tagName, dom::Document * document);

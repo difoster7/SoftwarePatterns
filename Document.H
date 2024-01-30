@@ -12,26 +12,26 @@ namespace dom
 	class Attr;
 	class NodeList;
 
-	class Document : public virtual Node
+	class Document : public virtual Node	// Factory method creator interface
 	{
 	public:
-		virtual Element *	createElement(const std::string & tagName)	= 0;
-		virtual Text *		createTextNode(const std::string & data)	= 0;
-		virtual Attr *		createAttribute(const std::string & name)	= 0;
+		virtual Element *	createElement(const std::string & tagName)	= 0;	// Factory method creator function
+		virtual Text *		createTextNode(const std::string & data)	= 0;	// Factory method creator function
+		virtual Attr *		createAttribute(const std::string & name)	= 0;	// Factory method creator function
 		virtual Element *	getDocumentElement()				= 0;
 	};
 };
 
-class Document_Impl : public virtual dom::Document, public virtual Node_Impl
+class Document_Impl : public virtual dom::Document, public virtual Node_Impl	// Factory method concrete creator
 {
 public:
 	Document_Impl(void);
 
 	virtual ~Document_Impl();
 
-	virtual dom::Element *	createElement(const std::string & tagName);
-	virtual dom::Text *	createTextNode(const std::string & data);
-	virtual dom::Attr *	createAttribute(const std::string & name);
+	virtual dom::Element *	createElement(const std::string & tagName);	// Factory method concrete creator function
+	virtual dom::Text *	createTextNode(const std::string & data);	// Factory method concrete creator function
+	virtual dom::Attr *	createAttribute(const std::string & name);	// Factory method concrete creator function
 	virtual dom::Element *	getDocumentElement();
 };
 
