@@ -2,6 +2,7 @@
 #define DOCUMENT_H
 
 #include <string>
+#include <fstream>
 
 #include "Node.H"
 

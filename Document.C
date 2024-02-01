@@ -39,5 +39,5 @@ void Document_Impl::serializePretty(std::fstream file)
 {
 	file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
 	file << "\n";
-	getDocumentElement().serializePretty(file);
+	getDocumentElement()->serializePretty(file);
 }
