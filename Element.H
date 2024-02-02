@@ -5,6 +5,7 @@
 
 #include "Node.H"
 #include "NamedNodeMap.H"
+#include "Text.H";
 
 namespace dom
 {
