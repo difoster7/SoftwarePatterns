@@ -105,3 +105,16 @@ dom::Text *		Text_Impl::splitText(int offset)
 		throw dom::DOMException(dom::DOMException::INDEX_SIZE_ERR, "Index larget than Text node's value.");
 	}
 }
+
+int Text_Impl::serializePretty(int indentationLevel, std::fstream * file)
+{
+	//getNodeName();
+
+	testTest();
+
+	prettyIndentation(indentationLevel, file);
+	//testTest();
+	*file << getData();
+	*file << "\n";
+	return indentationLevel;
+}

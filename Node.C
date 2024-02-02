@@ -152,6 +152,11 @@ void Node_Impl::setParent(dom::Node * parent)
 	this->parent	= parent;
 }
 
+int Node_Impl::testTest()
+{
+	return 0;
+}
+
 dom::Node *		Node_Impl::getSibling(int direction)
 {
 	if (parent == 0)
@@ -175,4 +180,17 @@ dom::Node *		Node_Impl::getSibling(int direction)
 		else
 			return *i;
 	}
+}
+
+int Node_Impl::serializePretty(int indentationLevel, std::fstream * file)
+{
+	// TODO: Add error
+	printf("Error: serialize function called on a node.\n");
+	return -1;
+}
+
+void Node_Impl::prettyIndentation(int indentationLevel, std::fstream * file)
+{
+	for (int i = 0; i < indentationLevel; i++)
+		*file << "\t";
 }

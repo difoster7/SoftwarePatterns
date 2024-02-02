@@ -139,3 +139,51 @@ dom::Attr *		Element_Impl::setAttributeNode(dom::Attr * newAttr)
 	attributes.push_back(newAttr);
 	return oldAttribute;
 }
+
+// Concrete algorithm
+int Element_Impl::serializePretty(int indentationLevel, std::fstream * file)
+{
+
+	prettyIndentation(indentationLevel, file);
+	*file << "<" << getTagName();
+
+	int	attrCount = 0;
+
+	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
+	{
+		indentationLevel = (*i.operator->())->serializePretty(indentationLevel, file);
+		attrCount++;
+	}
+
+	if (attrCount > 0)
+		*file << " ";
+
+	if (getChildNodes()->size() == 0)
+	{
+		*file << "/>";
+		*file << "\n";
+	}
+	else
+	{
+		*file << ">";
+		*file << "\n";
+		indentationLevel++;
+
+		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
+		{
+			printf("%s\n", typeid(*i).name());
+			if (dynamic_cast<dom::Element*>(*i) != 0)// || dynamic_cast<dom::Text*>(*i) != 0)
+			{
+				indentationLevel = (*i.operator->())->serializePretty(indentationLevel, file);
+			}
+		}
+
+		indentationLevel--;
+		prettyIndentation(indentationLevel, file);
+		*file << "</" << getTagName() + ">";
+		*file << "\n";
+	}
+
+	return indentationLevel;
+
+}

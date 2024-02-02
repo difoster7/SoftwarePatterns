@@ -7,6 +7,7 @@
 
 namespace dom
 {
+	class Element;
 	class Document;
 
 	class Text : public virtual Node	// Factory method product
@@ -50,6 +51,8 @@ public:
 	virtual void			deleteData(int offset, int count);
 	virtual void			replaceData(int offset, int count, const std::string & arg);
 	virtual dom::Text *		splitText(int offset);
+
+	virtual int serializePretty(int indentationLevel, std::fstream * file);
 };
 
 #endif // TEXT_H

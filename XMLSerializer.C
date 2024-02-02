@@ -5,14 +5,16 @@
 #include "Attr.H"
 #include "Text.H"
 
-void XMLSerializer::prettyIndentation()
-{
-	for (int i = 0; i < indentationLevel; i++)
-		file << "\t";
-}
+//void XMLSerializer::prettyIndentation()
+//{
+//	for (int i = 0; i < indentationLevel; i++)
+//		file << "\t";
+//}
 
 void XMLSerializer::serializePretty(dom::Node * node)
 {
+	indentationLevel = node->serializePretty(indentationLevel, &file);
+	/*
 	if (dynamic_cast<dom::Document *>(node) != 0)
 	{
 		file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
@@ -71,6 +73,7 @@ void XMLSerializer::serializePretty(dom::Node * node)
 		file << dynamic_cast<dom::Text *>(node)->getData();
 		file << "\n";
 	}
+	*/
 }
 
 void XMLSerializer::serializeMinimal(dom::Node * node)

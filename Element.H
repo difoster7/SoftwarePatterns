@@ -12,7 +12,11 @@ namespace dom
 	class NodeList;
 	class Document;
 
-	class Element : public virtual Node	// Factory method product
+	/*
+	* ELement Class has the following roles
+	* Factory Pattern : Product
+	*/
+	class Element : public virtual Node
 	{
 	public:
 		virtual ~Element() {}
@@ -32,7 +36,12 @@ namespace dom
 	};
 };
 
-class Element_Impl : public virtual dom::Element, Node_Impl	// Factory method concrete product
+/*
+* Element_Impl class has the following roles
+* Factory Pattern : Concrete Produce
+* Strategy Pattern : Concrete Algorithm
+*/
+class Element_Impl : public virtual dom::Element, Node_Impl
 {
 private:
 	NamedNodeMap_Impl	attributes;
@@ -55,6 +64,9 @@ public:
 
 	virtual dom::NamedNodeMap *	getAttributes(void)	{ return &attributes; }
 	virtual bool			hasAttributes(void)	{ return attributes.size() > 0; }
+
+	virtual int serializePretty(int indentationLevel, std::fstream * file);	// Strategy pattern algorithm method
+
 };
 
 #endif // ELEMENT_H

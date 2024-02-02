@@ -35,9 +35,9 @@ dom::Element * Document_Impl::getDocumentElement()
 	return 0;
 }
 
-void Document_Impl::serializePretty(std::fstream file)
+int Document_Impl::serializePretty(int indentationLevel, std::fstream * file)
 {
-	file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
-	file << "\n";
-	getDocumentElement()->serializePretty(file);
+	*file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
+	*file << "\n";
+	return getDocumentElement()->serializePretty(indentationLevel, file);
 }

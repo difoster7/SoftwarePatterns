@@ -37,6 +37,8 @@ public:
 	virtual const std::string &	getValue(void);
 	virtual void			setValue(const std::string & value);
 	virtual dom::Element *		getOwnerElement(void);
+
+	virtual int serializePretty(int indentationLevel, std::fstream * file);
 };
 
 #endif // ATTR_H

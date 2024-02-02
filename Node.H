@@ -2,12 +2,17 @@
 #define NODE_H
 
 #include <string>
+#include <fstream>
 #include "NodeList.H"
 
 namespace dom
 {
 	class Document;
 
+	/*
+	* Node class has the following roles
+	* Strategy Pattern : Algorithm Interface
+	*/
 	class Node
 	{
 	public:
@@ -35,6 +40,9 @@ namespace dom
 		virtual Node *			appendChild(Node * newChild)			= 0;
 		virtual bool			hasChildNodes(void)				= 0;
 		virtual const std::string &	getLocalName(void)				= 0;
+
+		virtual int serializePretty(int indentationLevel, std::fstream * file) = 0;	// Factory Pattern Algorithm interface
+		virtual void prettyIndentation(int indentationLevel, std::fstream * file) = 0;
 	};
 
 	class DOMException
@@ -76,7 +84,6 @@ protected:
 	Node_Impl(const std::string & name, short type);
 public:
 	virtual ~Node_Impl();
-
 	virtual const std::string &	getNodeName(void);
 	virtual const std::string &	getNodeValue(void);
 	virtual void			setNodeValue(const std::string & nodeValue);
@@ -96,6 +103,13 @@ public:
 	virtual const std::string &	getLocalName(void);
 
 	virtual void setParent(dom::Node * parent);
+
+
+	virtual int serializePretty(int indentationLevel, std::fstream * file);	// Factory Pattern Algorithm interface
+	
+	virtual void prettyIndentation(int indentationLevel, std::fstream * file);
+	virtual int testTest();
+
 };
 
 #endif // NODE_H
