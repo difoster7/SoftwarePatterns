@@ -42,6 +42,7 @@ namespace dom
 		virtual const std::string &	getLocalName(void)				= 0;
 
 		virtual int serializePretty(int indentationLevel, std::fstream * file) = 0;	// Factory Pattern Algorithm interface
+		virtual void serializeMinimal(std::fstream* file) = 0;	// Factory Pattern Algorithm interface
 		virtual void prettyIndentation(int indentationLevel, std::fstream * file) = 0;
 	};
 
@@ -109,7 +110,8 @@ public:
 
 
 	virtual int serializePretty(int indentationLevel, std::fstream * file);	// Factory Pattern Algorithm interface implementation
-	
+	virtual void serializeMinimal(std::fstream* file);	// Factory Pattern Algorithm interface implementation
+
 	virtual void prettyIndentation(int indentationLevel, std::fstream * file);
 
 };

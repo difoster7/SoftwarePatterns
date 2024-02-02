@@ -185,6 +185,13 @@ int Node_Impl::serializePretty(int indentationLevel, std::fstream * file)
 	return -1;
 }
 
+// Strategy pattern algorithm interface implementation
+void Node_Impl::serializeMinimal(std::fstream* file)
+{
+	// TODO: Add error
+	printf("Error: serialize function called on a node.\n");
+}
+
 void Node_Impl::prettyIndentation(int indentationLevel, std::fstream * file)
 {
 	for (int i = 0; i < indentationLevel; i++)

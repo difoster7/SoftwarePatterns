@@ -48,6 +48,8 @@ public:
 	virtual dom::Element *		getOwnerElement(void);
 
 	virtual int serializePretty(int indentationLevel, std::fstream * file);	// Strategy pattern algorithm interface implementation
+	virtual void serializeMinimal(std::fstream* file);	// Factory Pattern Algorithm interface implementation
+
 };
 
 #endif // ATTR_H

@@ -40,3 +40,9 @@ int Attr_Impl::serializePretty(int indentationLevel, std::fstream * file)
 	*file << " " << getName() << "=\"" << getValue() << "\"";
 	return indentationLevel;
 }
+
+// Strategy pattern algorithm interface implementation
+void Attr_Impl::serializeMinimal(std::fstream* file)
+{
+	*file << " " << getName() << "=\"" << getValue() << "\"";
+}

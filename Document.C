@@ -45,3 +45,10 @@ int Document_Impl::serializePretty(int indentationLevel, std::fstream * file)
 	*file << "\n";
 	return getDocumentElement()->serializePretty(indentationLevel, file);
 }
+
+// Strategy pattern algorithm interface implementation
+void Document_Impl::serializeMinimal(std::fstream* file)
+{
+	*file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
+	getDocumentElement()->serializeMinimal(file);
+}

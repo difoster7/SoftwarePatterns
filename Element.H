@@ -67,6 +67,8 @@ public:
 	virtual bool			hasAttributes(void)	{ return attributes.size() > 0; }
 
 	virtual int serializePretty(int indentationLevel, std::fstream * file);	// Strategy pattern algorithm interface implementation
+	virtual void serializeMinimal(std::fstream* file);	// Factory Pattern Algorithm interface implementation
+
 
 };
 

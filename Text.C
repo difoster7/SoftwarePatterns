@@ -116,3 +116,9 @@ int Text_Impl::serializePretty(int indentationLevel, std::fstream * file)
 	*file << "\n";
 	return indentationLevel;
 }
+
+// strategy pattern algorithm interface implementation
+void Text_Impl::serializeMinimal(std::fstream* file)
+{
+	*file << getData();
+}
