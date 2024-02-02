@@ -140,7 +140,7 @@ dom::Attr *		Element_Impl::setAttributeNode(dom::Attr * newAttr)
 	return oldAttribute;
 }
 
-// Concrete algorithm
+// Strategy pattern algorithm interface implementation
 int Element_Impl::serializePretty(int indentationLevel, std::fstream * file)
 {
 

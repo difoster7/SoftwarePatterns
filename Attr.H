@@ -10,7 +10,11 @@ namespace dom
 	class Document;
 	class Element;
 
-	class Attr : public virtual Node	// Factory method product
+	/*
+	* Attr roles
+	* Factory Pattern : Product
+	*/
+	class Attr : public virtual Node
 	{
 	public:
 		virtual ~Attr() {}
@@ -22,6 +26,11 @@ namespace dom
 	};
 };
 
+/*
+* Attr_Impl roles
+* Factory pattern : Concrete Product
+* Strategy pattern : Concrete Strategy
+*/
 class Attr_Impl : public virtual dom::Attr, Node_Impl	// Factory method concrete product
 {
 protected:
@@ -38,7 +47,7 @@ public:
 	virtual void			setValue(const std::string & value);
 	virtual dom::Element *		getOwnerElement(void);
 
-	virtual int serializePretty(int indentationLevel, std::fstream * file);
+	virtual int serializePretty(int indentationLevel, std::fstream * file);	// Strategy pattern algorithm interface implementation
 };
 
 #endif // ATTR_H

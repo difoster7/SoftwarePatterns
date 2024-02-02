@@ -106,14 +106,12 @@ dom::Text *		Text_Impl::splitText(int offset)
 	}
 }
 
+// strategy pattern algorithm interface implementation
 int Text_Impl::serializePretty(int indentationLevel, std::fstream * file)
 {
-	//getNodeName();
-
-	testTest();
 
 	prettyIndentation(indentationLevel, file);
-	//testTest();
+
 	*file << getData();
 	*file << "\n";
 	return indentationLevel;

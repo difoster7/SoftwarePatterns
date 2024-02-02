@@ -10,7 +10,10 @@ namespace dom
 	class Element;
 	class Document;
 
-	class Text : public virtual Node	// Factory method product
+	/* Class Text roles
+	* Factory method : product
+	*/
+	class Text : public virtual Node
 	{
 	public:
 		virtual ~Text()	{}
@@ -30,7 +33,12 @@ namespace dom
 	};
 };
 
-class Text_Impl : public virtual dom::Text, Node_Impl	// Factory method concrete product
+/*
+* Text_Impl roles
+* Factory Pattern : Concrete Product
+* Strategy Pattern : Concrete Strategy
+*/
+class Text_Impl : public virtual dom::Text, Node_Impl
 {
 protected:
 	Text_Impl(const std::string value, dom::Document * document);
@@ -52,7 +60,7 @@ public:
 	virtual void			replaceData(int offset, int count, const std::string & arg);
 	virtual dom::Text *		splitText(int offset);
 
-	virtual int serializePretty(int indentationLevel, std::fstream * file);
+	virtual int serializePretty(int indentationLevel, std::fstream * file);	// strategy pattern algorithm interface implementation
 };
 
 #endif // TEXT_H

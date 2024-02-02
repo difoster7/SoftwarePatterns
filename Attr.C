@@ -34,6 +34,7 @@ dom::Element *		Attr_Impl::getOwnerElement(void)
 	return (dom::Element *)Node_Impl::getParentNode();
 }
 
+// Strategy pattern algorithm interface implementation
 int Attr_Impl::serializePretty(int indentationLevel, std::fstream * file)
 {
 	*file << " " << getName() << "=\"" << getValue() << "\"";

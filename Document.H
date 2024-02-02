@@ -42,7 +42,7 @@ public:
 	virtual dom::Attr *	createAttribute(const std::string & name);	// Factory pattern concrete creator method
 	virtual dom::Element *	getDocumentElement();
 
-	virtual int serializePretty(int indentationLevel, std::fstream * file);	// Strategy pattern concerte algorithm method
+	virtual int serializePretty(int indentationLevel, std::fstream * file);	// Strategy pattern algorithm interface implementation
 };
 
 #endif // DOCUMENT_H

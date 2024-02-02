@@ -152,11 +152,6 @@ void Node_Impl::setParent(dom::Node * parent)
 	this->parent	= parent;
 }
 
-int Node_Impl::testTest()
-{
-	return 0;
-}
-
 dom::Node *		Node_Impl::getSibling(int direction)
 {
 	if (parent == 0)
@@ -182,6 +177,7 @@ dom::Node *		Node_Impl::getSibling(int direction)
 	}
 }
 
+// Strategy pattern algorithm interface implementation
 int Node_Impl::serializePretty(int indentationLevel, std::fstream * file)
 {
 	// TODO: Add error

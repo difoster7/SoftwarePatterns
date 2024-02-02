@@ -68,6 +68,9 @@ namespace dom
 	};
 };
 
+/* Class Node_Impl has the following roles
+* Strategy Pattern : Concrete Strategy
+*/
 class Node_Impl : public virtual dom::Node
 {
 private:
@@ -105,10 +108,9 @@ public:
 	virtual void setParent(dom::Node * parent);
 
 
-	virtual int serializePretty(int indentationLevel, std::fstream * file);	// Factory Pattern Algorithm interface
+	virtual int serializePretty(int indentationLevel, std::fstream * file);	// Factory Pattern Algorithm interface implementation
 	
 	virtual void prettyIndentation(int indentationLevel, std::fstream * file);
-	virtual int testTest();
 
 };
 

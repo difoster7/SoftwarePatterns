@@ -11,16 +11,19 @@ Document_Impl::Document_Impl(void) : Node_Impl("", dom::Node::DOCUMENT_NODE)
 
 Document_Impl::~Document_Impl() {}
 
+// Factory pattern concrete creator
 dom::Element *	Document_Impl::createElement(const std::string & tagName)
 {
 	return new Element_Impl(tagName, this);
 }
 
+// Factory pattern concrete creator
 dom::Text *	Document_Impl::createTextNode(const std::string & data)
 {
 	return new Text_Impl(data, this);
 }
 
+// Factory pattern concrete creator
 dom::Attr *	Document_Impl::createAttribute(const std::string & name)
 {
 	return new Attr_Impl(name, this);
@@ -35,6 +38,7 @@ dom::Element * Document_Impl::getDocumentElement()
 	return 0;
 }
 
+// Strategy pattern algorithm interface implementation
 int Document_Impl::serializePretty(int indentationLevel, std::fstream * file)
 {
 	*file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
