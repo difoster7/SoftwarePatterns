@@ -42,8 +42,8 @@ public:
 	virtual dom::Attr *	createAttribute(const std::string & name);	// Factory pattern concrete creator method
 	virtual dom::Element *	getDocumentElement();
 
-	virtual int serializePretty(int indentationLevel, std::fstream * file);	// Strategy pattern algorithm interface implementation
-	virtual void serializeMinimal(std::fstream* file);	// Factory Pattern Algorithm interface implementation
+	virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file);	// Strategy pattern algorithm interface implementation
+	virtual void serializeMinimalAlgorithm(std::fstream* file);	// Factory Pattern Algorithm interface implementation
 
 };
 

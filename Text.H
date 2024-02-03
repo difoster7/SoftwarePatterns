@@ -60,8 +60,8 @@ public:
 	virtual void			replaceData(int offset, int count, const std::string & arg);
 	virtual dom::Text *		splitText(int offset);
 
-	virtual int serializePretty(int indentationLevel, std::fstream * file);	// strategy pattern algorithm interface implementation
-	virtual void serializeMinimal(std::fstream* file);	// Factory Pattern Algorithm interface implementation
+	virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file);	// strategy pattern algorithm interface implementation
+	virtual void serializeMinimalAlgorithm(std::fstream* file);	// Factory Pattern Algorithm interface implementation
 };
 
 #endif // TEXT_H

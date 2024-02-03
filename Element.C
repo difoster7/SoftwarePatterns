@@ -141,7 +141,7 @@ dom::Attr *		Element_Impl::setAttributeNode(dom::Attr * newAttr)
 }
 
 // Strategy pattern algorithm interface implementation
-int Element_Impl::serializePretty(int indentationLevel, std::fstream * file)
+int Element_Impl::serializePrettyAlgorithm(int indentationLevel, std::fstream * file)
 {
 
 	prettyIndentation(indentationLevel, file);
@@ -151,7 +151,7 @@ int Element_Impl::serializePretty(int indentationLevel, std::fstream * file)
 
 	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
 	{
-		indentationLevel = (*i.operator->())->serializePretty(indentationLevel, file);
+		indentationLevel = (*i.operator->())->serializePrettyAlgorithm(indentationLevel, file);
 		attrCount++;
 	}
 
@@ -173,7 +173,7 @@ int Element_Impl::serializePretty(int indentationLevel, std::fstream * file)
 		{
 			if (dynamic_cast<dom::Element*>(*i) != 0 || dynamic_cast<dom::Text*>(*i) != 0)
 			{
-				indentationLevel = (*i.operator->())->serializePretty(indentationLevel, file);
+				indentationLevel = (*i.operator->())->serializePrettyAlgorithm(indentationLevel, file);
 			}
 		}
 
@@ -187,14 +187,14 @@ int Element_Impl::serializePretty(int indentationLevel, std::fstream * file)
 }
 
 // Strategy pattern algorithm interface implementation
-void Element_Impl::serializeMinimal(std::fstream* file)
+void Element_Impl::serializeMinimalAlgorithm(std::fstream* file)
 {
 	*file << "<" << getTagName();
 
 	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
 	{
 
-		(*i.operator->())->serializeMinimal(file);
+		(*i.operator->())->serializeMinimalAlgorithm(file);
 	}
 
 	if (getChildNodes()->size() == 0)
@@ -207,7 +207,7 @@ void Element_Impl::serializeMinimal(std::fstream* file)
 		{
 			if (dynamic_cast<dom::Element*>(*i) != 0 || dynamic_cast<dom::Text*>(*i) != 0)
 			{
-				(*i.operator->())->serializeMinimal(file);
+				(*i.operator->())->serializeMinimalAlgorithm(file);
 			}
 		}
 		*file << "</" << getTagName() + ">";

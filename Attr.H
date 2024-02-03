@@ -47,8 +47,8 @@ public:
 	virtual void			setValue(const std::string & value);
 	virtual dom::Element *		getOwnerElement(void);
 
-	virtual int serializePretty(int indentationLevel, std::fstream * file);	// Strategy pattern algorithm interface implementation
-	virtual void serializeMinimal(std::fstream* file);	// Factory Pattern Algorithm interface implementation
+	virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file);	// Strategy pattern algorithm interface implementation
+	virtual void serializeMinimalAlgorithm(std::fstream* file);	// Factory Pattern Algorithm interface implementation
 
 };
 

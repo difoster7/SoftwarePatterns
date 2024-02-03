@@ -19,5 +19,5 @@ public:
 	~XMLSerializer() {}
 
 	virtual void		serializePretty(dom::Node * node);	// Strategy pattern context interface
-	virtual void		serializeMinimal(dom::Node * node);
+	virtual void		serializeMinimal(dom::Node * node);	// Strategy pattern context interface
 };
