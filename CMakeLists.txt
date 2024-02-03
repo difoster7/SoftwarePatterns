@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 3.23)
 project (Patterns)
 
-add_executable(Patterns Test.C)
+add_executable(Patterns Test.C "OutputStream.C")
 set_property(TARGET Patterns PROPERTY CXX_STANDARD 20)
 target_sources(Patterns PUBLIC
 	Attr.C
@@ -24,4 +24,4 @@ target_sources(Patterns PUBLIC
 	XMLTokenizer.H
 	XMLValidator.C
 	XMLValidator.H
-	)
+	 "OutputStream.H" "OutputStream.C")
