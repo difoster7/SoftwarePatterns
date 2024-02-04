@@ -39,16 +39,19 @@ dom::Element * Document_Impl::getDocumentElement()
 }
 
 // Strategy pattern algorithm interface implementation
-int Document_Impl::serializePrettyAlgorithm(int indentationLevel, std::fstream * file)
+int Document_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
 {
-	*file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
-	*file << "\n";
-	return getDocumentElement()->serializePrettyAlgorithm(indentationLevel, file);
+	out->write("<? xml version=\"1.0\" encoding=\"UTF-8\"?>");
+	out->write("\n");
+	//*file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
+	//*file << "\n";
+	return getDocumentElement()->serializePrettyAlgorithm(indentationLevel, out);
 }
 
 // Strategy pattern algorithm interface implementation
-void Document_Impl::serializeMinimalAlgorithm(std::fstream* file)
+void Document_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
 {
-	*file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
-	getDocumentElement()->serializeMinimalAlgorithm(file);
+	out->write("<? xml version=\"1.0\" encoding=\"UTF-8\"?>");
+	//*file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
+	getDocumentElement()->serializeMinimalAlgorithm(out);
 }

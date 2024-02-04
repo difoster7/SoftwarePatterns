@@ -3,6 +3,7 @@
 #include <ios>
 
 #include "Node.H"
+#include "OutputStream.H"
 
 /*
 * XMLSerializer roles
@@ -11,11 +12,11 @@
 class XMLSerializer
 {
 private:
-	std::fstream		file;
+	dom::OutputStream	* out;
 	int			indentationLevel;
 
 public:
-	XMLSerializer(const std::string & filename) : indentationLevel(0), file(filename.c_str(), std::ios_base::out)	{}
+	XMLSerializer(dom::OutputStream * out) : indentationLevel(0), out(out) {}
 	~XMLSerializer() {}
 
 	virtual void		serializePretty(dom::Node * node);	// Strategy pattern context interface

@@ -6,6 +6,7 @@
 #include "XMLTokenizer.H"
 #include "XMLSerializer.H"
 #include "XMLValidator.H"
+#include "OutputStream.H"
 
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
@@ -16,13 +17,14 @@ void printUsage(void)
 	printf("Usage:\n");
 	printf("\tTest t [file] ...\n");
 	printf("\tTest s [file1] [file2]\n");
+	printf("\tTest s\n");
 	printf("\tTest v [file]\n");
 }
 
 int main(int argc, char** argv)
 {
 
-	if (argc < 3)
+	if (argc < 2)
 	{
 		printUsage();
 		exit(0);
@@ -47,6 +49,12 @@ int main(int argc, char** argv)
 
 void testTokenizer(int argc, char** argv)
 {
+	if (argc < 3)
+	{
+		printUsage();
+		exit(0);
+	}
+
 	dom::Document *	document	= new Document_Impl;
 
 	dom::Element *	element	= document->createElement("NewElement");
@@ -89,11 +97,11 @@ void testTokenizer(int argc, char** argv)
 
 void testSerializer(int argc, char** argv)
 {
-	if (argc < 4)
-	{
-		printUsage();
-		exit(0);
-	}
+	//if (argc < 4)
+	//{
+	//	printUsage();
+	//	exit(0);
+	//}
 
 	//
 	// Create tree of this document:
@@ -108,6 +116,27 @@ void testSerializer(int argc, char** argv)
 	//   </element>
 	// </document>
 	//
+
+	dom::OutputStream* outputPretty;
+	dom::OutputStream* outputMinimal;
+
+	switch (argc)
+	{
+	case 2:
+		outputPretty = new StdOutputStream();
+		outputMinimal = new StdOutputStream();
+		break;
+
+	case 3:
+		outputPretty = new FileOutputStream(argv[2]);
+		outputMinimal = new StdOutputStream();
+		break;
+
+	case 4:
+		outputPretty = new FileOutputStream(argv[2]);
+		outputMinimal = new FileOutputStream(argv[3]);
+	}
+
 	dom::Document *	document	= new Document_Impl;
 	dom::Element *	root		= document->createElement("document");
 	document->appendChild(root);
@@ -134,9 +163,9 @@ void testSerializer(int argc, char** argv)
 	//
 	// Serialize
 	//
-	XMLSerializer	xmlSerializer(argv[2]);
+	XMLSerializer	xmlSerializer(outputPretty);
 	xmlSerializer.serializePretty(document);
-	XMLSerializer	xmlSerializer2(argv[3]);
+	XMLSerializer	xmlSerializer2(outputMinimal);
 	xmlSerializer2.serializeMinimal(document);
 
 	// delete Document and tree.
@@ -283,7 +312,8 @@ void testValidator(int argc, char** argv)
 	//
 	// Serialize
 	//
-	XMLSerializer	xmlSerializer(argv[2]);
+	dom::OutputStream* out = new FileOutputStream(argv[2]);
+	XMLSerializer	xmlSerializer(out);
 	xmlSerializer.serializePretty(document);
 
 	// delete Document and tree.

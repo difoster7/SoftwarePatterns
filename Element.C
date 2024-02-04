@@ -141,75 +141,93 @@ dom::Attr *		Element_Impl::setAttributeNode(dom::Attr * newAttr)
 }
 
 // Strategy pattern algorithm interface implementation
-int Element_Impl::serializePrettyAlgorithm(int indentationLevel, std::fstream * file)
+int Element_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
 {
 
-	prettyIndentation(indentationLevel, file);
-	*file << "<" << getTagName();
+	prettyIndentation(indentationLevel, out);
+	out->write("<");
+	out->write(getTagName());
+	//*file << "<" << getTagName();
 
 	int	attrCount = 0;
 
 	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
 	{
-		indentationLevel = (*i.operator->())->serializePrettyAlgorithm(indentationLevel, file);
+		indentationLevel = (*i.operator->())->serializePrettyAlgorithm(indentationLevel, out);
 		attrCount++;
 	}
 
 	if (attrCount > 0)
-		*file << " ";
+		out->write(" ");
+		//*file << " ";
 
 	if (getChildNodes()->size() == 0)
 	{
-		*file << "/>";
-		*file << "\n";
+		out->write("/>");
+		out->write("\n");
+		//*file << "/>";
+		//*file << "\n";
 	}
 	else
 	{
-		*file << ">";
-		*file << "\n";
+		out->write(">");
+		out->write("\n");
+		//*file << ">";
+		//*file << "\n";
 		indentationLevel++;
 
 		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
 		{
 			if (dynamic_cast<dom::Element*>(*i) != 0 || dynamic_cast<dom::Text*>(*i) != 0)
 			{
-				indentationLevel = (*i.operator->())->serializePrettyAlgorithm(indentationLevel, file);
+				indentationLevel = (*i.operator->())->serializePrettyAlgorithm(indentationLevel, out);
 			}
 		}
 
 		indentationLevel--;
-		prettyIndentation(indentationLevel, file);
-		*file << "</" << getTagName() + ">";
-		*file << "\n";
+		prettyIndentation(indentationLevel, out);
+		out->write("</");
+		out->write(getTagName());
+		out->write(">");
+		out->write("\n");
+		//*file << "</" << getTagName() + ">";
+		//*file << "\n";
 	}
 
 	return indentationLevel;
 }
 
 // Strategy pattern algorithm interface implementation
-void Element_Impl::serializeMinimalAlgorithm(std::fstream* file)
+void Element_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
 {
-	*file << "<" << getTagName();
+	out->write("<");
+	out->write(getTagName());
+	//*file << "<" << getTagName();
 
 	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
 	{
 
-		(*i.operator->())->serializeMinimalAlgorithm(file);
+		(*i.operator->())->serializeMinimalAlgorithm(out);
 	}
 
 	if (getChildNodes()->size() == 0)
-		*file << "/>";
+		out->write("/>");
+		//*file << "/>";
 	else
 	{
-		*file << ">";
+		out->write(">");
+		//*file << ">";
 
 		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
 		{
 			if (dynamic_cast<dom::Element*>(*i) != 0 || dynamic_cast<dom::Text*>(*i) != 0)
 			{
-				(*i.operator->())->serializeMinimalAlgorithm(file);
+				(*i.operator->())->serializeMinimalAlgorithm(out);
 			}
 		}
-		*file << "</" << getTagName() + ">";
+		out->write("</");
+		out->write(getTagName());
+		out->write(">");
+		//*file << "</" << getTagName() + ">";
 	}
 }

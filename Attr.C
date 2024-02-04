@@ -35,14 +35,24 @@ dom::Element *		Attr_Impl::getOwnerElement(void)
 }
 
 // Strategy pattern algorithm interface implementation
-int Attr_Impl::serializePrettyAlgorithm(int indentationLevel, std::fstream * file)
+int Attr_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
 {
-	*file << " " << getName() << "=\"" << getValue() << "\"";
+	out->write(" ");
+	out->write(getName());
+	out->write("=\"");
+	out->write(getValue()); 
+	out->write("\"");
+	//*file << " " << getName() << "=\"" << getValue() << "\"";
 	return indentationLevel;
 }
 
 // Strategy pattern algorithm interface implementation
-void Attr_Impl::serializeMinimalAlgorithm(std::fstream* file)
+void Attr_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
 {
-	*file << " " << getName() << "=\"" << getValue() << "\"";
+	out->write(" ");
+	out->write(getName());
+	out->write("=\"");
+	out->write(getValue());
+	out->write("\"");
+	//*file << " " << getName() << "=\"" << getValue() << "\"";
 }

@@ -107,18 +107,21 @@ dom::Text *		Text_Impl::splitText(int offset)
 }
 
 // strategy pattern algorithm interface implementation
-int Text_Impl::serializePrettyAlgorithm(int indentationLevel, std::fstream * file)
+int Text_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
 {
 
-	prettyIndentation(indentationLevel, file);
+	prettyIndentation(indentationLevel, out);
 
-	*file << getData();
-	*file << "\n";
+	out->write(getData());
+	out->write("\n");
+	//*file << getData();
+	//*file << "\n";
 	return indentationLevel;
 }
 
 // strategy pattern algorithm interface implementation
-void Text_Impl::serializeMinimalAlgorithm(std::fstream* file)
+void Text_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
 {
-	*file << getData();
+	out->write(getData());
+	//*file << getData();
 }

@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include "NodeList.H"
+#include "OutputStream.H"
 
 namespace dom
 {
@@ -41,9 +42,9 @@ namespace dom
 		virtual bool			hasChildNodes(void)				= 0;
 		virtual const std::string &	getLocalName(void)				= 0;
 
-		virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file) = 0;	// Strategy Pattern Algorithm interface
-		virtual void serializeMinimalAlgorithm(std::fstream* file) = 0;	// Strategy Pattern Algorithm interface
-		virtual void prettyIndentation(int indentationLevel, std::fstream * file) = 0;
+		virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
+		virtual void serializeMinimalAlgorithm(dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
+		virtual void prettyIndentation(int indentationLevel, dom::OutputStream * out) = 0;
 	};
 
 	class DOMException
@@ -71,6 +72,7 @@ namespace dom
 
 /* Class Node_Impl has the following roles
 * Strategy Pattern : Concrete Strategy
+* Strategy Pattern : Context
 */
 class Node_Impl : public virtual dom::Node
 {
@@ -109,10 +111,10 @@ public:
 	virtual void setParent(dom::Node * parent);
 
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file);	// Strategy Pattern Algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(std::fstream* file);	// Strategy Pattern Algorithm interface implementation
+	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 
-	virtual void prettyIndentation(int indentationLevel, std::fstream * file);
+	virtual void prettyIndentation(int indentationLevel, dom::OutputStream* out);
 
 };
 

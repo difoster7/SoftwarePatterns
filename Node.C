@@ -178,7 +178,7 @@ dom::Node *		Node_Impl::getSibling(int direction)
 }
 
 // Strategy pattern algorithm interface implementation
-int Node_Impl::serializePrettyAlgorithm(int indentationLevel, std::fstream * file)
+int Node_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
 {
 	// TODO: Add error
 	printf("Error: serialize function called on a node.\n");
@@ -186,14 +186,14 @@ int Node_Impl::serializePrettyAlgorithm(int indentationLevel, std::fstream * fil
 }
 
 // Strategy pattern algorithm interface implementation
-void Node_Impl::serializeMinimalAlgorithm(std::fstream* file)
+void Node_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
 {
 	// TODO: Add error
 	printf("Error: serialize function called on a node.\n");
 }
 
-void Node_Impl::prettyIndentation(int indentationLevel, std::fstream * file)
+void Node_Impl::prettyIndentation(int indentationLevel, dom::OutputStream * out)
 {
 	for (int i = 0; i < indentationLevel; i++)
-		*file << "\t";
+		out->write("\t");
 }

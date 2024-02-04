@@ -29,6 +29,7 @@ namespace dom
 * Document_Impl class has the following roles
 * Factory Pattern : Concrete Creator
 * Strategy Pattern : Concrete Algorithm
+* Strategy Pattern : Context
 */
 class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 {
@@ -42,8 +43,8 @@ public:
 	virtual dom::Attr *	createAttribute(const std::string & name);	// Factory pattern concrete creator method
 	virtual dom::Element *	getDocumentElement();
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file);	// Strategy pattern algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(std::fstream* file);	// Factory Pattern Algorithm interface implementation
+	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
+	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Factory Pattern Algorithm interface implementation
 
 };
 

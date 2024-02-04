@@ -41,6 +41,7 @@ namespace dom
 * Element_Impl class has the following roles
 * Factory Pattern : Concrete Product
 * Strategy Pattern : Concrete strategy
+* Strategy Pattern : Context
 */
 class Element_Impl : public virtual dom::Element, Node_Impl
 {
@@ -66,8 +67,8 @@ public:
 	virtual dom::NamedNodeMap *	getAttributes(void)	{ return &attributes; }
 	virtual bool			hasAttributes(void)	{ return attributes.size() > 0; }
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file);	// Strategy pattern algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(std::fstream* file);	// Strategy Pattern Algorithm interface implementation
+	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
+	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 
 
 };

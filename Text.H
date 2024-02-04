@@ -37,6 +37,7 @@ namespace dom
 * Text_Impl roles
 * Factory Pattern : Concrete Product
 * Strategy Pattern : Concrete Strategy
+* Strategy Pattern : Context
 */
 class Text_Impl : public virtual dom::Text, Node_Impl
 {
@@ -60,8 +61,8 @@ public:
 	virtual void			replaceData(int offset, int count, const std::string & arg);
 	virtual dom::Text *		splitText(int offset);
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file);	// strategy pattern algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(std::fstream* file);	// Strategy Pattern Algorithm interface implementation
+	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// strategy pattern algorithm interface implementation
+	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 };
 
 #endif // TEXT_H

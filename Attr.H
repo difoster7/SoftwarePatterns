@@ -30,6 +30,7 @@ namespace dom
 * Attr_Impl roles
 * Factory pattern : Concrete Product
 * Strategy pattern : Concrete Strategy
+* Strategy pattern : Context
 */
 class Attr_Impl : public virtual dom::Attr, Node_Impl	// Factory method concrete product
 {
@@ -47,8 +48,8 @@ public:
 	virtual void			setValue(const std::string & value);
 	virtual dom::Element *		getOwnerElement(void);
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file);	// Strategy pattern algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(std::fstream* file);	// Strategy Pattern Algorithm interface implementation
+	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
+	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 
 };
 
