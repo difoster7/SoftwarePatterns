@@ -24,4 +24,5 @@ target_sources(Patterns PUBLIC
 	XMLTokenizer.H
 	XMLValidator.C
 	XMLValidator.H
-	 "OutputStream.H" "OutputStream.C")
+	OutputStream.H
+	OutputStream.C)

@@ -61,7 +61,7 @@ public:
 	virtual dom::Text *		splitText(int offset);
 
 	virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file);	// strategy pattern algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(std::fstream* file);	// Factory Pattern Algorithm interface implementation
+	virtual void serializeMinimalAlgorithm(std::fstream* file);	// Strategy Pattern Algorithm interface implementation
 };
 
 #endif // TEXT_H

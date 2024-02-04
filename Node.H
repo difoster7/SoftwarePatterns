@@ -41,8 +41,8 @@ namespace dom
 		virtual bool			hasChildNodes(void)				= 0;
 		virtual const std::string &	getLocalName(void)				= 0;
 
-		virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file) = 0;	// Factory Pattern Algorithm interface
-		virtual void serializeMinimalAlgorithm(std::fstream* file) = 0;	// Factory Pattern Algorithm interface
+		virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file) = 0;	// Strategy Pattern Algorithm interface
+		virtual void serializeMinimalAlgorithm(std::fstream* file) = 0;	// Strategy Pattern Algorithm interface
 		virtual void prettyIndentation(int indentationLevel, std::fstream * file) = 0;
 	};
 
@@ -109,8 +109,8 @@ public:
 	virtual void setParent(dom::Node * parent);
 
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file);	// Factory Pattern Algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(std::fstream* file);	// Factory Pattern Algorithm interface implementation
+	virtual int serializePrettyAlgorithm(int indentationLevel, std::fstream * file);	// Strategy Pattern Algorithm interface implementation
+	virtual void serializeMinimalAlgorithm(std::fstream* file);	// Strategy Pattern Algorithm interface implementation
 
 	virtual void prettyIndentation(int indentationLevel, std::fstream * file);
 

@@ -6,6 +6,7 @@
 
 namespace dom
 {
+	// Class OutputStream a the Strategy Pattern Algorithm interface
 	class OutputStream 
 	{
 	public:
@@ -13,6 +14,7 @@ namespace dom
 	};
 }
 
+// Class FileOutputStream is a Strategy Pattern Concrete Strategy
 class FileOutputStream : public dom::OutputStream
 {
 private:
@@ -25,6 +27,7 @@ public:
 	virtual void write(const std::string& input);
 };
 
+// Class StdOutputStream is a Strategy Pattern Concrete Strategy
 class StdOutputStream : public dom::OutputStream 
 {
 public:
