@@ -7,6 +7,7 @@
 #include "XMLSerializer.H"
 #include "XMLValidator.H"
 #include "OutputStream.H"
+#include "NodeValidatorDecorator.H"
 
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
@@ -208,6 +209,13 @@ void testValidator(int argc, char** argv)
 	schemaElement->addValidChild("attribute2", true);
 	schemaElement->setCanHaveText(true);
 
+	DocumentValidatorDecorator* document = new DocumentValidatorDecorator(&xmlValidator, new Document_Impl);
+	ElementValidatorDecorator* root = 0;
+	ElementValidatorDecorator* child = 0;
+	dom::Attr* attr = 0;
+
+
+	/*
 	dom::Document *	document	= new Document_Impl;
 	dom::Element *	root		= 0;
 	dom::Element *	child		= 0;
@@ -307,7 +315,7 @@ void testValidator(int argc, char** argv)
 	{
 		printf("Attempted invalid schema operation.");
 		exit(0);
-	}
+	}*/
 
 	//
 	// Serialize

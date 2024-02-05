@@ -25,4 +25,6 @@ target_sources(Patterns PUBLIC
 	XMLValidator.C
 	XMLValidator.H
 	OutputStream.H
-	OutputStream.C)
+	OutputStream.C
+	NodeValidatorDecorator.H
+	NodeValidatorDecorator.C)
