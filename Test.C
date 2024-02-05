@@ -237,19 +237,6 @@ void testValidator(int argc, char** argv)
 	child = new ElementValidatorDecorator(&xmlValidator, document->createElement("element"));
 	root->appendChild(child->getElement());
 
-	/*
-
-	if (xmlValidator.canAddElement(root, "element"))
-	{
-		child			= document->createElement("element");
-		root->appendChild(child);
-	}
-	else
-	{
-		printf("Attempted invalid schema operation.");
-		exit(0);
-	}*/
-
 	//
 	// Serialize
 	//

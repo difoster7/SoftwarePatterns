@@ -13,6 +13,7 @@ namespace dom
 	/*
 	* Node class has the following roles
 	* Strategy Pattern : Algorithm Interface
+	* Decorator Pattern : Component
 	*/
 	class Node
 	{
@@ -73,6 +74,7 @@ namespace dom
 /* Class Node_Impl has the following roles
 * Strategy Pattern : Concrete Strategy
 * Strategy Pattern : Context
+* Decorator Pattern : Concrete Component
 */
 class Node_Impl : public virtual dom::Node
 {

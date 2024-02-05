@@ -8,6 +8,11 @@
 #include "Element.H"
 #include "Attr.H"
 
+/*
+* NodeValidatorDecorator has the following roles:
+* Decorator Pattern : Decorator
+*/
+
 class NodeValidatorDecorator : public virtual dom::Node
 {
 protected:
@@ -40,6 +45,11 @@ public:
 	virtual void prettyIndentation(int indentationLevel, dom::OutputStream* out) { return node->prettyIndentation(indentationLevel, out); };
 };
 
+/*
+* DocumentValidatorDecorator has the following roles:
+* Decorator Pattern : Concrete Decorator
+*/
+
 class DocumentValidatorDecorator : public virtual NodeValidatorDecorator, public virtual dom::Document
 {
 private:
@@ -56,6 +66,11 @@ public:
 	virtual dom::Node* appendChild(Node* newChild);	// overriden decorated function
 
 };
+
+/*
+* ElementValidatorDecorator has the following roles:
+* Decorator Pattern : Concrete Decorator
+*/
 
 class ElementValidatorDecorator : public virtual NodeValidatorDecorator, public virtual dom::Element
 {

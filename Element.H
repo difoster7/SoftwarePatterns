@@ -16,6 +16,7 @@ namespace dom
 	/*
 	* ELement Class has the following roles
 	* Factory Pattern : Product
+	* Decorator Pattern : Component
 	*/
 	class Element : public virtual Node
 	{
@@ -42,6 +43,7 @@ namespace dom
 * Factory Pattern : Concrete Product
 * Strategy Pattern : Concrete strategy
 * Strategy Pattern : Context
+* Decorator Pattern : Concrete Component
 */
 class Element_Impl : public virtual dom::Element, Node_Impl
 {
