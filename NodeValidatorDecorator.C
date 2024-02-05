@@ -10,6 +10,17 @@ dom::Node* DocumentValidatorDecorator::appendChild(Node* newChild)
 	exit(0);
 }
 
+void ElementValidatorDecorator::setAttribute(const std::string& name, const std::string& value)
+{
+	if (validator->canAddAttribute(this->element, name))
+	{
+		return element->setAttribute(name, value);
+	}
+
+	printf("Attempted invalid schema operation.");
+	exit(0);
+}
+
 dom::Attr* ElementValidatorDecorator::setAttributeNode(dom::Attr* newAttr)
 {
 	if (validator->canAddAttribute(this->element, newAttr->getNodeName()))

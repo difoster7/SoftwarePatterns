@@ -72,12 +72,14 @@ public:
 	virtual bool			hasAttribute(const std::string& name) { return element->hasAttribute(name); };
 	virtual void			removeAttribute(const std::string& name) { return element->removeAttribute(name); };
 	virtual dom::Attr* removeAttributeNode(dom::Attr* oldAttr) { return element->removeAttributeNode(oldAttr); };
-	virtual void			setAttribute(const std::string& name, const std::string& value) { return element->setAttribute(name, value); };
+	virtual void			setAttribute(const std::string& name, const std::string& value);	// overriden decorated function
 	virtual dom::Attr* setAttributeNode(dom::Attr* newAttr);	// overriden decorated function
 	virtual dom::Node* appendChild(Node* newChild);	// overriden decorated function
 
 	virtual dom::NamedNodeMap* getAttributes(void) { return element->getAttributes(); };
 	virtual bool			hasAttributes(void) { return element->hasAttributes(); };
+
+	virtual dom::Element* getElement() { return element; };
 };
 
 #endif // !XMLVALIDATORDECORATOR_H
