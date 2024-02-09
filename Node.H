@@ -8,6 +8,7 @@ namespace dom
 {
 	class Document;
 
+	// Composite Pattern Component Interface
 	class Node
 	{
 	public:
@@ -60,6 +61,8 @@ namespace dom
 	};
 };
 
+// Composite Pattern Leaf Component Implmentation
+// Defines default error behavior for child management functions
 class Node_Impl : public virtual dom::Node
 {
 private:

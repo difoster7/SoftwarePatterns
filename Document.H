@@ -13,6 +13,7 @@ namespace dom
 	class Attr;
 	class NodeList;
 
+	// Composite Pattern Interface for a Composite Component
 	class Document : public virtual Node
 	{
 	public:
@@ -23,6 +24,7 @@ namespace dom
 	};
 };
 
+// Composite Pattern Implmentation of a Composite Component
 class Document_Impl : public virtual dom::Document, public virtual CompositeNode_Impl
 {
 public:

@@ -9,6 +9,7 @@ namespace dom
 {
 	class Document;
 
+	// Composite Pattern Interface for a Leaf Component
 	class Text : public virtual Node
 	{
 	public:
@@ -29,6 +30,7 @@ namespace dom
 	};
 };
 
+// Composite Pattern Implementation of a Leaf Component
 class Text_Impl : public virtual dom::Text, Node_Impl
 {
 protected:

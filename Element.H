@@ -13,6 +13,7 @@ namespace dom
 	class NodeList;
 	class Document;
 
+	// Composite Pattern Interface for a Composite Component
 	class Element : public virtual Node
 	{
 	public:
@@ -33,6 +34,7 @@ namespace dom
 	};
 };
 
+// Composite Pattern Implementation of a Composite Component
 class Element_Impl : public virtual dom::Element, CompositeNode_Impl
 {
 private:

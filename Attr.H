@@ -10,6 +10,7 @@ namespace dom
 	class Document;
 	class Element;
 
+	// Composite Pattern Interface for a Leaf Component
 	class Attr : public virtual Node
 	{
 	public:
@@ -22,6 +23,7 @@ namespace dom
 	};
 };
 
+// Composite Pattern Implmenetation of a Leaf Component
 class Attr_Impl : public virtual dom::Attr, Node_Impl
 {
 protected:

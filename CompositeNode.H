@@ -5,6 +5,7 @@
 
 namespace dom
 {
+	// Composite Pattern Composite Component Interface
 	class CompositeNode : public virtual Node
 	{
 	public:
@@ -23,6 +24,8 @@ namespace dom
 	};
 }
 
+// Composite Pattern Composite Component Implementation
+// Defines child management functions for composites
 class CompositeNode_Impl : public virtual dom::CompositeNode, virtual public Node_Impl
 {
 protected:
