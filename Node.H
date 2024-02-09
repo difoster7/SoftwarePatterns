@@ -67,11 +67,12 @@ private:
 	std::string	value;
 	short		nodeType;
 	dom::Node *	parent;
-	dom::NodeList	nodes;
+	//dom::NodeList	nodes;
 
 	dom::Node *			getSibling(int direction);
 protected:
 	dom::Document *	document;
+	dom::NodeList nodes;
 
 	Node_Impl(const std::string & name, short type);
 public:
