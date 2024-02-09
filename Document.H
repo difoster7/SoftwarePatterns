@@ -14,7 +14,7 @@ namespace dom
 	class NodeList;
 
 	// Composite Pattern Interface for a Composite Component
-	class Document : public virtual Node
+	class Document : public virtual CompositeNode
 	{
 	public:
 		virtual Element *	createElement(const std::string & tagName)	= 0;

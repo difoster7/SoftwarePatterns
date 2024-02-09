@@ -14,7 +14,7 @@ namespace dom
 	class Document;
 
 	// Composite Pattern Interface for a Composite Component
-	class Element : public virtual Node
+	class Element : public virtual CompositeNode
 	{
 	public:
 		virtual ~Element() {}
