@@ -99,8 +99,6 @@ dom::Node *		Node_Impl::appendChild(dom::Node * newChild)
 
 bool			Node_Impl::hasChildNodes(void)
 {
-	throw dom::DOMException(dom::DOMException::HIERARCHY_REQUEST_ERR, "Child management functions unavailable for this node.");
-
 	return false;
 }
 
