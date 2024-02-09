@@ -1,5 +1,11 @@
-#include "CompositeNode.H";
-//#include "CompositeNode.H"
+#include "iterator"
+
+#include "CompositeNode.H"
+
+CompositeNode_Impl::CompositeNode_Impl(const std::string& name, short type, dom::Document* doc) : Node_Impl(name, type)
+{
+	document = doc;
+}
 
 dom::NodeList* CompositeNode_Impl::getChildNodes(void)
 {
@@ -93,4 +99,11 @@ dom::Node* CompositeNode_Impl::appendChild(Node* newChild)
 bool CompositeNode_Impl::hasChildNodes(void)
 {
 	return nodes.size() > 0;
+}
+
+dom::Node* CompositeNode_Impl::getChild(int n)
+{
+	dom::NodeList::iterator iter = nodes.begin();
+	advance(iter, n - 1);
+	return *iter;
 }

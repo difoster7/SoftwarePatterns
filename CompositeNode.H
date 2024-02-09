@@ -18,13 +18,15 @@ namespace dom
 		virtual Node* removeChild(Node* oldChild) = 0;
 		virtual Node* appendChild(Node* newChild) = 0;
 		virtual bool hasChildNodes(void) = 0;
+
+		virtual Node* getChild(int n) = 0;
 	};
 }
 
-class CompositeNode_Impl : public virtual dom::CompositeNode, Node_Impl
+class CompositeNode_Impl : public virtual dom::CompositeNode, virtual public Node_Impl
 {
 protected:
-	CompositeNode_Impl(const std::string& name, short type) : Node_Impl(name, type) {}
+	CompositeNode_Impl(const std::string& name, short type, dom::Document* doc);
 
 public:
 	virtual ~CompositeNode_Impl() {}
@@ -37,6 +39,8 @@ public:
 	virtual Node* removeChild(Node* oldChild);
 	virtual Node* appendChild(Node* newChild);
 	virtual bool hasChildNodes(void);
+
+	virtual Node* getChild(int n);
 
 };
 

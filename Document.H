@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Node.H"
+#include "CompositeNode.H"
 
 namespace dom
 {
@@ -22,7 +23,7 @@ namespace dom
 	};
 };
 
-class Document_Impl : public virtual dom::Document, public virtual Node_Impl
+class Document_Impl : public virtual dom::Document, public virtual CompositeNode_Impl
 {
 public:
 	Document_Impl(void);
