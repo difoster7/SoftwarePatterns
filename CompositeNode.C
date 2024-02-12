@@ -1,6 +1,7 @@
 #include "iterator"
 
 #include "CompositeNode.H"
+#include "NodeIter.H"
 
 CompositeNode_Impl::CompositeNode_Impl(const std::string& name, short type, dom::Document* doc) : Node_Impl(name, type)
 {
@@ -106,4 +107,9 @@ dom::Node* CompositeNode_Impl::getChild(int n)
 	dom::NodeList::iterator iter = nodes.begin();
 	advance(iter, n - 1);
 	return *iter;
+}
+
+NodeIter_Impl* CompositeNode_Impl::createIterator()
+{
+	return new NodeIter_Impl(this);
 }

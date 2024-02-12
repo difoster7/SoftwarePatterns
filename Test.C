@@ -7,6 +7,8 @@
 #include "XMLSerializer.H"
 #include "XMLValidator.H"
 
+#include "NodeIter.H"
+
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
 void testValidator(int argc, char** argv);
@@ -87,6 +89,7 @@ void testTokenizer(int argc, char** argv)
 	}
 }
 
+// Iterator Pattern client
 void testSerializer(int argc, char** argv)
 {
 	if (argc < 4)
@@ -131,15 +134,20 @@ void testSerializer(int argc, char** argv)
 	child				= document->createElement("element");
 	root->appendChild(child);
 
-	//
-	// Serialize
-	//
-	XMLSerializer	xmlSerializer(argv[2]);
-	xmlSerializer.serializePretty(document);
-	XMLSerializer	xmlSerializer2(argv[3]);
-	xmlSerializer2.serializeMinimal(document);
+	NodeIter_Impl* iter = document->createIterator();
+	dom::Node* currentNode;
+	
+	XMLSerializer xmlSerializer1(argv[2]);
+	XMLSerializer xmlSerializer2(argv[3]);
 
-	// delete Document and tree.
+	for (currentNode = iter->start(); !iter->isDone(); currentNode = iter->next())
+	{
+		xmlSerializer1.serializePretty(currentNode);
+		xmlSerializer2.serializeMinimal(currentNode);
+	}
+
+	delete(iter);
+
 }
 
 void testValidator(int argc, char** argv)

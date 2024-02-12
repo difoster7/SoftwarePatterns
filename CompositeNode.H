@@ -2,10 +2,14 @@
 #define COMPOSITENODE_H
 
 #include "Node.H"
+//#include "NodeIter.H"
+
+class NodeIter_Impl;
 
 namespace dom
 {
 	// Composite Pattern Composite Component Interface
+	// Iterator Pattern Aggregate Interface
 	class CompositeNode : public virtual Node
 	{
 	public:
@@ -21,11 +25,13 @@ namespace dom
 		virtual bool hasChildNodes(void) = 0;
 
 		virtual Node* getChild(int n) = 0;
+		virtual NodeIter_Impl* createIterator() = 0;
 	};
-}
+};
 
 // Composite Pattern Composite Component Implementation
 // Defines child management functions for composites
+// Iterator Pattern Concrete Aggregate
 class CompositeNode_Impl : public virtual dom::CompositeNode, virtual public Node_Impl
 {
 protected:
@@ -44,6 +50,7 @@ public:
 	virtual bool hasChildNodes(void);
 
 	virtual Node* getChild(int n);
+	virtual NodeIter_Impl* createIterator();
 
 };
 

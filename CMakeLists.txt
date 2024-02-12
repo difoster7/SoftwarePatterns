@@ -26,4 +26,5 @@ target_sources(Patterns PUBLIC
 	XMLValidator.H
 	CompositeNode.H
 	CompositeNode.C
-)
+	NodeIter.H
+ "NodeIter.C")

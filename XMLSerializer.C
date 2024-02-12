@@ -17,7 +17,7 @@ void XMLSerializer::serializePretty(dom::Node * node)
 	{
 		file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
 		file << "\n";
-		serializePretty(dynamic_cast<dom::Document *>(node)->getDocumentElement());
+		//serializePretty(dynamic_cast<dom::Document *>(node)->getDocumentElement());
 	}
 	else if (dynamic_cast<dom::Element *>(node) != 0)
 	{
@@ -48,11 +48,11 @@ void XMLSerializer::serializePretty(dom::Node * node)
 			file << "\n";
 			indentationLevel++;
 
-			for (dom::NodeList::iterator i = dynamic_cast<dom::Element *>(node)->getChildNodes()->begin();
-			  i != dynamic_cast<dom::Element *>(node)->getChildNodes()->end();
-			  i++)
-				if (dynamic_cast<dom::Element *>(*i) != 0 || dynamic_cast<dom::Text *>(*i) != 0)
-					serializePretty(*i);
+			//for (dom::NodeList::iterator i = dynamic_cast<dom::Element *>(node)->getChildNodes()->begin();
+			//  i != dynamic_cast<dom::Element *>(node)->getChildNodes()->end();
+			//  i++)
+			//	if (dynamic_cast<dom::Element *>(*i) != 0 || dynamic_cast<dom::Text *>(*i) != 0)
+			//		serializePretty(*i);
 
 			indentationLevel--;
 			prettyIndentation();
@@ -78,7 +78,7 @@ void XMLSerializer::serializeMinimal(dom::Node * node)
 	if (dynamic_cast<dom::Document *>(node) != 0)
 	{
 		file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
-		serializeMinimal(dynamic_cast<dom::Document *>(node)->getDocumentElement());
+		//serializeMinimal(dynamic_cast<dom::Document *>(node)->getDocumentElement());
 	}
 	else if (dynamic_cast<dom::Element *>(node) != 0)
 	{
@@ -95,11 +95,11 @@ void XMLSerializer::serializeMinimal(dom::Node * node)
 		{
 			file << ">";
 
-			for (dom::NodeList::iterator i = dynamic_cast<dom::Element *>(node)->getChildNodes()->begin();
-			  i != dynamic_cast<dom::Element *>(node)->getChildNodes()->end();
-			  i++)
-				if (dynamic_cast<dom::Element *>(*i) != 0 || dynamic_cast<dom::Text *>(*i) != 0)
-					serializeMinimal(*i);
+			//for (dom::NodeList::iterator i = dynamic_cast<dom::Element *>(node)->getChildNodes()->begin();
+			//  i != dynamic_cast<dom::Element *>(node)->getChildNodes()->end();
+			//  i++)
+			//	if (dynamic_cast<dom::Element *>(*i) != 0 || dynamic_cast<dom::Text *>(*i) != 0)
+			//		serializeMinimal(*i);
 
 			file << "</" << dynamic_cast<dom::Element *>(node)->getTagName() + ">";
 		}
