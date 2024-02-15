@@ -43,8 +43,6 @@ int Document_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStr
 {
 	out->write("<? xml version=\"1.0\" encoding=\"UTF-8\"?>");
 	out->write("\n");
-	//*file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
-	//*file << "\n";
 	return getDocumentElement()->serializePrettyAlgorithm(indentationLevel, out);
 }
 
@@ -52,6 +50,5 @@ int Document_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStr
 void Document_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
 {
 	out->write("<? xml version=\"1.0\" encoding=\"UTF-8\"?>");
-	//*file << "<? xml version=\"1.0\" encoding=\"UTF-8\"?>";
 	getDocumentElement()->serializeMinimalAlgorithm(out);
 }

@@ -42,7 +42,6 @@ int Attr_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream*
 	out->write("=\"");
 	out->write(getValue()); 
 	out->write("\"");
-	//*file << " " << getName() << "=\"" << getValue() << "\"";
 	return indentationLevel;
 }
 
@@ -54,5 +53,4 @@ void Attr_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
 	out->write("=\"");
 	out->write(getValue());
 	out->write("\"");
-	//*file << " " << getName() << "=\"" << getValue() << "\"";
 }

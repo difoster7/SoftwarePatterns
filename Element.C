@@ -147,7 +147,6 @@ int Element_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStre
 	prettyIndentation(indentationLevel, out);
 	out->write("<");
 	out->write(getTagName());
-	//*file << "<" << getTagName();
 
 	int	attrCount = 0;
 
@@ -159,21 +158,16 @@ int Element_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStre
 
 	if (attrCount > 0)
 		out->write(" ");
-		//*file << " ";
 
 	if (getChildNodes()->size() == 0)
 	{
 		out->write("/>");
 		out->write("\n");
-		//*file << "/>";
-		//*file << "\n";
 	}
 	else
 	{
 		out->write(">");
 		out->write("\n");
-		//*file << ">";
-		//*file << "\n";
 		indentationLevel++;
 
 		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
@@ -190,8 +184,6 @@ int Element_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStre
 		out->write(getTagName());
 		out->write(">");
 		out->write("\n");
-		//*file << "</" << getTagName() + ">";
-		//*file << "\n";
 	}
 
 	return indentationLevel;
@@ -202,7 +194,6 @@ void Element_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
 {
 	out->write("<");
 	out->write(getTagName());
-	//*file << "<" << getTagName();
 
 	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
 	{
@@ -212,11 +203,9 @@ void Element_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
 
 	if (getChildNodes()->size() == 0)
 		out->write("/>");
-		//*file << "/>";
 	else
 	{
 		out->write(">");
-		//*file << ">";
 
 		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
 		{
@@ -228,6 +217,5 @@ void Element_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
 		out->write("</");
 		out->write(getTagName());
 		out->write(">");
-		//*file << "</" << getTagName() + ">";
 	}
 }

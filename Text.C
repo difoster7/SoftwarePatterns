@@ -114,8 +114,6 @@ int Text_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream*
 
 	out->write(getData());
 	out->write("\n");
-	//*file << getData();
-	//*file << "\n";
 	return indentationLevel;
 }
 
@@ -123,5 +121,4 @@ int Text_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream*
 void Text_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
 {
 	out->write(getData());
-	//*file << getData();
 }
