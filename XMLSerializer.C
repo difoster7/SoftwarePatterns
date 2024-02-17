@@ -8,11 +8,13 @@
 // Stratgy pattern context
 void XMLSerializer::serializePretty(dom::Node * node)
 {
-	indentationLevel = node->serializePrettyAlgorithm(indentationLevel, out);
+	node->setSerializerPretty();
+	indentationLevel = node->serialize(indentationLevel, out);
 }
 
 // Strategy pattern context
 void XMLSerializer::serializeMinimal(dom::Node * node)
 {
-	node->serializeMinimalAlgorithm(out);
+	node->setSerializerMinimal();
+	node->serialize(0, out);
 }

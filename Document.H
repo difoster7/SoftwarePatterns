@@ -28,6 +28,8 @@ namespace dom
 
 class DocumentSerializer
 {
+private:
+	dom::Document* doc;
 protected:
 	virtual void writeOpener(dom::OutputStream* out) {};
 	virtual int returnStatement(int indentationLevel, dom::OutputStream* out) { return indentationLevel; };
@@ -75,7 +77,7 @@ private:
 
 protected:
 	virtual void writeOpener(dom::OutputStream* out);
-	virtual int returnStatement(int indentationLevel, dom::OutputStream* out);
+	//virtual int returnStatement(int indentationLevel, dom::OutputStream* out);
 
 public:
 	DocumentSerializerPretty(dom::Document* doc) : doc(doc) {}

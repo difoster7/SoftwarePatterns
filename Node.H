@@ -46,6 +46,10 @@ namespace dom
 		virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
 		virtual void serializeMinimalAlgorithm(dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
 		virtual void prettyIndentation(int indentationLevel, dom::OutputStream * out) = 0;
+
+		virtual void setSerializerPretty() = 0;
+		virtual void setSerializerMinimal() = 0;
+		virtual int serialize(int indentationLevel, dom::OutputStream* out) = 0;
 	};
 
 	class DOMException
@@ -117,6 +121,10 @@ public:
 	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 
 	virtual void prettyIndentation(int indentationLevel, dom::OutputStream* out);
+
+	virtual void setSerializerPretty() {};
+	virtual void setSerializerMinimal() {};
+	virtual int serialize(int indentationLevel, dom::OutputStream* out) { out->write("hi\n"); return indentationLevel; }
 
 };
 
