@@ -38,6 +38,26 @@ namespace dom
 	};
 };
 
+class ElementSerializer
+{
+protected:
+	dom::Element* ele;
+
+	virtual void writeOpener(int indentationLevel, dom::OutputStream* out) {};
+	virtual void setNextSerializerNodeMap(dom::NamedNodeMap::iterator i) {};
+	virtual void setNextSerializerNodeList(dom::NodeList::iterator i) {};
+	virtual void writeSpace(dom::OutputStream* out) {};
+	virtual void writeNewLine(dom::OutputStream* out) {};
+	virtual int incrementIndentationLevel(int indentationLevel) { return indentationLevel; };
+	virtual int decrementIndentationLevel(int indentationLevel) { return indentationLevel; };
+	virtual void writeCloser(int indentationLevel, dom::OutputStream* out) {};
+
+public:
+	ElementSerializer(dom::Element* ele) : ele(ele) {};
+
+	int serialize(int indentationLevel, dom::OutputStream* out);
+};
+
 /*
 * Element_Impl class has the following roles
 * Factory Pattern : Concrete Product
@@ -49,8 +69,11 @@ class Element_Impl : public virtual dom::Element, Node_Impl
 {
 private:
 	NamedNodeMap_Impl	attributes;
+	ElementSerializer* serializer;
+
 protected:
 	Element_Impl(const std::string & tagName, dom::Document * document);
+
 public:
 	friend class Document_Impl;
 
@@ -69,10 +92,41 @@ public:
 	virtual dom::NamedNodeMap *	getAttributes(void)	{ return &attributes; }
 	virtual bool			hasAttributes(void)	{ return attributes.size() > 0; }
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
+	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 
+	virtual void setSerializerPretty();
+	virtual void setSerializerMinimal();
+	virtual int serialize(int indentationLevel, dom::OutputStream* out);
 
+};
+
+class ElementSerializerPretty : public virtual ElementSerializer
+{
+protected:
+	virtual void writeOpener(int indentationLevel, dom::OutputStream* out);
+	virtual void setNextSerializerNodeMap(dom::NamedNodeMap::iterator i);
+	virtual void setNextSerializerNodeList(dom::NodeList::iterator i);
+	virtual void writeSpace(dom::OutputStream* out);
+	virtual void writeNewLine(dom::OutputStream* out);
+	virtual int incrementIndentationLevel(int indentationLevel);
+	virtual int decrementIndentationLevel(int indentationLevel);
+	virtual void writeCloser(int indentationLevel, dom::OutputStream* out);
+
+public:
+	ElementSerializerPretty(dom::Element* ele) : ElementSerializer(ele) {};
+};
+
+class ElementSerializerMinimal : public virtual ElementSerializer
+{
+protected:
+	virtual void writeOpener(int indentationLevel, dom::OutputStream* out);
+	virtual void setNextSerializerNodeMap(dom::NamedNodeMap::iterator i);
+	virtual void setNextSerializerNodeList(dom::NodeList::iterator i);
+	virtual void writeCloser(int indentationLevel, dom::OutputStream* out);
+
+public:
+	ElementSerializerMinimal(dom::Element* ele) : ElementSerializer(ele) {};
 };
 
 #endif // ELEMENT_H

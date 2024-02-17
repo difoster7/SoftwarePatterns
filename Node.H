@@ -124,7 +124,7 @@ public:
 
 	virtual void setSerializerPretty() {};
 	virtual void setSerializerMinimal() {};
-	virtual int serialize(int indentationLevel, dom::OutputStream* out) { out->write("hi\n"); return indentationLevel; }
+	virtual int serialize(int indentationLevel, dom::OutputStream* out) { printf("hi from node serialize\n"); return indentationLevel; }
 
 };
 

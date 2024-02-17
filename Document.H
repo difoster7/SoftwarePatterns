@@ -28,13 +28,15 @@ namespace dom
 
 class DocumentSerializer
 {
-private:
-	dom::Document* doc;
 protected:
+	dom::Document* doc;
+
 	virtual void writeOpener(dom::OutputStream* out) {};
 	virtual int returnStatement(int indentationLevel, dom::OutputStream* out) { return indentationLevel; };
+	virtual void setNextSerializer() {};
 
 public:
+	DocumentSerializer(dom::Document* doc) : doc(doc) {};
 	int serialize(int indentationLevel, dom::OutputStream* out);
 };
 
@@ -72,27 +74,23 @@ public:
 
 class DocumentSerializerPretty : public virtual DocumentSerializer
 {
-private:
-	dom::Document* doc;
-
 protected:
 	virtual void writeOpener(dom::OutputStream* out);
-	//virtual int returnStatement(int indentationLevel, dom::OutputStream* out);
+	virtual void setNextSerializer();
 
 public:
-	DocumentSerializerPretty(dom::Document* doc) : doc(doc) {}
+	DocumentSerializerPretty(dom::Document* doc) : DocumentSerializer(doc) {};
 };
 
 class DocumentSerializerMinimal : public virtual DocumentSerializer
 {
-private:
-	dom::Document* doc;
-
 protected:
 	virtual void writeOpener(dom::OutputStream* out);
+	virtual void setNextSerializer();
 
 public:
-	DocumentSerializerMinimal(dom::Document* doc) : doc(doc) {}
+
+	DocumentSerializerMinimal(dom::Document* doc) : DocumentSerializer(doc) {};
 };
 
 #endif // DOCUMENT_H

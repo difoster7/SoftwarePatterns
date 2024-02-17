@@ -70,30 +70,29 @@ int Document_Impl::serialize(int indentationLevel, dom::OutputStream* out)
 
 int DocumentSerializer::serialize(int indentationLevel, dom::OutputStream* out)
 {
-	printf("hi1 DocumentSerializer\n");
 	writeOpener(out);
+
+	setNextSerializer();
 	return doc->getDocumentElement()->serialize(indentationLevel, out);// returnStatement(indentationLevel, out);
 }
 
 void DocumentSerializerPretty::writeOpener(dom::OutputStream* out)
 {
-	printf("hi2 DocumentSerializer\n");
 	out->write("<? xml version=\"1.0\" encoding=\"UTF-8\"?>");
 	out->write("\n");
 }
 
-//int DocumentSerializerPretty::returnStatement(int indentationLevel, dom::OutputStream* out)
-//{
-//	return doc->getDocumentElement()->serialize(indentationLevel, out);
-//}
+void DocumentSerializerPretty::setNextSerializer()
+{
+	doc->getDocumentElement()->setSerializerPretty();
+}
 
 void DocumentSerializerMinimal::writeOpener(dom::OutputStream* out)
 {
-	printf("hi3 DocumentSerializer\n");
 	out->write("<? xml version=\"1.0\" encoding=\"UTF-8\"?>");
 }
 
-//void DocumentSerializerMinimal::returnStatement(int indentationLevel, dom::OutputStream* out)
-//{
-//	doc->getDocumentElement()->serialize
-//}
+void DocumentSerializerMinimal::setNextSerializer()
+{
+	doc->getDocumentElement()->setSerializerMinimal();
+}
