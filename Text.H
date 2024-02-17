@@ -33,6 +33,18 @@ namespace dom
 	};
 };
 
+class TextSerializer
+{
+protected:
+	dom::Text* text;
+
+	virtual void writeData(int indentationLevel, dom::OutputStream* out) {};
+
+public:
+	TextSerializer(dom::Text* text) : text(text) {};
+	int serialize(int indentationLevel, dom::OutputStream* out);
+};
+
 /*
 * Text_Impl roles
 * Factory Pattern : Concrete Product
@@ -41,8 +53,12 @@ namespace dom
 */
 class Text_Impl : public virtual dom::Text, Node_Impl
 {
+private:
+	TextSerializer* serializer;
+
 protected:
 	Text_Impl(const std::string value, dom::Document * document);
+
 public:
 	friend class Document_Impl;
 
@@ -61,8 +77,31 @@ public:
 	virtual void			replaceData(int offset, int count, const std::string & arg);
 	virtual dom::Text *		splitText(int offset);
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// strategy pattern algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// strategy pattern algorithm interface implementation
+	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+
+	virtual void setSerializerPretty();
+	virtual void setSerializerMinimal();
+	virtual int serialize(int indentationLevel, dom::OutputStream* out);
+};
+
+
+class TextSerializerPretty : public virtual TextSerializer
+{
+protected:
+	virtual void writeData(int indentationLevel, dom::OutputStream* out);
+
+public:
+	TextSerializerPretty(dom::Text* text) : TextSerializer(text) {};
+};
+
+class TextSerializerMinimal : public virtual TextSerializer
+{
+protected:
+	virtual void writeData(int indentationLevel, dom::OutputStream* out);
+
+public:
+	TextSerializerMinimal(dom::Text* text) : TextSerializer(text) {};
 };
 
 #endif // TEXT_H

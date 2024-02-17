@@ -106,19 +106,54 @@ dom::Text *		Text_Impl::splitText(int offset)
 	}
 }
 
-// strategy pattern algorithm interface implementation
-int Text_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
+void Text_Impl::setSerializerPretty()
 {
+	serializer = new TextSerializerPretty(this);
+}
 
-	prettyIndentation(indentationLevel, out);
+void Text_Impl::setSerializerMinimal()
+{
+	serializer = new TextSerializerMinimal(this);
+}
 
-	out->write(getData());
-	out->write("\n");
+int Text_Impl::serialize(int indentationLevel, dom::OutputStream* out)
+{
+	return serializer->serialize(indentationLevel, out);
+}
+
+//// strategy pattern algorithm interface implementation
+//int Text_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
+//{
+//
+//	prettyIndentation(indentationLevel, out);
+//
+//	out->write(getData());
+//	out->write("\n");
+//	return indentationLevel;
+//}
+//
+//// strategy pattern algorithm interface implementation
+//void Text_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
+//{
+//	out->write(getData());
+//}
+
+int TextSerializer::serialize(int indentationLevel, dom::OutputStream* out)
+{
+	writeData(indentationLevel, out);
+
 	return indentationLevel;
 }
 
-// strategy pattern algorithm interface implementation
-void Text_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
+void TextSerializerPretty::writeData(int indentationLevel, dom::OutputStream* out)
 {
-	out->write(getData());
+	text->prettyIndentation(indentationLevel, out);
+
+	out->write(text->getData());
+	out->write("\n");
+}
+
+void TextSerializerMinimal::writeData(int indentationLevel, dom::OutputStream* out)
+{
+	out->write(text->getData());
 }
