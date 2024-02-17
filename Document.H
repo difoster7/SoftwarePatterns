@@ -26,6 +26,16 @@ namespace dom
 	};
 };
 
+class DocumentSerializer
+{
+protected:
+	virtual void writeOpener(dom::OutputStream* out) {};
+	virtual int returnStatement(int indentationLevel, dom::OutputStream* out) { return indentationLevel; };
+
+public:
+	int serialize(int indentationLevel, dom::OutputStream* out);
+};
+
 /* 
 * Document_Impl class has the following roles
 * Factory Pattern : Concrete Creator
@@ -35,6 +45,9 @@ namespace dom
 */
 class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 {
+private:
+	DocumentSerializer* serializer;
+
 public:
 	Document_Impl(void);
 
@@ -45,9 +58,39 @@ public:
 	virtual dom::Attr *	createAttribute(const std::string & name);	// Factory pattern concrete creator method
 	virtual dom::Element *	getDocumentElement();
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Factory Pattern Algorithm interface implementation
+	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
+	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Factory Pattern Algorithm interface implementation
 
+	virtual void setSerializerPretty();
+	virtual void setSerializerMinimal();
+	virtual int serialize(int indentationLevel, dom::OutputStream* out);
+
+};
+
+
+class DocumentSerializerPretty : public virtual DocumentSerializer
+{
+private:
+	dom::Document* doc;
+
+protected:
+	virtual void writeOpener(dom::OutputStream* out);
+	virtual int returnStatement(int indentationLevel, dom::OutputStream* out);
+
+public:
+	DocumentSerializerPretty(dom::Document* doc) : doc(doc) {}
+};
+
+class DocumentSerializerMinimal : public virtual DocumentSerializer
+{
+private:
+	dom::Document* doc;
+
+protected:
+	virtual void writeOpener(dom::OutputStream* out);
+
+public:
+	DocumentSerializerMinimal(dom::Document* doc) : doc(doc) {}
 };
 
 #endif // DOCUMENT_H

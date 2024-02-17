@@ -38,17 +38,54 @@ dom::Element * Document_Impl::getDocumentElement()
 	return 0;
 }
 
-// Strategy pattern algorithm interface implementation
-int Document_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
+void Document_Impl::setSerializerPretty()
+{
+	serializer = new DocumentSerializerPretty(this);
+}
+
+void Document_Impl::setSerializerMinimal()
+{
+	serializer = new DocumentSerializerMinimal(this);
+}
+
+int Document_Impl::serialize(int indentationLevel, dom::OutputStream* out)
+{
+	return serializer->serialize(indentationLevel, out);
+}
+
+//// Strategy pattern algorithm interface implementation
+//int Document_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
+//{
+//	out->write("<? xml version=\"1.0\" encoding=\"UTF-8\"?>");
+//	out->write("\n");
+//	return getDocumentElement()->serializePrettyAlgorithm(indentationLevel, out);
+//}
+//
+//// Strategy pattern algorithm interface implementation
+//void Document_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
+//{
+//	out->write("<? xml version=\"1.0\" encoding=\"UTF-8\"?>");
+//	getDocumentElement()->serializeMinimalAlgorithm(out);
+//}
+
+int DocumentSerializer::serialize(int indentationLevel, dom::OutputStream* out)
+{
+	writeOpener(out);
+	return returnStatement(indentationLevel, out);
+}
+
+void DocumentSerializerPretty::writeOpener(dom::OutputStream* out)
 {
 	out->write("<? xml version=\"1.0\" encoding=\"UTF-8\"?>");
 	out->write("\n");
-	return getDocumentElement()->serializePrettyAlgorithm(indentationLevel, out);
 }
 
-// Strategy pattern algorithm interface implementation
-void Document_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
+int DocumentSerializerPretty::returnStatement(int indentationLevel, dom::OutputStream* out)
+{
+	return doc->getDocumentElement()->serializePrettyAlgorithm(indentationLevel, out);
+}
+
+void DocumentSerializerMinimal::writeOpener(dom::OutputStream* out)
 {
 	out->write("<? xml version=\"1.0\" encoding=\"UTF-8\"?>");
-	getDocumentElement()->serializeMinimalAlgorithm(out);
 }
