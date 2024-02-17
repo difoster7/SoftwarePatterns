@@ -38,24 +38,28 @@ namespace dom
 	};
 };
 
+/*
+* ElementSerializer has the following roles
+* Template Pattern : Abstract class
+*/
 class ElementSerializer
 {
 protected:
 	dom::Element* ele;
 
-	virtual void writeOpener(int indentationLevel, dom::OutputStream* out) {};
-	virtual void setNextSerializerNodeMap(dom::NamedNodeMap::iterator i) {};
-	virtual void setNextSerializerNodeList(dom::NodeList::iterator i) {};
-	virtual void writeSpace(dom::OutputStream* out) {};
-	virtual void writeNewLine(dom::OutputStream* out) {};
-	virtual int incrementIndentationLevel(int indentationLevel) { return indentationLevel; };
-	virtual int decrementIndentationLevel(int indentationLevel) { return indentationLevel; };
-	virtual void writeCloser(int indentationLevel, dom::OutputStream* out) {};
+	virtual void writeOpener(int indentationLevel, dom::OutputStream* out) {};	// Template pattern primitive method
+	virtual void setNextSerializerNodeMap(dom::NamedNodeMap::iterator i) {};	// Template pattern primitive method
+	virtual void setNextSerializerNodeList(dom::NodeList::iterator i) {};	// Template pattern primitive method
+	virtual void writeSpace(dom::OutputStream* out) {};	// Template pattern primitive method
+	virtual void writeNewLine(dom::OutputStream* out) {};	// Template pattern primitive method
+	virtual int incrementIndentationLevel(int indentationLevel) { return indentationLevel; };	// Template pattern primitive method
+	virtual int decrementIndentationLevel(int indentationLevel) { return indentationLevel; };	// Template pattern primitive method
+	virtual void writeCloser(int indentationLevel, dom::OutputStream* out) {};	// Template pattern primitive method
 
 public:
 	ElementSerializer(dom::Element* ele) : ele(ele) {};
 
-	int serialize(int indentationLevel, dom::OutputStream* out);
+	int serialize(int indentationLevel, dom::OutputStream* out);	// Template pattern template method
 };
 
 /*
@@ -101,29 +105,37 @@ public:
 
 };
 
+/*
+* ElementSerializerPretty has the following roles
+* Template Pattern : Concrete class
+*/
 class ElementSerializerPretty : public virtual ElementSerializer
 {
 protected:
-	virtual void writeOpener(int indentationLevel, dom::OutputStream* out);
-	virtual void setNextSerializerNodeMap(dom::NamedNodeMap::iterator i);
-	virtual void setNextSerializerNodeList(dom::NodeList::iterator i);
-	virtual void writeSpace(dom::OutputStream* out);
-	virtual void writeNewLine(dom::OutputStream* out);
-	virtual int incrementIndentationLevel(int indentationLevel);
-	virtual int decrementIndentationLevel(int indentationLevel);
-	virtual void writeCloser(int indentationLevel, dom::OutputStream* out);
+	virtual void writeOpener(int indentationLevel, dom::OutputStream* out);	// Template pattern primitive method
+	virtual void setNextSerializerNodeMap(dom::NamedNodeMap::iterator i);	// Template pattern primitive method
+	virtual void setNextSerializerNodeList(dom::NodeList::iterator i);	// Template pattern primitive method
+	virtual void writeSpace(dom::OutputStream* out);	// Template pattern primitive method
+	virtual void writeNewLine(dom::OutputStream* out);	// Template pattern primitive method
+	virtual int incrementIndentationLevel(int indentationLevel);	// Template pattern primitive method
+	virtual int decrementIndentationLevel(int indentationLevel);	// Template pattern primitive method
+	virtual void writeCloser(int indentationLevel, dom::OutputStream* out);	// Template pattern primitive method
 
 public:
 	ElementSerializerPretty(dom::Element* ele) : ElementSerializer(ele) {};
 };
 
+/*
+* ElementSerializerMinimal has the following roles
+* Template Pattern : Concrete class
+*/
 class ElementSerializerMinimal : public virtual ElementSerializer
 {
 protected:
-	virtual void writeOpener(int indentationLevel, dom::OutputStream* out);
-	virtual void setNextSerializerNodeMap(dom::NamedNodeMap::iterator i);
-	virtual void setNextSerializerNodeList(dom::NodeList::iterator i);
-	virtual void writeCloser(int indentationLevel, dom::OutputStream* out);
+	virtual void writeOpener(int indentationLevel, dom::OutputStream* out);	// Template pattern primitive method
+	virtual void setNextSerializerNodeMap(dom::NamedNodeMap::iterator i);	// Template pattern primitive method
+	virtual void setNextSerializerNodeList(dom::NodeList::iterator i);	// Template pattern primitive method
+	virtual void writeCloser(int indentationLevel, dom::OutputStream* out);	// Template pattern primitive method
 
 public:
 	ElementSerializerMinimal(dom::Element* ele) : ElementSerializer(ele) {};

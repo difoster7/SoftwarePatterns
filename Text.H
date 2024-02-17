@@ -33,16 +33,20 @@ namespace dom
 	};
 };
 
+/*
+* TextSerializer has the following roles
+* Template Pattern : Abstract class
+*/
 class TextSerializer
 {
 protected:
 	dom::Text* text;
 
-	virtual void writeData(int indentationLevel, dom::OutputStream* out) {};
+	virtual void writeData(int indentationLevel, dom::OutputStream* out) {};	// Template pattern primitive method
 
 public:
 	TextSerializer(dom::Text* text) : text(text) {};
-	int serialize(int indentationLevel, dom::OutputStream* out);
+	int serialize(int indentationLevel, dom::OutputStream* out);	// Template pattern template method
 };
 
 /*
@@ -85,20 +89,27 @@ public:
 	virtual int serialize(int indentationLevel, dom::OutputStream* out);
 };
 
-
+/*
+* TextSerializerPretty has the following roles
+* Template Pattern : Concrete class
+*/
 class TextSerializerPretty : public virtual TextSerializer
 {
 protected:
-	virtual void writeData(int indentationLevel, dom::OutputStream* out);
+	virtual void writeData(int indentationLevel, dom::OutputStream* out);	// Template pattern primitive method
 
 public:
 	TextSerializerPretty(dom::Text* text) : TextSerializer(text) {};
 };
 
+/*
+* TextSerializerMinimal has the following roles
+* Template Pattern : Concrete class
+*/
 class TextSerializerMinimal : public virtual TextSerializer
 {
 protected:
-	virtual void writeData(int indentationLevel, dom::OutputStream* out);
+	virtual void writeData(int indentationLevel, dom::OutputStream* out);	// Template pattern primitive method
 
 public:
 	TextSerializerMinimal(dom::Text* text) : TextSerializer(text) {};

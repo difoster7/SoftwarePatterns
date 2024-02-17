@@ -26,18 +26,21 @@ namespace dom
 	};
 };
 
+/*
+* DocumentSerializer has the following roles
+* Template Pattern : Abstract class
+*/
 class DocumentSerializer
 {
 protected:
 	dom::Document* doc;
 
-	virtual void writeOpener(dom::OutputStream* out) {};
-	virtual int returnStatement(int indentationLevel, dom::OutputStream* out) { return indentationLevel; };
-	virtual void setNextSerializer() {};
+	virtual void writeOpener(dom::OutputStream* out) {};	// Template pattern primitive method
+	virtual void setNextSerializer() {};	// Template pattern primitive method
 
 public:
 	DocumentSerializer(dom::Document* doc) : doc(doc) {};
-	int serialize(int indentationLevel, dom::OutputStream* out);
+	int serialize(int indentationLevel, dom::OutputStream* out);	// Template pattern template method
 };
 
 /* 
@@ -63,7 +66,7 @@ public:
 	virtual dom::Element *	getDocumentElement();
 
 	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
-	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Factory Pattern Algorithm interface implementation
+	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 
 	virtual void setSerializerPretty();
 	virtual void setSerializerMinimal();
@@ -71,22 +74,29 @@ public:
 
 };
 
-
+/*
+* DocumentSerializerPretty has the following roles
+* Template Pattern : Concrete class
+*/
 class DocumentSerializerPretty : public virtual DocumentSerializer
 {
 protected:
-	virtual void writeOpener(dom::OutputStream* out);
-	virtual void setNextSerializer();
+	virtual void writeOpener(dom::OutputStream* out);	// Template pattern primitive method
+	virtual void setNextSerializer();	// Template pattern primitive method
 
 public:
 	DocumentSerializerPretty(dom::Document* doc) : DocumentSerializer(doc) {};
 };
 
+/*
+* DocumentSerializerMinimal has the following roles
+* Template Pattern : Concrete class
+*/
 class DocumentSerializerMinimal : public virtual DocumentSerializer
 {
 protected:
-	virtual void writeOpener(dom::OutputStream* out);
-	virtual void setNextSerializer();
+	virtual void writeOpener(dom::OutputStream* out);	// Template pattern primitive method
+	virtual void setNextSerializer();	// Template pattern primitive method
 
 public:
 

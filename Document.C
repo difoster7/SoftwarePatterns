@@ -73,7 +73,7 @@ int DocumentSerializer::serialize(int indentationLevel, dom::OutputStream* out)
 	writeOpener(out);
 
 	setNextSerializer();
-	return doc->getDocumentElement()->serialize(indentationLevel, out);// returnStatement(indentationLevel, out);
+	return doc->getDocumentElement()->serialize(indentationLevel, out);
 }
 
 void DocumentSerializerPretty::writeOpener(dom::OutputStream* out)
