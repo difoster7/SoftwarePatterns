@@ -15,6 +15,7 @@ namespace dom
 	* Document Class has the following roles
 	* Factory Pattern : Creator Interface
 	* Decorator Pattern : Component
+	* Abstract Factory Pattern : Abstract Factory
 	*/
 	class Document : public virtual Node
 	{
@@ -49,6 +50,7 @@ public:
 * Strategy Pattern : Concrete Algorithm
 * Strategy Pattern : Context
 * Decorator Pattern : Concrete Component
+* Abstract Facotry Pattern : Concrete Factory
 */
 class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 {

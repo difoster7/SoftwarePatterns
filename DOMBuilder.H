@@ -5,8 +5,7 @@
 #include "Element.H"
 #include "Attr.H"
 
-// Document already has an abstract factory...just need the builder
-
+// DOMBuilder is the Builder Pattern Abstract Builder
 class DOMBuilder
 {
 public:
@@ -18,6 +17,8 @@ public:
 	virtual dom::Node* getCurrent() = 0;
 };
 
+// DOMBuilder_Impl is the Builder Pattern Concrete Builder
+// DOMBuilder_Impl is the  Abstract Factory Pattern Client
 class DOMBuilder_Impl : public virtual DOMBuilder
 {
 private:

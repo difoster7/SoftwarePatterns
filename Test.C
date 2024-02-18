@@ -49,6 +49,7 @@ int main(int argc, char** argv)
 	}
 }
 
+// testTokenizer is the Builder Pattern Director
 void testTokenizer(int argc, char** argv)
 {
 	if (argc < 3)
@@ -126,7 +127,6 @@ void testTokenizer(int argc, char** argv)
 			case XMLTokenizer::XMLToken::NULL_TAG_END:
 				if (docLevel) builder->setParentAsCurrent();
 				docLevel--;
-				//if (builder->getCurrent()->getNodeType() == dom::Node::DOCUMENT_NODE) printf("hi\n");
 			}
 
 		} while (token->getTokenType() != XMLTokenizer::XMLToken::NULL_TOKEN);
