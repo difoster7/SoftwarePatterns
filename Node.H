@@ -43,8 +43,8 @@ namespace dom
 		virtual bool			hasChildNodes(void)				= 0;
 		virtual const std::string &	getLocalName(void)				= 0;
 
-		virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
-		virtual void serializeMinimalAlgorithm(dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
+		//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
+		//virtual void serializeMinimalAlgorithm(dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
 		virtual void prettyIndentation(int indentationLevel, dom::OutputStream * out) = 0;
 
 		virtual void setSerializerPretty() = 0;
@@ -117,8 +117,8 @@ public:
 	virtual void setParent(dom::Node * parent);
 
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 
 	virtual void prettyIndentation(int indentationLevel, dom::OutputStream* out);
 

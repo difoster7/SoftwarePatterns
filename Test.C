@@ -8,6 +8,7 @@
 #include "XMLValidator.H"
 #include "OutputStream.H"
 #include "NodeValidatorDecorator.H"
+#include "DOMBuilder.H"
 
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
@@ -73,6 +74,8 @@ void testTokenizer(int argc, char** argv)
 	delete text;
 	delete attr;
 	delete document;
+
+
 
 	for (int i = 2; i < argc; i++)
 	{

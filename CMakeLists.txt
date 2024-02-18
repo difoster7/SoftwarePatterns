@@ -27,4 +27,4 @@ target_sources(Patterns PUBLIC
 	OutputStream.H
 	OutputStream.C
 	NodeValidatorDecorator.H
-	NodeValidatorDecorator.C)
+	NodeValidatorDecorator.C "DOMBuilder.H" "DOMBuilder.C")
