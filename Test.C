@@ -75,13 +75,17 @@ void testTokenizer(int argc, char** argv)
 	delete attr;
 	delete document;
 
+	DOMBuilder* builder = new DOMBuilder_Impl;
 
+	std::string attrName;
 
 	for (int i = 2; i < argc; i++)
 	{
 		XMLTokenizer	tokenizer(argv[i]);
 
 		XMLTokenizer::XMLToken *	token	= 0;
+		int docLevel  = 0;
+		bool ignoreNextElement = false;
 
 		printf("File:  '%s'\n", argv[i]);
 
@@ -93,7 +97,46 @@ void testTokenizer(int argc, char** argv)
 			printf("\tLine %d:  %s = '%s'\n", tokenizer.getLineNumber(),
 			  token->toString(), token->getToken().size() == 0 ? "" : token->getToken().c_str());
 
+			switch (token->getTokenType())
+			{
+			case XMLTokenizer::XMLToken::ELEMENT:
+				if (!ignoreNextElement)
+				{
+					builder->addElement(token->getToken().c_str());
+					docLevel++;
+				}
+				else 
+				{
+					ignoreNextElement = false;
+				}
+				break;
+
+			case XMLTokenizer::XMLToken::ATTRIBUTE:
+				if(docLevel) attrName = token->getToken();
+				break;
+
+			case XMLTokenizer::XMLToken::ATTRIBUTE_VALUE:
+				if (docLevel) builder->addAttr(attrName, token->getToken());
+				break;
+			case XMLTokenizer::XMLToken::VALUE:
+				if (docLevel) builder->addText(token->getToken());
+				break;
+			case XMLTokenizer::XMLToken::TAG_CLOSE_START:
+				ignoreNextElement = true;
+			case XMLTokenizer::XMLToken::NULL_TAG_END:
+				if (docLevel) builder->setParentAsCurrent();
+				docLevel--;
+				//if (builder->getCurrent()->getNodeType() == dom::Node::DOCUMENT_NODE) printf("hi\n");
+			}
+
 		} while (token->getTokenType() != XMLTokenizer::XMLToken::NULL_TOKEN);
+
+		// Test builder
+		printf("\n~~~~~~~~~~~~Builder output~~~~~~~~~~\n\n");
+		dom::OutputStream* outputPretty = new StdOutputStream();
+		XMLSerializer	xmlSerializer(outputPretty);
+		xmlSerializer.serializePretty(builder->getDoc());
+
 
 		delete	token;
 	}

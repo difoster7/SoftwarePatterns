@@ -15,13 +15,13 @@ public:
 	virtual void addText(const std::string& value) = 0;
 	virtual void setParentAsCurrent() = 0;
 	virtual dom::Node* getDoc() = 0;
+	virtual dom::Node* getCurrent() = 0;
 };
 
 class DOMBuilder_Impl : public virtual DOMBuilder
 {
 private:
 	dom::Document* doc;
-	dom::Node* root;
 	dom::Node* curNode;
 
 public:
@@ -32,6 +32,7 @@ public:
 	virtual void addText(const std::string& value);
 	virtual void setParentAsCurrent();
 	virtual dom::Node* getDoc();
+	virtual dom::Node* getCurrent();
 };
 
 

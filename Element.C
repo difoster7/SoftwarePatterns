@@ -142,7 +142,6 @@ dom::Attr *		Element_Impl::setAttributeNode(dom::Attr * newAttr)
 
 void Element_Impl::setSerializerPretty()
 {
-	printf("hello set pretty\n"); fflush(stdout);
 	serializer = new ElementSerializerPretty(this);
 }
 
@@ -153,7 +152,6 @@ void Element_Impl::setSerializerMinimal()
 
 int Element_Impl::serialize(int indentationLevel, dom::OutputStream* out)
 {
-	printf("hi from element serialize\n"); fflush(stdout);
 	return serializer->serialize(indentationLevel, out);
 }
 
@@ -284,7 +282,6 @@ int ElementSerializer::serialize(int indentationLevel, dom::OutputStream* out)
 
 void ElementSerializerPretty::writeOpener(int indentationLevel, dom::OutputStream* out)
 {
-	printf("hi from writeOpener\n"); fflush(stdout);
 	ele->prettyIndentation(indentationLevel, out);
 	out->write("<");
 	out->write(ele->getTagName());
