@@ -35,8 +35,3 @@ dom::Node* DOMBuilder_Impl::getDoc()
 {
 	return doc;
 }
-
-dom::Node* DOMBuilder_Impl::getCurrent()
-{
-	return curNode;
-}

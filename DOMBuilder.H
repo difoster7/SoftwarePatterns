@@ -14,7 +14,6 @@ public:
 	virtual void addText(const std::string& value) = 0;
 	virtual void setParentAsCurrent() = 0;
 	virtual dom::Node* getDoc() = 0;
-	virtual dom::Node* getCurrent() = 0;
 };
 
 // DOMBuilder_Impl is the Builder Pattern Concrete Builder
@@ -33,11 +32,6 @@ public:
 	virtual void addText(const std::string& value);
 	virtual void setParentAsCurrent();
 	virtual dom::Node* getDoc();
-	virtual dom::Node* getCurrent();
 };
-
-
-
-
 
 #endif // !DOMBUILDER_H
