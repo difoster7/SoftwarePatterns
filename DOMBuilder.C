@@ -1,11 +1,5 @@
 #include "DOMBuilder.H"
 
-DOMBuilder_Impl::DOMBuilder_Impl()
-{
-	doc = new Document_Impl();
-	curNode = doc;
-}
-
 void DOMBuilder_Impl::addElement(const std::string& tagName)
 {
 	dom::Element* newEle = doc->createElement(tagName);

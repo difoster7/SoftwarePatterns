@@ -16,16 +16,18 @@ public:
 	virtual dom::Node* getDoc() = 0;
 };
 
-// DOMBuilder_Impl is the Builder Pattern Concrete Builder
-// DOMBuilder_Impl is the  Abstract Factory Pattern Client
+// DOMBuilder_Impl has the following roles:
+// Builder Pattern : Concrete Builder
+// Abstract Factory : Pattern Client
+// Monostate
 class DOMBuilder_Impl : public virtual DOMBuilder
 {
 private:
-	dom::Document* doc;
-	dom::Node* curNode;
+	inline static dom::Document* doc = new Document_Impl();
+	inline static dom::Node* curNode = doc;
 
 public:
-	DOMBuilder_Impl();
+	DOMBuilder_Impl() {}
 
 	virtual void addElement(const std::string& tagName);
 	virtual void addAttr(const std::string& name, const std::string& value);
