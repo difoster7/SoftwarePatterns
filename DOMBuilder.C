@@ -6,7 +6,6 @@ void DOMBuilder_Impl::addElement(const std::string& tagName)
 
 	curNode->appendChild(newEle);
 	curNode = newEle;
-	dynamic_cast<dom::Element*>(curNode);
 }
 
 void DOMBuilder_Impl::addAttr(const std::string& name, const std::string& value)
