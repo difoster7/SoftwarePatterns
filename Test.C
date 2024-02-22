@@ -9,10 +9,12 @@
 #include "OutputStream.H"
 #include "NodeValidatorDecorator.H"
 #include "DOMBuilder.H"
+#include "Director.H"
 
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
 void testValidator(int argc, char** argv);
+void testDirector(int argc, char** argv);
 
 void printUsage(void)
 {
@@ -45,6 +47,10 @@ int main(int argc, char** argv)
 	case 'V':
 	case 'v':
 		testValidator(argc, argv);
+		break;
+	case 'D':
+	case 'd':
+		testDirector(argc, argv);
 		break;
 	}
 }
@@ -291,4 +297,17 @@ void testValidator(int argc, char** argv)
 	xmlSerializer.serializePretty(document);
 
 	// delete Document and tree.
+}
+
+void testDirector(int argc, char** argv)
+{
+	DOMBuilder* builder = new DOMBuilder_Impl();
+	printf("hi1 %s\n", argv[2]);
+	std::string s1 = argv[2];
+	Director director(s1, builder);
+	director.build();
+
+	dom::OutputStream* outputPretty = new StdOutputStream();
+	XMLSerializer	xmlSerializer(outputPretty);
+	xmlSerializer.serializePretty(builder->getDoc());
 }
