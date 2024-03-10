@@ -26,35 +26,35 @@ namespace XERCES
 		virtual DOMNode* getLastChild() const;
 		virtual DOMNode* getPreviousSibling() const;
 		virtual DOMNode* getNextSibling() const;
-		virtual DOMNamedNodeMap* getAttributes() const;
+		virtual DOMNamedNodeMap* getAttributes() const { return nullptr; };	// unsupported
 		virtual DOMDocument* getOwnerDocument() const;
-		virtual DOMNode* cloneNode(bool deep) const;
+		virtual DOMNode* cloneNode(bool deep) const { return nullptr; }; 	// unsupported
 		virtual DOMNode* insertBefore(DOMNode* newChild, DOMNode* refChild);
 		virtual DOMNode* replaceChild(DOMNode* newChild, DOMNode* oldChild);
 		virtual DOMNode* removeChild(DOMNode* oldChild);
 		virtual DOMNode* appendChild(DOMNode* newChild);
 		virtual bool hasChildNodes() const;
 		virtual void setNodeValue(const XMLCh* nodeValue);
-		virtual void normalize();
-		virtual bool isSupported(const XMLCh* feature, const XMLCh* version) const;
-		virtual const XMLCh* getNamespaceURI() const;
-		virtual const XMLCh* getPrefix() const;
+		virtual void normalize() {};	// unsupported
+		virtual bool isSupported(const XMLCh* feature, const XMLCh* version) const { return 0; };	// unsupported
+		virtual const XMLCh* getNamespaceURI() const { return nullptr; };	// unsupported
+		virtual const XMLCh* getPrefix() const { return nullptr; };	// unsupported
 		virtual const XMLCh* getLocalName() const;
-		virtual void setPrefix(const XMLCh* prefix);
-		virtual bool hasAttributes() const;
-		virtual bool isSameNode(const DOMNode* other) const;
-		virtual bool isEqualNode(const DOMNode* arg) const;
-		virtual void* setUserData(const XMLCh* key, void* data, DOMUserDataHandler* handler);
-		virtual void* getUserData(const XMLCh* key) const;
-		virtual const XMLCh* getBaseURI() const;
-		virtual short compareDocumentPosition(const DOMNode* other) const;
-		virtual const XMLCh* getTextContent() const;
-		virtual void setTextContent(const XMLCh* textContent);
-		virtual const XMLCh* lookupPrefix(const XMLCh* namespaceURI) const;
-		virtual bool isDefaultNamespace(const XMLCh* namespaceURI) const;
-		virtual const XMLCh* lookupNamespaceURI(const XMLCh* prefix) const;
-		virtual void* getFeature(const XMLCh* feature, const XMLCh* version) const;
-		virtual void release();
+		virtual void setPrefix(const XMLCh* prefix) {};	// unsupported
+		virtual bool hasAttributes() const { return 0; };	// unsupported
+		virtual bool isSameNode(const DOMNode* other) const { return 0; };	// unsupported
+		virtual bool isEqualNode(const DOMNode* arg) const { return 0; };	// unsupported
+		virtual void* setUserData(const XMLCh* key, void* data, DOMUserDataHandler* handler) { return nullptr; };	// unsupported
+		virtual void* getUserData(const XMLCh* key) const { return nullptr; };	// unsupported
+		virtual const XMLCh* getBaseURI() const { return nullptr; };	// unsupported
+		virtual short compareDocumentPosition(const DOMNode* other) const { return NULL; };	// unsupported
+		virtual const XMLCh* getTextContent() const { return 0; };	// unsupported
+		virtual void setTextContent(const XMLCh* textContent) {};	// unsupported
+		virtual const XMLCh* lookupPrefix(const XMLCh* namespaceURI) const { return nullptr; };	// unsupported
+		virtual bool isDefaultNamespace(const XMLCh* namespaceURI) const { return 0; };	// unsupported
+		virtual const XMLCh* lookupNamespaceURI(const XMLCh* prefix) const { return nullptr; };	// unsupported
+		virtual void* getFeature(const XMLCh* feature, const XMLCh* version) const { return nullptr; };	// unsupported
+		virtual void release() {};	// unsupported
 
 	};
 };
