@@ -12,6 +12,7 @@ namespace dom
 
 	/* Class Text roles
 	* Factory method : product
+	* Adapter Pattern : Adaptee
 	*/
 	class Text : public virtual Node
 	{

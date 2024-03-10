@@ -14,6 +14,7 @@ namespace dom
 	* Node class has the following roles
 	* Strategy Pattern : Algorithm Interface
 	* Decorator Pattern : Component
+	* Adapter Pattern : Adaptee
 	*/
 	class Node
 	{

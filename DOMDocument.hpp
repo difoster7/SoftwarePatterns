@@ -60,7 +60,8 @@ namespace XERCES
 	 * <p>See also the <a href='http://www.w3.org/TR/2000/REC-DOM-Level-2-Core-20001113'>Document Object Model (DOM) Level 2 Core Specification</a>.
 	 */
 
-	class DOMDocument : public DOMNode
+	 // DOMDocument is a target in the adapter pattern
+	class DOMDocument : public virtual DOMNode
 	{
 
 
@@ -79,8 +80,8 @@ namespace XERCES
 		// -----------------------------------------------------------------------
 		/** @name Unimplemented constructors and operators */
 		//@{
-		DOMDocument(const DOMDocument&);
-		DOMDocument& operator = (const DOMDocument&);
+		//DOMDocument(const DOMDocument&);
+		//DOMDocument& operator = (const DOMDocument&);
 		//@}
 
 	public:

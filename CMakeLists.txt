@@ -37,4 +37,7 @@ target_sources(Patterns PUBLIC
 	DOMNodeAdapter.H
 	DOMNodeAdapter.C
 	DOMDocumentAdapter.H
-	DOMDocumentAdapter.C)
+	DOMDocumentAdapter.C
+	DOMElementAdapter.H
+	DOMAttrAdapter.H
+	DOMTextAdapter.H)

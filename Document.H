@@ -16,6 +16,7 @@ namespace dom
 	* Factory Pattern : Creator Interface
 	* Decorator Pattern : Component
 	* Abstract Factory Pattern : Abstract Factory
+	* Adapter Pattern : Adaptee
 	*/
 	class Document : public virtual Node
 	{

@@ -136,6 +136,8 @@ namespace XERCES
 	 *
 	 * @since DOM Level 1
 	 */
+
+	 // DOMNode is a target in the adapter pattern
 	class  DOMNode {
 	protected:
 		// -----------------------------------------------------------------------

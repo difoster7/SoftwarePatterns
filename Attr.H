@@ -13,6 +13,7 @@ namespace dom
 	/*
 	* Attr roles
 	* Factory Pattern : Product
+	* Adapter Pattern : Adaptee
 	*/
 	class Attr : public virtual Node
 	{

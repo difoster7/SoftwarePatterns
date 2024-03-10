@@ -17,6 +17,7 @@ namespace dom
 	* ELement Class has the following roles
 	* Factory Pattern : Product
 	* Decorator Pattern : Component
+	* Adapter Pattern : Adaptee
 	*/
 	class Element : public virtual Node
 	{

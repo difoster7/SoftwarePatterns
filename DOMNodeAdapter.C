@@ -3,6 +3,11 @@
 
 using namespace XERCES;
 
+XERCES::DOMNodeAdapter::DOMNodeAdapter(dom::Node* node)
+{
+	nodeRef = node;
+}
+
 const XMLCh* DOMNodeAdapter::getNodeName() const
 {
 	return nodeRef->getNodeName().c_str();
@@ -27,10 +32,7 @@ DOMNode::NodeType DOMNodeAdapter::getNodeType() const
 
 DOMNode* DOMNodeAdapter::getParentNode() const
 {
-	DOMNode* returnNode = new DOMNodeAdapter();
-	dom::Node* parent = nodeRef->getParentNode();
-	returnNode->setNodeValue(parent->getNodeValue().c_str());
-	return returnNode;
+	return new DOMNodeAdapter(nodeRef->getParentNode());
 }
 
 DOMNodeList* DOMNodeAdapter::getChildNodes() const
@@ -47,80 +49,66 @@ DOMNodeList* DOMNodeAdapter::getChildNodes() const
 
 DOMNode* DOMNodeAdapter::getFirstChild() const
 {
-	DOMNode* returnNode = new DOMNodeAdapter();
-	dom::Node* firstChild = nodeRef->getFirstChild();
-	returnNode->setNodeValue(firstChild->getNodeValue().c_str());
-	return returnNode;
+	return new DOMNodeAdapter(nodeRef->getFirstChild());
 }
 
 DOMNode* DOMNodeAdapter::getLastChild() const
 {
-	DOMNode* returnNode = new DOMNodeAdapter();
-	dom::Node* lastChild = nodeRef->getLastChild();
-	returnNode->setNodeValue(lastChild->getNodeValue().c_str());
-	return returnNode;
+	return new DOMNodeAdapter(nodeRef->getLastChild());
 }
 
 DOMNode* DOMNodeAdapter::getPreviousSibling() const
 {
-	DOMNode* returnNode = new DOMNodeAdapter();
-	dom::Node* previousSibling = nodeRef->getPreviousSibling();
-	returnNode->setNodeValue(previousSibling->getNodeValue().c_str());
-	return returnNode;
+	return new DOMNodeAdapter(nodeRef->getPreviousSibling());
 }
 
 DOMNode* DOMNodeAdapter::getNextSibling() const
 {
-
-	DOMNode* returnNode = new DOMNodeAdapter();
-	dom::Node* nextSibling = nodeRef->getNextSibling();
-	returnNode->setNodeValue(nextSibling->getNodeValue().c_str());
-	return returnNode;
+	return new DOMNodeAdapter(nodeRef->getNextSibling());
 }
 
 DOMDocument* DOMNodeAdapter::getOwnerDocument() const
 {
-	// the below code fails to compile due to DOMDocumentAdapter being an abstract class for some reason...
-	/*
-	DOMDocument* returnNode = new DOMDocumentAdapter();
-	dom::Document* ownerDoc = nodeRef->getOwnerDocument();
-	returnNode->setNodeValue(ownerDoc->getNodeValue().c_str());
-	return returnNode;
-	*/
-	return nullptr;
+	return new DOMDocumentAdapter(nodeRef->getOwnerDocument());
 }
 
 DOMNode* DOMNodeAdapter::insertBefore(DOMNode* newChild, DOMNode* refChild)
 { 
-	return nullptr;
+	dom::Node* domNewChild = dynamic_cast<DOMNodeAdapter*>(newChild)->getNodeRef();
+	dom::Node* domRefChild = dynamic_cast<DOMNodeAdapter*>(refChild)->getNodeRef();
+	return new DOMNodeAdapter(nodeRef->insertBefore(domNewChild, domRefChild));
 }
 
 DOMNode* DOMNodeAdapter::replaceChild(DOMNode* newChild, DOMNode* oldChild)
 {
-	// For these child management functions, cast the inputs to adaptee's, then use the reference node as inputs to 
-	return nullptr;
+	dom::Node* domNewChild = dynamic_cast<DOMNodeAdapter*>(newChild)->getNodeRef();
+	dom::Node* domOldChild = dynamic_cast<DOMNodeAdapter*>(oldChild)->getNodeRef();
+	return new DOMNodeAdapter(nodeRef->replaceChild(domNewChild, domOldChild));
 }
 
 DOMNode* DOMNodeAdapter::removeChild(DOMNode* oldChild)
 {
-	return nullptr;
+	dom::Node* domOldChild = dynamic_cast<DOMNodeAdapter*>(oldChild)->getNodeRef();
+	return new DOMNodeAdapter(nodeRef->removeChild(domOldChild));
 }
 
 DOMNode* DOMNodeAdapter::appendChild(DOMNode* newChild)
 {
-	return nullptr;
+	dom::Node* domNewChild = dynamic_cast<DOMNodeAdapter*>(newChild)->getNodeRef();
+	return new DOMNodeAdapter(nodeRef->appendChild(domNewChild));
 }
 
 bool DOMNodeAdapter::hasChildNodes() const
 {
-	return false;
+	return nodeRef->hasChildNodes();
 }
 
 void DOMNodeAdapter::setNodeValue(const XMLCh* nodeValue)
 {
+	nodeRef->setNodeValue(nodeValue);
 }
 
 const XMLCh* DOMNodeAdapter::getLocalName() const
 {
-	return nullptr;
+	return nodeRef->getLocalName().c_str();
 }

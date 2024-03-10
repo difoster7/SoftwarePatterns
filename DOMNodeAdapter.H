@@ -6,6 +6,7 @@
 
 namespace XERCES
 {
+	// DOMNodeAdapter is an adapter in the adapter pattern
 	class DOMNodeAdapter : public virtual DOMNode
 	{
 	private:
@@ -14,9 +15,12 @@ namespace XERCES
 	protected:
 		DOMNodeAdapter() {};
 		DOMNodeAdapter(const DOMNode&) {};
+		DOMNodeAdapter(dom::Node* node);
 
 	public:
 		virtual ~DOMNodeAdapter() {};
+		virtual dom::Node* getNodeRef() { return nodeRef; };
+
 		virtual const XMLCh* getNodeName() const;
 		virtual const XMLCh* getNodeValue() const;
 		virtual NodeType getNodeType() const;
