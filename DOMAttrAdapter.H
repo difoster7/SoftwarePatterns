@@ -7,7 +7,7 @@
 namespace XERCES
 {
 	// DOMAttr is a target in the adapter pattern
-	class DOMAttr {};	// empty class to make inheritance work
+	class DOMAttr : public virtual DOMNode {};	// empty class to make inheritance work
 
 	// DOMAttrAdapter is an adapter in the adapter pattern
 	class DOMAttrAdapter : public virtual DOMAttr, DOMNodeAdapter

@@ -5,11 +5,6 @@
 
 using namespace XERCES;
 
-DOMDocumentAdapter::DOMDocumentAdapter(dom::Document* doc)
-{
-	docRef = doc;
-}
-
 DOMElement* DOMDocumentAdapter::createElement(const XMLCh* tagName)
 {
 	return new DOMElementAdapter(docRef->createElement(tagName));

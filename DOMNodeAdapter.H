@@ -20,6 +20,7 @@ namespace XERCES
 	public:
 		virtual ~DOMNodeAdapter() {};
 		virtual dom::Node* getNodeRef() { return nodeRef; };
+		virtual void setNodeRef(dom::Node* node) { nodeRef = node; };
 
 		virtual const XMLCh* getNodeName() const;
 		virtual const XMLCh* getNodeValue() const;

@@ -16,8 +16,8 @@ namespace XERCES
 	protected:
 
 	public:
-		DOMDocumentAdapter() {};
-		DOMDocumentAdapter(dom::Document* doc);
+		DOMDocumentAdapter() { docRef = new Document_Impl(); setNodeRef(docRef); };
+		DOMDocumentAdapter(dom::Document* doc) : docRef(doc), DOMNodeAdapter(doc) {};
 
 		virtual ~DOMDocumentAdapter() {};
 		virtual DOMElement* createElement(const XMLCh* tagName);

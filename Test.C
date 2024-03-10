@@ -10,11 +10,17 @@
 #include "NodeValidatorDecorator.H"
 #include "DOMBuilder.H"
 #include "Director.H"
+#include "DOMDocumentAdapter.H"
+#include "DOMNodeAdapter.H"
+#include "DOMTextAdapter.H"
+#include "DOMAttrAdapter.H"
+#include "DOMElementAdapter.H"
 
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
 void testValidator(int argc, char** argv);
 void testDirector(int argc, char** argv);
+void testAdapter(int argc, char** argv);
 
 void printUsage(void)
 {
@@ -23,6 +29,7 @@ void printUsage(void)
 	printf("\tTest s [file1] [file2]\n");
 	printf("\tTest s\n");
 	printf("\tTest v [file]\n");
+	printf("\tTest a\n");
 }
 
 int main(int argc, char** argv)
@@ -51,6 +58,10 @@ int main(int argc, char** argv)
 	case 'D':
 	case 'd':
 		testDirector(argc, argv);
+		break;
+	case 'A':
+	case 'a':
+		testAdapter(argc, argv);
 		break;
 	}
 }
@@ -310,4 +321,24 @@ void testDirector(int argc, char** argv)
 	dom::OutputStream* outputPretty = new StdOutputStream();
 	XMLSerializer	xmlSerializer(outputPretty);
 	xmlSerializer.serializePretty(builder->getDoc());
+}
+
+void testAdapter(int argc, char** argv)
+{
+	XERCES::DOMDocument* domDoc = new XERCES::DOMDocumentAdapter();
+	XERCES::DOMElement* root = domDoc->createElement("document");
+	domDoc->appendChild(root);
+	
+	XERCES::DOMElement* child = domDoc->createElement("element");
+	XERCES::DOMAttr* attr = domDoc->createAttribute("attribute");
+	root->appendChild(child);
+
+	child = domDoc->createElement("element");
+	root->appendChild(child);
+
+	child = domDoc->createElement("element2");
+	XERCES::DOMText* text = domDoc->createTextNode("Element2 value");
+	child->appendChild(text);
+	root->appendChild(child);
+
 }

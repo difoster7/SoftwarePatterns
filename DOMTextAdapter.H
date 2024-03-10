@@ -7,7 +7,7 @@
 namespace XERCES
 {
 	// DOMText is a target in the adapter pattern
-	class DOMText {};	// empty class to make inheritance work
+	class DOMText : public virtual DOMNode {};	// empty class to make inheritance work
 
 	// DOMTextAdapter is an adapter in the adapter pattern
 	class DOMTextAdapter : public virtual DOMText, DOMNodeAdapter
