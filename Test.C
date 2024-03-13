@@ -23,6 +23,7 @@ void printUsage(void)
 	printf("\tTest s [file1] [file2]\n");
 	printf("\tTest s\n");
 	printf("\tTest v [file]\n");
+	printf("\tTest d [file]\n");
 }
 
 int main(int argc, char** argv)
