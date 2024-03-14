@@ -5,7 +5,8 @@
 
 class Observer
 {
-
+public:
+	void update(dom::Node* node) {}
 };
 
 #endif // !OBSERVER_H

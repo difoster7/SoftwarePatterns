@@ -32,4 +32,6 @@ target_sources(Patterns PUBLIC
 	DOMBuilder.C
 	Director.H
 	Director.C
-	ChangeManager.H "Observer.H")
+	ChangeManager.H
+	ChangeManager.C
+	Observer.H)
