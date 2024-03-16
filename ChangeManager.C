@@ -1,127 +1,63 @@
 #include "ChangeManager.H"
 
 // 0 to search eleList, 1 to search attrList, 2 to search textList
-std::list<Observer*>::iterator ChangeManager_Impl::findMember(int list, Observer* obs)
+std::list<Observer*>::iterator ChangeManager_Impl::findMember(ChangeType chg, Observer* obs)
 {
-	std::list<Observer*>::iterator iter = eleList.begin();
+	std::list<Observer*>::iterator iter;
 
-	switch (list) {
-	case 0:
-		for (iter = eleList.begin(); iter != eleList.end(); iter++) {
+	if (chg == NEW_NODE)
+	{
+		for (iter = newNodeObs.begin(); iter != newNodeObs.end(); iter++) {
 			if (*iter.operator->() == obs) {
 				break;
 			}
 		}
-		break;
-	case 1:
-		for (iter = attrList.begin(); iter != attrList.end(); iter++) {
+	}
+	else 
+	{
+		for (iter = nodeCompleteObs.begin(); iter != nodeCompleteObs.end(); iter++) {
 			if (*iter.operator->() == obs) {
 				break;
 			}
 		}
-		break;
-	case 2:
-		for (iter = textList.begin(); iter != textList.end(); iter++) {
-			if (*iter.operator->() == obs) {
-				break;
-			}
-		}
-		break;
 	}
 
 	return iter;
 }
 
-void ChangeManager_Impl::attachAll(Observer* obs)
+void ChangeManager_Impl::registerNewNode(Observer* obs)
 {
-	attachElement(obs);
-	attachAttr(obs);
-	attachText(obs);
-}
-
-void ChangeManager_Impl::attachElement(Observer* obs)
-{
-	if (findMember(0, obs) == eleList.end())
+	if (findMember(NEW_NODE, obs) == newNodeObs.end())
 	{
-		eleList.push_back(obs);
+		newNodeObs.push_back(obs);
 	}
 }
 
-void ChangeManager_Impl::attachAttr(Observer* obs)
+void ChangeManager_Impl::registerNodeComplete(Observer* obs)
 {
-	if (findMember(1, obs) == attrList.end())
+	if (findMember(NODE_COMPLETE, obs) == nodeCompleteObs.end())
 	{
-		attrList.push_back(obs);
+		nodeCompleteObs.push_back(obs);
 	}
 }
 
-void ChangeManager_Impl::attachText(Observer* obs)
-{
-	if (findMember(2, obs) == textList.end())
-	{
-		textList.push_back(obs);
-	}
-}
-
-void ChangeManager_Impl::detachAll(Observer* obs)
-{
-	detachElement(obs);
-	detachAttr(obs);
-	detachText(obs);
-}
-
-void ChangeManager_Impl::detachElement(Observer* obs)
-{
-	std::list<Observer*>::iterator i = findMember(0, obs);
-	if (i != eleList.end())
-	{
-		eleList.erase(i);
-	}
-}
-
-void ChangeManager_Impl::detachAttr(Observer* obs)
-{
-	std::list<Observer*>::iterator i = findMember(1, obs);
-	if (i != attrList.end())
-	{
-		attrList.erase(i);
-	}
-}
-
-void ChangeManager_Impl::detachText(Observer* obs)
-{
-	std::list<Observer*>::iterator i = findMember(2, obs);
-	if (i != textList.end())
-	{
-		textList.erase(i);
-	}
-}
-
-void ChangeManager_Impl::notify(dom::Node* node)
+void ChangeManager_Impl::notify(ChangeType chg, dom::Node* node)
 {
 	std::list<Observer*>::iterator i;
 
-	if (dynamic_cast<dom::Element*>(node))
+	if (chg == NEW_NODE)
 	{
-		for (i = eleList.begin(); i != eleList.end(); i++)
+		for (i = newNodeObs.begin(); i != newNodeObs.end(); i++)
+		{
+			(*i)->update(node);
+		}
+	}
+	else
+	{
+		for (i = nodeCompleteObs.begin(); i != nodeCompleteObs.end(); i++)
 		{
 			(*i)->update(node);
 		}
 	}
 
-	if (dynamic_cast<dom::Attr*>(node))
-	{
-		for (i = eleList.begin(); i != eleList.end(); i++)
-		{
-			(*i)->update(node);
-		}
-	}
-
-	if (dynamic_cast<dom::Text*>(node))
-	{
-		for (i = eleList.begin(); i != eleList.end(); i++)
-		{
-			(*i)->update(node);
-		}
-	}
 }
