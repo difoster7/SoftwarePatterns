@@ -25,19 +25,40 @@ std::list<Observer*>::iterator ChangeManager_Impl::findMember(ChangeType chg, Ob
 	return iter;
 }
 
-void ChangeManager_Impl::registerNewNode(Observer* obs)
+void ChangeManager_Impl::registerObserver(ChangeType chg, Observer* obs)
 {
-	if (findMember(NEW_NODE, obs) == newNodeObs.end())
+	if (chg == NEW_NODE)
 	{
-		newNodeObs.push_back(obs);
+		if (findMember(NEW_NODE, obs) == newNodeObs.end())
+		{
+			newNodeObs.push_back(obs);
+		}
 	}
+	else
+	{
+		if (findMember(NODE_COMPLETE, obs) == nodeCompleteObs.end())
+		{
+			nodeCompleteObs.push_back(obs);
+		}
+	}
+
 }
 
-void ChangeManager_Impl::registerNodeComplete(Observer* obs)
+void ChangeManager_Impl::deregisterObserver(ChangeType chg, Observer* obs)
 {
-	if (findMember(NODE_COMPLETE, obs) == nodeCompleteObs.end())
+	if (chg == NEW_NODE)
 	{
-		nodeCompleteObs.push_back(obs);
+		if (findMember(NEW_NODE, obs) == newNodeObs.end())
+		{
+			newNodeObs.remove(obs);
+		}
+	}
+	else
+	{
+		if (findMember(NODE_COMPLETE, obs) == nodeCompleteObs.end())
+		{
+			nodeCompleteObs.remove(obs);
+		}
 	}
 }
 

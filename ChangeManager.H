@@ -16,8 +16,8 @@ public:
 		NODE_COMPLETE
 	};
 
-	virtual void registerNewNode(Observer* obs) = 0;
-	virtual void registerNodeComplete(Observer* obs) = 0;
+	virtual void registerObserver(ChangeType chg, Observer* obs) = 0;
+	virtual void deregisterObserver(ChangeType chg, Observer* obs) = 0;
 
 	virtual void notify(ChangeType chg, dom::Node* node) = 0;
 };
@@ -33,8 +33,8 @@ private:
 public:
 	ChangeManager_Impl() {}
 
-	virtual void registerNewNode(Observer* obs);
-	virtual void registerNodeComplete(Observer* obs);
+	virtual void registerObserver(ChangeType chg, Observer* obs);
+	virtual void deregisterObserver(ChangeType chg, Observer* obs);
 
 	virtual void notify(ChangeType chg, dom::Node* node);
 };

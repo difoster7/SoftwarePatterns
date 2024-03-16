@@ -303,7 +303,6 @@ void testValidator(int argc, char** argv)
 void testDirector(int argc, char** argv)
 {
 	DOMBuilder* builder = new DOMBuilder_Impl();
-	printf("hi1 %s\n", argv[2]);
 	std::string s1 = argv[2];
 	Director director(s1, builder);
 	director.build();

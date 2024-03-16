@@ -4,6 +4,7 @@
 #include "Document.H"
 #include "Element.H"
 #include "Attr.H"
+#include "ChangeManager.H"
 
 // DOMBuilder is the Builder Pattern Abstract Builder
 class DOMBuilder
