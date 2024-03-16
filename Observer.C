@@ -15,7 +15,7 @@ NewNodeObserver_Impl::~NewNodeObserver_Impl()
 
 void NewNodeObserver_Impl::update(dom::Node* node)
 {
-	printf("New node created! Node name: %s", node->getNodeName());
+	printf("New node created! Node name: %s\n", node->getNodeName().c_str());
 }
 
 NodeCompleteObserver_Impl::NodeCompleteObserver_Impl()
@@ -32,5 +32,5 @@ NodeCompleteObserver_Impl::~NodeCompleteObserver_Impl()
 
 void NodeCompleteObserver_Impl::update(dom::Node* node)
 {
-	printf("All children have been added for node %s", node->getNodeName());
+	printf("Child added to node: %s\n", node->getNodeName().c_str());
 }

@@ -10,6 +10,7 @@
 #include "NodeValidatorDecorator.H"
 #include "DOMBuilder.H"
 #include "Director.H"
+#include "Observer.H"
 
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
@@ -302,6 +303,9 @@ void testValidator(int argc, char** argv)
 
 void testDirector(int argc, char** argv)
 {
+	Observer* newNodeObserver = new NewNodeObserver_Impl();
+	Observer* nodeCompleteObserver = new NodeCompleteObserver_Impl();
+
 	DOMBuilder* builder = new DOMBuilder_Impl();
 	std::string s1 = argv[2];
 	Director director(s1, builder);
