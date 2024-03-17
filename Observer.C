@@ -32,5 +32,5 @@ NodeCompleteObserver_Impl::~NodeCompleteObserver_Impl()
 
 void NodeCompleteObserver_Impl::update(dom::Node* node)
 {
-	printf("Child added to node: %s\n", node->getNodeName().c_str());
+	printf("Node complete: %s\n", node->getNodeName().c_str());
 }
