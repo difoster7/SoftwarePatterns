@@ -3,12 +3,15 @@
 
 #include "Node.H"
 
+// Observer pattern : Abstract observer
 class Observer
 {
 public:
 	virtual void update(dom::Node* node) {}
 };
 
+// Observer pattern : Concrete observer
+// Mediator pattern : colleague
 class NewNodeObserver_Impl : public virtual Observer
 {
 public:
@@ -17,6 +20,8 @@ public:
 	void update(dom::Node* node);
 };
 
+// Observer pattern : Concrete observer
+// Mediator pattern : colleague
 class NodeCompleteObserver_Impl : public virtual Observer
 {
 public:

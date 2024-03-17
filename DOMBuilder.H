@@ -21,6 +21,8 @@ public:
 // Builder Pattern : Concrete Builder
 // Abstract Factory : Pattern Client
 // Monostate
+// Observer Pattern : subject
+// Mediator Pattern : colleague
 class DOMBuilder_Impl : public virtual DOMBuilder
 {
 private:

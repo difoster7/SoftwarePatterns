@@ -7,6 +7,8 @@
 #include "Observer.H"
 #include "Node.H"
 
+// Observer pattern : abstract change manager
+// Mediator pattern : abstract mediator
 class ChangeManager
 {
 public:
@@ -22,6 +24,8 @@ public:
 	virtual void notify(ChangeType chg, dom::Node* node) = 0;
 };
 
+// Observer pattern : concrete change manager
+// Mediator pattern : concrete mediator
 class ChangeManager_Impl : public virtual ChangeManager
 {
 private:
