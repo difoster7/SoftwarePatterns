@@ -1,4 +1,5 @@
 #include "DOMBuilder.H"
+#include "EventHandler.H"
 
 void DOMBuilder_Impl::addElement(const std::string& tagName)
 {
@@ -30,6 +31,10 @@ void DOMBuilder_Impl::setParentAsCurrent()
 	ChangeManager* chgMngr = new ChangeManager_Impl();
 	chgMngr->notify(ChangeManager::ChangeType::NODE_COMPLETE, curNode);
 
+	if (curNode->getNodeType() == dom::Node::ELEMENT_NODE) {
+		EventHandler* handlers = new EventHandler();
+		handlers->addhandler(curNode);
+	}
 	curNode = curNode->getParentNode();
 }
 

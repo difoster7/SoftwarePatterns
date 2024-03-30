@@ -197,3 +197,9 @@ void Node_Impl::prettyIndentation(int indentationLevel, dom::OutputStream * out)
 	for (int i = 0; i < indentationLevel; i++)
 		out->write("\t");
 }
+
+// Chain of Responsibility
+void Node_Impl::handleEvent(std::string& request)
+{
+	printf("Request \"%s\" unhandled\n", request.c_str());
+}

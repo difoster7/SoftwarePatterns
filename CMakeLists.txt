@@ -34,4 +34,6 @@ target_sources(Patterns PUBLIC
 	Director.C
 	ChangeManager.H
 	ChangeManager.C
-	Observer.H "Observer.C")
+	Observer.H
+	Observer.C
+	EventHandler.H)

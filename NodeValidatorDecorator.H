@@ -47,6 +47,9 @@ public:
 	virtual void setSerializerPretty() { node->setSerializerPretty(); };
 	virtual void setSerializerMinimal() { node->setSerializerMinimal(); };
 	virtual int serialize(int indentationLevel, dom::OutputStream* out) { return node->serialize(indentationLevel, out); };
+
+	virtual void handleEvent(std::string& request) { return node->handleEvent(request); };
+
 };
 
 /*

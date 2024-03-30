@@ -348,3 +348,27 @@ void ElementSerializerMinimal::writeCloser(int indentationLevel, dom::OutputStre
 	out->write(ele->getTagName());
 	out->write(">");
 }
+
+// Chain of Responsibility
+void Element_Impl::handleEvent(std::string& request)
+{
+	if (hasAttributeByValue(request)) {
+		printf("Handled request \"%s\" handled by node %s\n", request.c_str(), getNodeName().c_str());
+	}
+	else {
+		getParentNode()->handleEvent(request);
+	}
+}
+
+bool Element_Impl::hasAttributeByValue(const std::string& value)
+{
+	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)
+	{
+		dom::Attr* attr = dynamic_cast<dom::Attr*>(*i.operator->());
+
+		if (attr->getValue().compare(value) == 0)
+			return true;
+	}
+
+	return false;
+}

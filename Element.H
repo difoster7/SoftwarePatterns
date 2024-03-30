@@ -68,11 +68,15 @@ public:
 * Strategy Pattern : Concrete strategy
 * Strategy Pattern : Context
 * Decorator Pattern : Concrete Component
+* Chain of Responsibility : Concrete Handler
 */
 class Element_Impl : public virtual dom::Element, Node_Impl
 {
 private:
 	NamedNodeMap_Impl	attributes;
+
+	bool hasAttributeByValue(const std::string& name);
+
 	ElementSerializer* serializer;
 
 protected:
@@ -103,6 +107,9 @@ public:
 	virtual void setSerializerPretty();
 	virtual void setSerializerMinimal();
 	virtual int serialize(int indentationLevel, dom::OutputStream* out);
+
+	virtual void handleEvent(std::string& request); // Chain of Responsibility
+
 
 };
 
