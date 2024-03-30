@@ -363,25 +363,25 @@ void testCoR(int argc, char** argv)
 void testMemento(int argc, char** argv)
 {
 	XMLValidator	xmlValidator;
-	//ValidChildren* schemaElement = xmlValidator.addSchemaElement("");
-	//schemaElement->addValidChild("document", false);
-	//schemaElement = xmlValidator.addSchemaElement("document");
-	//schemaElement->addValidChild("element", false);
-	//schemaElement = xmlValidator.addSchemaElement("element");
-	//schemaElement->addValidChild("element", false);
-	//schemaElement->addValidChild("attribute", true);
-	//schemaElement->addValidChild("attribute2", true);
-	//schemaElement->setCanHaveText(true);
+	ValidChildren* schemaElement = xmlValidator.addSchemaElement("");
+	schemaElement->addValidChild("document", false);
+	schemaElement = xmlValidator.addSchemaElement("document");
+	schemaElement->addValidChild("element", false);
+	schemaElement = xmlValidator.addSchemaElement("element");
+	schemaElement->addValidChild("element", false);
+	schemaElement->addValidChild("attribute", true);
+	schemaElement->addValidChild("attribute2", true);
+	schemaElement->setCanHaveText(true);
 
-	//printf("Saving Validator state\n");
-	//XMLValidator_Caretaker caretaker;
-	//caretaker.saveState(&xmlValidator);
+	printf("Saving Validator state\n");
+	XMLValidator_Caretaker caretaker;
+	caretaker.saveState(&xmlValidator);
 
-	//printf("Resetting the validator to a new Object with no state\n");
-	//xmlValidator = *(new XMLValidator);
+	printf("Resetting the validator to a new Object with no state\n");
+	xmlValidator = *(new XMLValidator);
 
-	//printf("Restoring validator state\n");
-	////caretaker.restoreState(&xmlValidator);
+	printf("Restoring validator state\n");
+	caretaker.restoreState(&xmlValidator);
 
 
 	DocumentValidatorDecorator* document = new DocumentValidatorDecorator(&xmlValidator, new Document_Impl);
