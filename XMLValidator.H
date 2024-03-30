@@ -26,6 +26,20 @@ public:
 	virtual bool		childIsValid(const std::string & child, bool isAttribute);
 };
 
+class XMLValidator_Memento
+{
+private:
+	std::vector<ValidChildren*> state;
+
+	XMLValidator_Memento(std::vector<ValidChildren*> state) : state(state) {};
+	std::vector<ValidChildren*> getState() { return state; };
+
+public:
+	~XMLValidator_Memento() {};
+
+	friend class XMLValidator;
+};
+
 class XMLValidator
 {
 private:
@@ -40,6 +54,21 @@ public:
 	virtual bool					canAddElement(dom::Element * element, std::string newElement);
 	virtual bool					canAddText(dom::Element * element);
 	virtual bool					canAddAttribute(dom::Element * element, std::string newAttribute);
+
+	virtual void	setMemento(XMLValidator_Memento* memento) { schema = memento->getState(); };
+	virtual XMLValidator_Memento*	createMemento(){ return new XMLValidator_Memento(schema); };
+};
+
+class XMLValidator_Caretaker
+{
+private:
+	XMLValidator_Memento* memento;
+
+public:
+	XMLValidator_Caretaker() {};
+
+	void saveState(XMLValidator* validator) { memento = validator->createMemento(); }
+	void restoreState(XMLValidator* validator) { validator->setMemento(memento); }
 };
 
 #endif // !XMLVALIDATOR_H

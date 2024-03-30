@@ -19,6 +19,7 @@ void testSerializer(int argc, char** argv);
 void testValidator(int argc, char** argv);
 void testDirector(int argc, char** argv);
 void testCoR(int argc, char** argv);
+void testMemento(int argc, char** argv);
 
 void printUsage(void)
 {
@@ -29,6 +30,7 @@ void printUsage(void)
 	printf("\tTest v [file]\n");
 	printf("\tTest d [file]\n");
 	printf("\tTest c [file]\n");
+	printf("\tTest m\n");
 }
 
 int main(int argc, char** argv)
@@ -61,6 +63,10 @@ int main(int argc, char** argv)
 	case 'C':
 	case 'c':
 		testCoR(argc, argv);
+		break;
+	case 'M':
+	case 'm':
+		testMemento(argc, argv);
 		break;
 	}
 }
@@ -340,16 +346,79 @@ void testCoR(int argc, char** argv)
 		(*i)->handleEvent(eventType);
 	}
 
-	printf("Now attempting to handle type 1 events.\n");
+	printf("Now attempting to handle type 2 events.\n");
 	eventType = "\"type2\"";
 	for (dom::NodeList::iterator i = handlerList->begin(); i != handlerList->end(); i++) {
 		(*i)->handleEvent(eventType);
 	}
 
-	printf("Now attempting to handle type 1 events.\n");
+	printf("Now attempting to handle type 3 events.\n");
 	eventType = "\"type3\"";
 	for (dom::NodeList::iterator i = handlerList->begin(); i != handlerList->end(); i++) {
 		(*i)->handleEvent(eventType);
 	}
 			
 }
+
+void testMemento(int argc, char** argv)
+{
+	XMLValidator	xmlValidator;
+	//ValidChildren* schemaElement = xmlValidator.addSchemaElement("");
+	//schemaElement->addValidChild("document", false);
+	//schemaElement = xmlValidator.addSchemaElement("document");
+	//schemaElement->addValidChild("element", false);
+	//schemaElement = xmlValidator.addSchemaElement("element");
+	//schemaElement->addValidChild("element", false);
+	//schemaElement->addValidChild("attribute", true);
+	//schemaElement->addValidChild("attribute2", true);
+	//schemaElement->setCanHaveText(true);
+
+	//printf("Saving Validator state\n");
+	//XMLValidator_Caretaker caretaker;
+	//caretaker.saveState(&xmlValidator);
+
+	//printf("Resetting the validator to a new Object with no state\n");
+	//xmlValidator = *(new XMLValidator);
+
+	//printf("Restoring validator state\n");
+	////caretaker.restoreState(&xmlValidator);
+
+
+	DocumentValidatorDecorator* document = new DocumentValidatorDecorator(&xmlValidator, new Document_Impl);
+	ElementValidatorDecorator* root = 0;
+	ElementValidatorDecorator* child = 0;
+	dom::Attr* attr = 0;
+
+	root = new ElementValidatorDecorator(&xmlValidator, document->createElement("document"));
+	document->appendChild(root->getElement());
+
+	child = new ElementValidatorDecorator(&xmlValidator, document->createElement("element"));
+	attr = document->createAttribute("attribute");
+	attr->setValue("attribute value");
+	child->setAttributeNode(attr);
+	root->appendChild(child->getElement());
+
+	child = new ElementValidatorDecorator(&xmlValidator, document->createElement("element"));
+	root->appendChild(child->getElement());
+
+	child = new ElementValidatorDecorator(&xmlValidator, document->createElement("element"));
+	child->setAttribute("attribute", "attribute value");
+	child->setAttribute("attribute2", "attribute2 value");
+
+	dom::Text* text = document->createTextNode("Element Value");
+	child->appendChild(text);
+	root->appendChild(child->getElement());
+
+	child = new ElementValidatorDecorator(&xmlValidator, document->createElement("element"));
+	root->appendChild(child->getElement());
+
+
+
+
+
+
+	dom::OutputStream* outputPretty = new StdOutputStream();
+	XMLSerializer	xmlSerializer(outputPretty);
+	xmlSerializer.serializePretty(document);
+}
+
