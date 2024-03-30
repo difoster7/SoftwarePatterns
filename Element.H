@@ -108,7 +108,7 @@ public:
 	virtual void setSerializerMinimal();
 	virtual int serialize(int indentationLevel, dom::OutputStream* out);
 
-	virtual void handleRequest(std::string& request); // Chain of Responsibility
+	virtual void handleEvent(std::string& request); // Chain of Responsibility
 
 
 };

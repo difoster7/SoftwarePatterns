@@ -1,4 +1,5 @@
 #include "DOMBuilder.H"
+#include "EventHandler.H"
 
 void DOMBuilder_Impl::addElement(const std::string& tagName)
 {
@@ -21,6 +22,10 @@ void DOMBuilder_Impl::addText(const std::string& value)
 
 void DOMBuilder_Impl::setParentAsCurrent()
 {
+	if (curNode->getNodeType() == dom::Node::ELEMENT_NODE) {
+		EventHandler* handlers = new EventHandler();
+		handlers->addhandler(curNode);
+	}
 	curNode = curNode->getParentNode();
 }
 

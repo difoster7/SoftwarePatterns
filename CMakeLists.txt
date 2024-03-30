@@ -29,4 +29,4 @@ target_sources(Patterns PUBLIC
 	NodeValidatorDecorator.H
 	NodeValidatorDecorator.C
 	DOMBuilder.H
-	DOMBuilder.C "Director.H" "Director.C")
+	DOMBuilder.C "Director.H" "Director.C" "EventHandler.H")

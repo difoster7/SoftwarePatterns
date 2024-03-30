@@ -10,11 +10,14 @@
 #include "NodeValidatorDecorator.H"
 #include "DOMBuilder.H"
 #include "Director.H"
+#include "EventHandler.H"
+#include "NodeList.H"
 
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
 void testValidator(int argc, char** argv);
 void testDirector(int argc, char** argv);
+void testCoR(int argc, char** argv);
 
 void printUsage(void)
 {
@@ -24,6 +27,7 @@ void printUsage(void)
 	printf("\tTest s\n");
 	printf("\tTest v [file]\n");
 	printf("\tTest d [file]\n");
+	printf("\tTest c [file]\n");
 }
 
 int main(int argc, char** argv)
@@ -52,6 +56,10 @@ int main(int argc, char** argv)
 	case 'D':
 	case 'd':
 		testDirector(argc, argv);
+		break;
+	case 'C':
+	case 'c':
+		testCoR(argc, argv);
 		break;
 	}
 }
@@ -311,4 +319,34 @@ void testDirector(int argc, char** argv)
 	dom::OutputStream* outputPretty = new StdOutputStream();
 	XMLSerializer	xmlSerializer(outputPretty);
 	xmlSerializer.serializePretty(builder->getDoc());
+}
+
+void testCoR(int argc, char** argv)
+{
+	DOMBuilder* builder = new DOMBuilder_Impl();
+	std::string s1 = argv[2];
+	Director director(s1, builder);
+	director.build();
+
+	EventHandler* handlers = new EventHandler();
+	dom::NodeList* handlerList = handlers->getHandlers();
+
+	printf("Now attempting to handle type 1 events.\n");
+	std::string eventType = "\"type1\"";
+	for (dom::NodeList::iterator i = handlerList->begin(); i != handlerList->end(); i++) {
+		(*i)->handleEvent(eventType);
+	}
+
+	printf("Now attempting to handle type 1 events.\n");
+	eventType = "\"type2\"";
+	for (dom::NodeList::iterator i = handlerList->begin(); i != handlerList->end(); i++) {
+		(*i)->handleEvent(eventType);
+	}
+
+	printf("Now attempting to handle type 1 events.\n");
+	eventType = "\"type3\"";
+	for (dom::NodeList::iterator i = handlerList->begin(); i != handlerList->end(); i++) {
+		(*i)->handleEvent(eventType);
+	}
+			
 }

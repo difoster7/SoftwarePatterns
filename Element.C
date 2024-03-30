@@ -350,13 +350,13 @@ void ElementSerializerMinimal::writeCloser(int indentationLevel, dom::OutputStre
 }
 
 // Chain of Responsibility
-void Element_Impl::handleRequest(std::string& request)
+void Element_Impl::handleEvent(std::string& request)
 {
 	if (hasAttributeByValue(request)) {
-		printf("Handled request \"%s\"", request);
+		printf("Handled request \"%s\" handled by node %s\n", request.c_str(), getNodeName().c_str());
 	}
 	else {
-		getParentNode()->handleRequest(request);
+		getParentNode()->handleEvent(request);
 	}
 }
 

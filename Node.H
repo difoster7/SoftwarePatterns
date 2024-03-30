@@ -52,7 +52,7 @@ namespace dom
 		virtual void setSerializerMinimal() = 0;
 		virtual int serialize(int indentationLevel, dom::OutputStream* out) = 0;
 
-		virtual void handleRequest(std::string& request) = 0; // Chain of Responsibility
+		virtual void handleEvent(std::string& request) = 0; // Chain of Responsibility
 	};
 
 	class DOMException
@@ -130,7 +130,7 @@ public:
 	virtual void setSerializerMinimal() {};
 	virtual int serialize(int indentationLevel, dom::OutputStream* out) { return indentationLevel; }
 
-	virtual void handleRequest(std::string& request); // Chain of Responsibility
+	virtual void handleEvent(std::string& request); // Chain of Responsibility
 
 
 };

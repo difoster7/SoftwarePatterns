@@ -199,7 +199,7 @@ void Node_Impl::prettyIndentation(int indentationLevel, dom::OutputStream * out)
 }
 
 // Chain of Responsibility
-void Node_Impl::handleRequest(std::string& request)
+void Node_Impl::handleEvent(std::string& request)
 {
-	printf("Requet \"%s\" unhandled.", request);
+	printf("Request \"%s\" unhandled\n", request.c_str());
 }
