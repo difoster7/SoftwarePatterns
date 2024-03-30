@@ -8,10 +8,13 @@
 #include "XMLValidator.H"
 #include "OutputStream.H"
 #include "NodeValidatorDecorator.H"
+#include "DOMBuilder.H"
+#include "Director.H"
 
 void testTokenizer(int argc, char** argv);
 void testSerializer(int argc, char** argv);
 void testValidator(int argc, char** argv);
+void testDirector(int argc, char** argv);
 
 void printUsage(void)
 {
@@ -20,6 +23,7 @@ void printUsage(void)
 	printf("\tTest s [file1] [file2]\n");
 	printf("\tTest s\n");
 	printf("\tTest v [file]\n");
+	printf("\tTest d [file]\n");
 }
 
 int main(int argc, char** argv)
@@ -45,9 +49,14 @@ int main(int argc, char** argv)
 	case 'v':
 		testValidator(argc, argv);
 		break;
+	case 'D':
+	case 'd':
+		testDirector(argc, argv);
+		break;
 	}
 }
 
+// testTokenizer is the Builder Pattern Director
 void testTokenizer(int argc, char** argv)
 {
 	if (argc < 3)
@@ -74,11 +83,17 @@ void testTokenizer(int argc, char** argv)
 	delete attr;
 	delete document;
 
+	DOMBuilder* builder = new DOMBuilder_Impl;
+
+	std::string attrName;
+
 	for (int i = 2; i < argc; i++)
 	{
 		XMLTokenizer	tokenizer(argv[i]);
 
 		XMLTokenizer::XMLToken *	token	= 0;
+		int docLevel  = 0;
+		bool ignoreNextElement = false;
 
 		printf("File:  '%s'\n", argv[i]);
 
@@ -90,7 +105,45 @@ void testTokenizer(int argc, char** argv)
 			printf("\tLine %d:  %s = '%s'\n", tokenizer.getLineNumber(),
 			  token->toString(), token->getToken().size() == 0 ? "" : token->getToken().c_str());
 
+			switch (token->getTokenType())
+			{
+			case XMLTokenizer::XMLToken::ELEMENT:
+				if (!ignoreNextElement)
+				{
+					builder->addElement(token->getToken().c_str());
+					docLevel++;
+				}
+				else 
+				{
+					ignoreNextElement = false;
+				}
+				break;
+
+			case XMLTokenizer::XMLToken::ATTRIBUTE:
+				if(docLevel) attrName = token->getToken();
+				break;
+
+			case XMLTokenizer::XMLToken::ATTRIBUTE_VALUE:
+				if (docLevel) builder->addAttr(attrName, token->getToken());
+				break;
+			case XMLTokenizer::XMLToken::VALUE:
+				if (docLevel) builder->addText(token->getToken());
+				break;
+			case XMLTokenizer::XMLToken::TAG_CLOSE_START:
+				ignoreNextElement = true;
+			case XMLTokenizer::XMLToken::NULL_TAG_END:
+				if (docLevel) builder->setParentAsCurrent();
+				docLevel--;
+			}
+
 		} while (token->getTokenType() != XMLTokenizer::XMLToken::NULL_TOKEN);
+
+		// Test builder
+		printf("\n~~~~~~~~~~~~Builder output~~~~~~~~~~\n\n");
+		dom::OutputStream* outputPretty = new StdOutputStream();
+		XMLSerializer	xmlSerializer(outputPretty);
+		xmlSerializer.serializePretty(builder->getDoc());
+
 
 		delete	token;
 	}
@@ -245,4 +298,17 @@ void testValidator(int argc, char** argv)
 	xmlSerializer.serializePretty(document);
 
 	// delete Document and tree.
+}
+
+void testDirector(int argc, char** argv)
+{
+	DOMBuilder* builder = new DOMBuilder_Impl();
+	printf("hi1 %s\n", argv[2]);
+	std::string s1 = argv[2];
+	Director director(s1, builder);
+	director.build();
+
+	dom::OutputStream* outputPretty = new StdOutputStream();
+	XMLSerializer	xmlSerializer(outputPretty);
+	xmlSerializer.serializePretty(builder->getDoc());
 }

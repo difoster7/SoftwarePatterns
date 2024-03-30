@@ -140,84 +140,213 @@ dom::Attr *		Element_Impl::setAttributeNode(dom::Attr * newAttr)
 	return oldAttribute;
 }
 
-// Strategy pattern algorithm interface implementation
-int Element_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
+void Element_Impl::setSerializerPretty()
 {
+	serializer = new ElementSerializerPretty(this);
+}
 
-	prettyIndentation(indentationLevel, out);
-	out->write("<");
-	out->write(getTagName());
+void Element_Impl::setSerializerMinimal()
+{
+	serializer = new ElementSerializerMinimal(this);
+}
 
-	int	attrCount = 0;
+int Element_Impl::serialize(int indentationLevel, dom::OutputStream* out)
+{
+	return serializer->serialize(indentationLevel, out);
+}
 
-	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
+//// Strategy pattern algorithm interface implementation
+//int Element_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
+//{
+//
+//	prettyIndentation(indentationLevel, out);
+//	out->write("<");
+//	out->write(getTagName());
+//
+//	int	attrCount = 0;
+//
+//	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
+//	{
+//		indentationLevel = (*i.operator->())->serializePrettyAlgorithm(indentationLevel, out);
+//		attrCount++;
+//	}
+//
+//	if (attrCount > 0)
+//		out->write(" ");
+//
+//	if (getChildNodes()->size() == 0)
+//	{
+//		out->write("/>");
+//		out->write("\n");
+//	}
+//	else
+//	{
+//		out->write(">");
+//		out->write("\n");
+//		indentationLevel++;
+//
+//		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
+//		{
+//			if (dynamic_cast<dom::Element*>(*i) != 0 || dynamic_cast<dom::Text*>(*i) != 0)
+//			{
+//				indentationLevel = (*i.operator->())->serializePrettyAlgorithm(indentationLevel, out);
+//			}
+//		}
+//
+//		indentationLevel--;
+//		prettyIndentation(indentationLevel, out);
+//		out->write("</");
+//		out->write(getTagName());
+//		out->write(">");
+//		out->write("\n");
+//	}
+//
+//	return indentationLevel;
+//}
+//
+//// Strategy pattern algorithm interface implementation
+//void Element_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
+//{
+//	out->write("<");
+//	out->write(getTagName());
+//
+//	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
+//	{
+//
+//		(*i.operator->())->serializeMinimalAlgorithm(out);
+//	}
+//
+//	if (getChildNodes()->size() == 0)
+//		out->write("/>");
+//	else
+//	{
+//		out->write(">");
+//
+//		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
+//		{
+//			if (dynamic_cast<dom::Element*>(*i) != 0 || dynamic_cast<dom::Text*>(*i) != 0)
+//			{
+//				(*i.operator->())->serializeMinimalAlgorithm(out);
+//			}
+//		}
+//		out->write("</");
+//		out->write(getTagName());
+//		out->write(">");
+//	}
+//}
+
+int ElementSerializer::serialize(int indentationLevel, dom::OutputStream* out)
+{
+	writeOpener(indentationLevel, out);
+
+	int attrCount = 0;
+
+	for (dom::NamedNodeMap::iterator i = ele->getAttributes()->begin(); i != ele->getAttributes()->end(); i++)
 	{
-		indentationLevel = (*i.operator->())->serializePrettyAlgorithm(indentationLevel, out);
+		setNextSerializerNodeMap(i);
+		indentationLevel = (*i.operator->())->serialize(indentationLevel, out);
 		attrCount++;
 	}
 
 	if (attrCount > 0)
-		out->write(" ");
+	{
+		writeSpace(out);
+	}
 
-	if (getChildNodes()->size() == 0)
+	if (ele->getChildNodes()->size() == 0)
 	{
 		out->write("/>");
-		out->write("\n");
+		writeNewLine(out);
 	}
 	else
 	{
 		out->write(">");
-		out->write("\n");
-		indentationLevel++;
+		writeNewLine(out);
+		indentationLevel = incrementIndentationLevel(indentationLevel);
 
-		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
+		for (dom::NodeList::iterator i = ele->getChildNodes()->begin(); i != ele->getChildNodes()->end(); i++)
 		{
 			if (dynamic_cast<dom::Element*>(*i) != 0 || dynamic_cast<dom::Text*>(*i) != 0)
 			{
-				indentationLevel = (*i.operator->())->serializePrettyAlgorithm(indentationLevel, out);
+				setNextSerializerNodeList(i);
+				indentationLevel = (*i.operator->())->serialize(indentationLevel, out);
 			}
 		}
 
-		indentationLevel--;
-		prettyIndentation(indentationLevel, out);
-		out->write("</");
-		out->write(getTagName());
-		out->write(">");
-		out->write("\n");
+		indentationLevel = decrementIndentationLevel(indentationLevel);
+		writeCloser(indentationLevel, out);
 	}
 
 	return indentationLevel;
 }
 
-// Strategy pattern algorithm interface implementation
-void Element_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
+void ElementSerializerPretty::writeOpener(int indentationLevel, dom::OutputStream* out)
+{
+	ele->prettyIndentation(indentationLevel, out);
+	out->write("<");
+	out->write(ele->getTagName());
+}
+
+void ElementSerializerPretty::setNextSerializerNodeMap(dom::NamedNodeMap::iterator i)
+{
+	(*i.operator->())->setSerializerPretty();
+}
+
+void ElementSerializerPretty::setNextSerializerNodeList(dom::NodeList::iterator i)
+{
+	(*i.operator->())->setSerializerPretty();
+}
+
+void ElementSerializerPretty::writeSpace(dom::OutputStream* out)
+{
+	out->write(" ");
+}
+
+void ElementSerializerPretty::writeNewLine(dom::OutputStream* out)
+{
+	out->write("\n");
+}
+
+int ElementSerializerPretty::incrementIndentationLevel(int indentationLevel)
+{
+	return ++indentationLevel;
+}
+
+int ElementSerializerPretty::decrementIndentationLevel(int indentationLevel)
+{
+	return --indentationLevel;
+}
+
+void ElementSerializerPretty::writeCloser(int indentationLevel, dom::OutputStream* out)
+{
+	ele->prettyIndentation(indentationLevel, out);
+	out->write("</");
+	out->write(ele->getTagName());
+	out->write(">");
+	out->write("\n");
+}
+
+void ElementSerializerMinimal::writeOpener(int indentationLevel, dom::OutputStream* out)
 {
 	out->write("<");
-	out->write(getTagName());
+	out->write(ele->getTagName());
+}
 
-	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
-	{
+void ElementSerializerMinimal::setNextSerializerNodeMap(dom::NamedNodeMap::iterator i)
+{
+	(*i.operator->())->setSerializerMinimal();
+}
 
-		(*i.operator->())->serializeMinimalAlgorithm(out);
-	}
+void ElementSerializerMinimal::setNextSerializerNodeList(dom::NodeList::iterator i)
+{
+	(*i.operator->())->setSerializerMinimal();
+}
 
-	if (getChildNodes()->size() == 0)
-		out->write("/>");
-	else
-	{
-		out->write(">");
-
-		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
-		{
-			if (dynamic_cast<dom::Element*>(*i) != 0 || dynamic_cast<dom::Text*>(*i) != 0)
-			{
-				(*i.operator->())->serializeMinimalAlgorithm(out);
-			}
-		}
-		out->write("</");
-		out->write(getTagName());
-		out->write(">");
-	}
+void ElementSerializerMinimal::writeCloser(int indentationLevel, dom::OutputStream* out)
+{
+	out->write("</");
+	out->write(ele->getTagName());
+	out->write(">");
 }
 
 // Chain of Responsibility

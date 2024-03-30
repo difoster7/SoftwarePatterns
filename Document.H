@@ -15,6 +15,7 @@ namespace dom
 	* Document Class has the following roles
 	* Factory Pattern : Creator Interface
 	* Decorator Pattern : Component
+	* Abstract Factory Pattern : Abstract Factory
 	*/
 	class Document : public virtual Node
 	{
@@ -26,15 +27,36 @@ namespace dom
 	};
 };
 
+/*
+* DocumentSerializer has the following roles
+* Template Pattern : Abstract class
+*/
+class DocumentSerializer
+{
+protected:
+	dom::Document* doc;
+
+	virtual void writeOpener(dom::OutputStream* out) {};	// Template pattern primitive method
+	virtual void setNextSerializer() {};	// Template pattern primitive method
+
+public:
+	DocumentSerializer(dom::Document* doc) : doc(doc) {};
+	int serialize(int indentationLevel, dom::OutputStream* out);	// Template pattern template method
+};
+
 /* 
 * Document_Impl class has the following roles
 * Factory Pattern : Concrete Creator
 * Strategy Pattern : Concrete Algorithm
 * Strategy Pattern : Context
 * Decorator Pattern : Concrete Component
+* Abstract Facotry Pattern : Concrete Factory
 */
 class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 {
+private:
+	DocumentSerializer* serializer;
+
 public:
 	Document_Impl(void);
 
@@ -45,9 +67,42 @@ public:
 	virtual dom::Attr *	createAttribute(const std::string & name);	// Factory pattern concrete creator method
 	virtual dom::Element *	getDocumentElement();
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Factory Pattern Algorithm interface implementation
+	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
+	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 
+	virtual void setSerializerPretty();
+	virtual void setSerializerMinimal();
+	virtual int serialize(int indentationLevel, dom::OutputStream* out);
+
+};
+
+/*
+* DocumentSerializerPretty has the following roles
+* Template Pattern : Concrete class
+*/
+class DocumentSerializerPretty : public virtual DocumentSerializer
+{
+protected:
+	virtual void writeOpener(dom::OutputStream* out);	// Template pattern primitive method
+	virtual void setNextSerializer();	// Template pattern primitive method
+
+public:
+	DocumentSerializerPretty(dom::Document* doc) : DocumentSerializer(doc) {};
+};
+
+/*
+* DocumentSerializerMinimal has the following roles
+* Template Pattern : Concrete class
+*/
+class DocumentSerializerMinimal : public virtual DocumentSerializer
+{
+protected:
+	virtual void writeOpener(dom::OutputStream* out);	// Template pattern primitive method
+	virtual void setNextSerializer();	// Template pattern primitive method
+
+public:
+
+	DocumentSerializerMinimal(dom::Document* doc) : DocumentSerializer(doc) {};
 };
 
 #endif // DOCUMENT_H

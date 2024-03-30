@@ -34,6 +34,22 @@ namespace dom
 };
 
 /*
+* TextSerializer has the following roles
+* Template Pattern : Abstract class
+*/
+class TextSerializer
+{
+protected:
+	dom::Text* text;
+
+	virtual void writeData(int indentationLevel, dom::OutputStream* out) {};	// Template pattern primitive method
+
+public:
+	TextSerializer(dom::Text* text) : text(text) {};
+	int serialize(int indentationLevel, dom::OutputStream* out);	// Template pattern template method
+};
+
+/*
 * Text_Impl roles
 * Factory Pattern : Concrete Product
 * Strategy Pattern : Concrete Strategy
@@ -41,8 +57,12 @@ namespace dom
 */
 class Text_Impl : public virtual dom::Text, Node_Impl
 {
+private:
+	TextSerializer* serializer;
+
 protected:
 	Text_Impl(const std::string value, dom::Document * document);
+
 public:
 	friend class Document_Impl;
 
@@ -61,8 +81,38 @@ public:
 	virtual void			replaceData(int offset, int count, const std::string & arg);
 	virtual dom::Text *		splitText(int offset);
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// strategy pattern algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// strategy pattern algorithm interface implementation
+	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+
+	virtual void setSerializerPretty();
+	virtual void setSerializerMinimal();
+	virtual int serialize(int indentationLevel, dom::OutputStream* out);
+};
+
+/*
+* TextSerializerPretty has the following roles
+* Template Pattern : Concrete class
+*/
+class TextSerializerPretty : public virtual TextSerializer
+{
+protected:
+	virtual void writeData(int indentationLevel, dom::OutputStream* out);	// Template pattern primitive method
+
+public:
+	TextSerializerPretty(dom::Text* text) : TextSerializer(text) {};
+};
+
+/*
+* TextSerializerMinimal has the following roles
+* Template Pattern : Concrete class
+*/
+class TextSerializerMinimal : public virtual TextSerializer
+{
+protected:
+	virtual void writeData(int indentationLevel, dom::OutputStream* out);	// Template pattern primitive method
+
+public:
+	TextSerializerMinimal(dom::Text* text) : TextSerializer(text) {};
 };
 
 #endif // TEXT_H

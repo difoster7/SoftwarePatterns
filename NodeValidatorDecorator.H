@@ -40,9 +40,13 @@ public:
 	virtual bool			hasChildNodes(void) { return node->hasChildNodes(); };
 	virtual const std::string& getLocalName(void) { return node->getLocalName(); };
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out) { return node->serializePrettyAlgorithm(indentationLevel, out); };	// Strategy Pattern Algorithm interface
-	virtual void serializeMinimalAlgorithm(dom::OutputStream* out) { return node->serializeMinimalAlgorithm(out); };	// Strategy Pattern Algorithm interface
+	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out) { return node->serializePrettyAlgorithm(indentationLevel, out); };	// Strategy Pattern Algorithm interface
+	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out) { return node->serializeMinimalAlgorithm(out); };	// Strategy Pattern Algorithm interface
 	virtual void prettyIndentation(int indentationLevel, dom::OutputStream* out) { return node->prettyIndentation(indentationLevel, out); };
+
+	virtual void setSerializerPretty() { node->setSerializerPretty(); };
+	virtual void setSerializerMinimal() { node->setSerializerMinimal(); };
+	virtual int serialize(int indentationLevel, dom::OutputStream* out) { return node->serialize(indentationLevel, out); };
 
 	virtual void handleRequest(std::string& request) { return node->handleRequest(request); };
 

@@ -44,9 +44,13 @@ namespace dom
 		virtual bool			hasChildNodes(void)				= 0;
 		virtual const std::string &	getLocalName(void)				= 0;
 
-		virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
-		virtual void serializeMinimalAlgorithm(dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
+		//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
+		//virtual void serializeMinimalAlgorithm(dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
 		virtual void prettyIndentation(int indentationLevel, dom::OutputStream * out) = 0;
+
+		virtual void setSerializerPretty() = 0;
+		virtual void setSerializerMinimal() = 0;
+		virtual int serialize(int indentationLevel, dom::OutputStream* out) = 0;
 
 		virtual void handleRequest(std::string& request) = 0; // Chain of Responsibility
 	};
@@ -117,14 +121,57 @@ public:
 	virtual void setParent(dom::Node * parent);
 
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 
 	virtual void prettyIndentation(int indentationLevel, dom::OutputStream* out);
+
+	virtual void setSerializerPretty() {};
+	virtual void setSerializerMinimal() {};
+	virtual int serialize(int indentationLevel, dom::OutputStream* out) { return indentationLevel; }
 
 	virtual void handleRequest(std::string& request); // Chain of Responsibility
 
 
+};
+
+// Abstract proxy to Node_Impl, built for the purposes of inheriting setParent method in Element_Proxy
+class Node_Impl_Proxy : public virtual dom::Node
+{
+protected:
+	Node_Impl_Proxy() {};
+
+public:
+	virtual ~Node_Impl_Proxy() {};
+	virtual const std::string& getNodeName(void) = 0;
+	virtual const std::string& getNodeValue(void) = 0;
+	virtual void			setNodeValue(const std::string& nodeValue)  = 0;
+	virtual short			getNodeType(void) = 0;
+	virtual dom::Node* getParentNode(void) = 0;
+	virtual dom::NodeList* getChildNodes(void) = 0;
+	virtual dom::Node* getFirstChild(void) = 0;
+	virtual dom::Node* getLastChild(void) = 0;
+	virtual dom::Node* getPreviousSibling(void) = 0;
+	virtual dom::Node* getNextSibling(void) = 0;
+	virtual dom::Document* getOwnerDocument(void) = 0;
+	virtual dom::Node* insertBefore(dom::Node* newChild, dom::Node* refChild) = 0;
+	virtual dom::Node* replaceChild(dom::Node* newChild, dom::Node* oldChild) = 0;
+	virtual dom::Node* removeChild(dom::Node* oldChild) = 0;
+	virtual dom::Node* appendChild(dom::Node* newChild) = 0;
+	virtual bool			hasChildNodes(void) = 0;
+	virtual const std::string& getLocalName(void) = 0;
+
+	virtual void setParent(dom::Node* parent) = 0;
+
+
+	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+
+	virtual void prettyIndentation(int indentationLevel, dom::OutputStream* out) = 0;
+
+	virtual void setSerializerPretty() = 0;
+	virtual void setSerializerMinimal() = 0;
+	virtual int serialize(int indentationLevel, dom::OutputStream* out) = 0;
 };
 
 #endif // NODE_H

@@ -2,12 +2,14 @@
 
 Attr_Impl::Attr_Impl(const std::string & tagName, dom::Document * document) : Node_Impl(tagName, dom::Node::ATTRIBUTE_NODE)
 {
+	serializer = new AttrSerializer(this);
 	Node_Impl::document	= document;
 }
 
 Attr_Impl::Attr_Impl(const std::string & tagName, const std::string & value, dom::Document * document) :
   Node_Impl(tagName, dom::Node::ATTRIBUTE_NODE)
 {
+	serializer = new AttrSerializer(this);
 	Node_Impl::document	= document;
 	setValue(value);
 }
@@ -34,23 +36,38 @@ dom::Element *		Attr_Impl::getOwnerElement(void)
 	return (dom::Element *)Node_Impl::getParentNode();
 }
 
-// Strategy pattern algorithm interface implementation
-int Attr_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
+int Attr_Impl::serialize(int indentationLevel, dom::OutputStream* out)
 {
-	out->write(" ");
-	out->write(getName());
-	out->write("=\"");
-	out->write(getValue()); 
-	out->write("\"");
-	return indentationLevel;
+	return serializer->serialize(indentationLevel, out);
 }
 
-// Strategy pattern algorithm interface implementation
-void Attr_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
+//// Strategy pattern algorithm interface implementation
+//int Attr_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
+//{
+//	out->write(" ");
+//	out->write(getName());
+//	out->write("=\"");
+//	out->write(getValue()); 
+//	out->write("\"");
+//	return indentationLevel;
+//}
+//
+//// Strategy pattern algorithm interface implementation
+//void Attr_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
+//{
+//	out->write(" ");
+//	out->write(getName());
+//	out->write("=\"");
+//	out->write(getValue());
+//	out->write("\"");
+//}
+
+int AttrSerializer::serialize(int indentationLevel, dom::OutputStream* out)
 {
 	out->write(" ");
-	out->write(getName());
+	out->write(attr->getName());
 	out->write("=\"");
-	out->write(getValue());
+	out->write(attr->getValue());
 	out->write("\"");
+	return indentationLevel;
 }

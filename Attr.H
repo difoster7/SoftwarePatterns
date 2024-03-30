@@ -26,6 +26,16 @@ namespace dom
 	};
 };
 
+class AttrSerializer
+{
+protected:
+	dom::Attr* attr;
+
+public:
+	AttrSerializer(dom::Attr* attr) : attr(attr) {};
+	int serialize(int indentationLevel, dom::OutputStream* out);
+};
+
 /*
 * Attr_Impl roles
 * Factory pattern : Concrete Product
@@ -34,8 +44,11 @@ namespace dom
 */
 class Attr_Impl : public virtual dom::Attr, Node_Impl	// Factory method concrete product
 {
+private:
+	AttrSerializer* serializer;
+
 protected:
-	Attr_Impl(const std::string & tagName, dom::Document * document);
+	Attr_Impl(const std::string& tagName, dom::Document* document);
 	Attr_Impl(const std::string & tagName, const std::string & value, dom::Document * document);
 public:
 	friend class Document_Impl;
@@ -47,9 +60,11 @@ public:
 	virtual const std::string &	getValue(void);
 	virtual void			setValue(const std::string & value);
 	virtual dom::Element *		getOwnerElement(void);
+	
+	virtual int serialize(int indentationLevel, dom::OutputStream* out);
 
-	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
-	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
+	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 
 };
 
