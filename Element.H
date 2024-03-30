@@ -44,11 +44,15 @@ namespace dom
 * Strategy Pattern : Concrete strategy
 * Strategy Pattern : Context
 * Decorator Pattern : Concrete Component
+* Chain of Responsibility : Concrete Handler
 */
 class Element_Impl : public virtual dom::Element, Node_Impl
 {
 private:
 	NamedNodeMap_Impl	attributes;
+
+	bool hasAttributeByValue(const std::string& name);
+
 protected:
 	Element_Impl(const std::string & tagName, dom::Document * document);
 public:
@@ -72,6 +76,7 @@ public:
 	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
 	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 
+	virtual void handleRequest(std::string& request); // Chain of Responsibility
 
 };
 

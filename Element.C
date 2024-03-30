@@ -219,3 +219,27 @@ void Element_Impl::serializeMinimalAlgorithm(dom::OutputStream* out)
 		out->write(">");
 	}
 }
+
+// Chain of Responsibility
+void Element_Impl::handleRequest(std::string& request)
+{
+	if (hasAttributeByValue(request)) {
+		printf("Handled request \"%s\"", request);
+	}
+	else {
+		getParentNode()->handleRequest(request);
+	}
+}
+
+bool Element_Impl::hasAttributeByValue(const std::string& value)
+{
+	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)
+	{
+		dom::Attr* attr = dynamic_cast<dom::Attr*>(*i.operator->());
+
+		if (attr->getValue().compare(value) == 0)
+			return true;
+	}
+
+	return false;
+}

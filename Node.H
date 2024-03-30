@@ -14,6 +14,7 @@ namespace dom
 	* Node class has the following roles
 	* Strategy Pattern : Algorithm Interface
 	* Decorator Pattern : Component
+	* Chain of Responsibility : Abstract Handler
 	*/
 	class Node
 	{
@@ -46,6 +47,8 @@ namespace dom
 		virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
 		virtual void serializeMinimalAlgorithm(dom::OutputStream* out) = 0;	// Strategy Pattern Algorithm interface
 		virtual void prettyIndentation(int indentationLevel, dom::OutputStream * out) = 0;
+
+		virtual void handleRequest(std::string& request) = 0; // Chain of Responsibility
 	};
 
 	class DOMException
@@ -75,6 +78,7 @@ namespace dom
 * Strategy Pattern : Concrete Strategy
 * Strategy Pattern : Context
 * Decorator Pattern : Concrete Component
+* Chain of Responsibility : Concrete Handler
 */
 class Node_Impl : public virtual dom::Node
 {
@@ -117,6 +121,9 @@ public:
 	virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
 
 	virtual void prettyIndentation(int indentationLevel, dom::OutputStream* out);
+
+	virtual void handleRequest(std::string& request); // Chain of Responsibility
+
 
 };
 

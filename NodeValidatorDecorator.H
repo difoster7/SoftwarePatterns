@@ -43,6 +43,9 @@ public:
 	virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out) { return node->serializePrettyAlgorithm(indentationLevel, out); };	// Strategy Pattern Algorithm interface
 	virtual void serializeMinimalAlgorithm(dom::OutputStream* out) { return node->serializeMinimalAlgorithm(out); };	// Strategy Pattern Algorithm interface
 	virtual void prettyIndentation(int indentationLevel, dom::OutputStream* out) { return node->prettyIndentation(indentationLevel, out); };
+
+	virtual void handleRequest(std::string& request) { return node->handleRequest(request); };
+
 };
 
 /*
