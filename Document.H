@@ -51,6 +51,7 @@ public:
 * Strategy Pattern : Context
 * Decorator Pattern : Concrete Component
 * Abstract Facotry Pattern : Concrete Factory
+* Prototype Pattern : Concrete prototype
 */
 class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 {
@@ -73,6 +74,8 @@ public:
 	virtual void setSerializerPretty();
 	virtual void setSerializerMinimal();
 	virtual int serialize(int indentationLevel, dom::OutputStream* out);
+	
+	virtual dom::Node* clone();	// prototype pattern clone method
 
 };
 

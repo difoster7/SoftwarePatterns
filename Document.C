@@ -53,6 +53,22 @@ int Document_Impl::serialize(int indentationLevel, dom::OutputStream* out)
 	return serializer->serialize(indentationLevel, out);
 }
 
+dom::Node* Document_Impl::clone()
+{
+	dom::Node* clonedNode = new Document_Impl();
+
+	if (dynamic_cast<DocumentSerializerPretty*>(serializer))
+	{
+		clonedNode->setSerializerPretty();
+	}
+	if (dynamic_cast<DocumentSerializerMinimal*>(serializer))
+	{
+		clonedNode->setSerializerMinimal();
+	}
+
+	return Node_Impl::clone(clonedNode);
+}
+
 //// Strategy pattern algorithm interface implementation
 //int Document_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
 //{
