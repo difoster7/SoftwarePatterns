@@ -15,6 +15,7 @@ namespace dom
 	* Strategy Pattern : Algorithm Interface
 	* Decorator Pattern : Component
 	* Chain of Responsibility : Abstract Handler
+	* Prototype Pattern : Abstract Prototype
 	*/
 	class Node
 	{
@@ -53,6 +54,9 @@ namespace dom
 		virtual int serialize(int indentationLevel, dom::OutputStream* out) = 0;
 
 		virtual void handleEvent(std::string& request) = 0; // Chain of Responsibility
+
+		virtual Node* clone() = 0;	// Prototype Pattern Clone method
+		virtual Node* clone(Node* clonedNode) = 0;
 	};
 
 	class DOMException
@@ -83,6 +87,7 @@ namespace dom
 * Strategy Pattern : Context
 * Decorator Pattern : Concrete Component
 * Chain of Responsibility : Concrete Handler
+* Prototype Pattern : Concrete Prototype
 */
 class Node_Impl : public virtual dom::Node
 {
@@ -132,6 +137,8 @@ public:
 
 	virtual void handleEvent(std::string& request); // Chain of Responsibility
 
+	virtual Node* clone();	// Prototype pattern clone method
+	virtual Node* clone(Node* clonedNode);
 
 };
 
@@ -172,6 +179,10 @@ public:
 	virtual void setSerializerPretty() = 0;
 	virtual void setSerializerMinimal() = 0;
 	virtual int serialize(int indentationLevel, dom::OutputStream* out) = 0;
+
+	virtual Node* clone() = 0;
+	virtual Node* clone(Node* clonedNode) = 0;
+
 };
 
 #endif // NODE_H

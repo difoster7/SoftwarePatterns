@@ -50,6 +50,10 @@ public:
 
 	virtual void handleEvent(std::string& request) { return node->handleEvent(request); };
 
+	virtual Node* clone() { return node->clone(); };
+	virtual Node* clone(Node* clonedNode) { return node->clone(node); };
+
+
 };
 
 /*

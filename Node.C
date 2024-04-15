@@ -203,3 +203,27 @@ void Node_Impl::handleEvent(std::string& request)
 {
 	printf("Request \"%s\" unhandled\n", request.c_str());
 }
+
+// prototype
+dom::Node* Node_Impl::clone()
+{
+	dom::Node* clonedNode = new Node_Impl(name, nodeType);
+	return clone(clonedNode);
+}
+
+// prototype
+dom::Node* Node_Impl::clone(Node* clonedNode)
+{
+	clonedNode->setNodeValue(getNodeValue());
+	dynamic_cast<Node_Impl*>(clonedNode)->setParent(getParentNode());
+	if (hasChildNodes())
+	{
+		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
+		{
+			dom::Node* clonedChild = (*i)->clone();
+			clonedNode->appendChild(clonedChild);
+		}
+	}
+
+	return clonedNode;
+}
