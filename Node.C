@@ -216,14 +216,16 @@ dom::Node* Node_Impl::clone(Node* clonedNode)
 {
 	clonedNode->setNodeValue(getNodeValue());
 	dynamic_cast<Node_Impl*>(clonedNode)->setParent(getParentNode());
+	dynamic_cast<Node_Impl*>(clonedNode)->document = getOwnerDocument();
 	if (hasChildNodes())
 	{
 		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
 		{
 			dom::Node* clonedChild = (*i)->clone();
+			dynamic_cast<Node_Impl*>(clonedChild)->setParent(0);
 			clonedNode->appendChild(clonedChild);
 		}
 	}
-
+	 
 	return clonedNode;
 }

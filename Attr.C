@@ -45,6 +45,7 @@ int Attr_Impl::serialize(int indentationLevel, dom::OutputStream* out)
 dom::Node* Attr_Impl::clone()
 {
 	dom::Node* clonedNode = new Attr_Impl(getName(), getValue(), getOwnerDocument());
+	dynamic_cast<Node_Impl*>(clonedNode)->setParent(0);
 
 	return Node_Impl::clone(clonedNode);
 }

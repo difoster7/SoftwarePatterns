@@ -65,6 +65,10 @@ int main(int argc, char** argv)
 	case 'm':
 		testMemento(argc, argv);
 		break;
+	case 'R':	// using R for "replica" to test clone because c is already taken
+	case 'r':
+		testClone(argc, argv);
+		break;
 	}
 }
 
@@ -409,13 +413,45 @@ void testMemento(int argc, char** argv)
 	child = new ElementValidatorDecorator(&xmlValidator, document->createElement("element"));
 	root->appendChild(child->getElement());
 
-
-
-
-
-
 	dom::OutputStream* outputPretty = new StdOutputStream();
 	XMLSerializer	xmlSerializer(outputPretty);
 	xmlSerializer.serializePretty(document);
+}
+
+void testClone(int argc, char** argv)
+{
+	dom::Document* document = new Document_Impl;
+	dom::Element* root = document->createElement("document");
+	document->appendChild(root);
+
+	dom::Element* child = document->createElement("element");
+	dom::Attr* attr = document->createAttribute("attribute");
+	attr->setValue("attribute value");
+	child->setAttributeNode(attr);
+	root->appendChild(child);
+
+	child = document->createElement("element");
+	root->appendChild(child);
+
+	child = document->createElement("element");
+	child->setAttribute("attribute", "attribute value");
+	child->setAttribute("attribute2", "attribute2 value");
+	dom::Text* text = document->createTextNode("Element Value");
+	child->appendChild(text);
+	root->appendChild(child);
+
+	child = document->createElement("element");
+	root->appendChild(child);
+
+	dom::Node* document2 = document->clone();
+
+	printf("\nNow printing original document\n\n");
+	dom::OutputStream* outputPretty = new StdOutputStream();
+	XMLSerializer	xmlSerializer(outputPretty);
+	xmlSerializer.serializePretty(document);
+
+	printf("\nNow printing cloned document\n\n");
+	xmlSerializer.serializePretty(document2);
+
 }
 

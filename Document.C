@@ -57,13 +57,16 @@ dom::Node* Document_Impl::clone()
 {
 	dom::Node* clonedNode = new Document_Impl();
 
-	if (dynamic_cast<DocumentSerializerPretty*>(serializer))
+	if (!serializer)
 	{
-		clonedNode->setSerializerPretty();
-	}
-	if (dynamic_cast<DocumentSerializerMinimal*>(serializer))
-	{
-		clonedNode->setSerializerMinimal();
+		if (dynamic_cast<DocumentSerializerPretty*>(serializer))
+		{
+			clonedNode->setSerializerPretty();
+		}
+		if (dynamic_cast<DocumentSerializerMinimal*>(serializer))
+		{
+			clonedNode->setSerializerMinimal();
+		}
 	}
 
 	return Node_Impl::clone(clonedNode);

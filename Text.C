@@ -126,13 +126,16 @@ dom::Node* Text_Impl::clone()
 {
 	dom::Node* clonedNode = new Text_Impl(getValue(), getOwnerDocument());
 
-	if (dynamic_cast<TextSerializerPretty*>(serializer))
-	{
-		clonedNode->setSerializerPretty();
-	}
-	if (dynamic_cast<TextSerializerMinimal*>(serializer))
-	{
-		clonedNode->setSerializerMinimal();
+	if (!serializer)
+	{ 
+		if (dynamic_cast<TextSerializerPretty*>(serializer))
+		{
+			clonedNode->setSerializerPretty();
+		}
+		if (dynamic_cast<TextSerializerMinimal*>(serializer))
+		{
+			clonedNode->setSerializerMinimal();
+		}
 	}
 
 	dynamic_cast<Text_Impl*>(clonedNode)->setData(getData());

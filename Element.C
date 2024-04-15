@@ -364,21 +364,24 @@ void Element_Impl::handleEvent(std::string& request)
 dom::Node* Element_Impl::clone()
 {
 	dom::Node* clonedNode = new Element_Impl(getTagName(), getOwnerDocument());
-
-	if (dynamic_cast<ElementSerializerPretty*>(serializer))
+	
+	if (!serializer)
 	{
-		clonedNode->setSerializerPretty();
+		if (dynamic_cast<ElementSerializerPretty*>(serializer))
+		{
+			clonedNode->setSerializerPretty();
+		}
+		if (dynamic_cast<ElementSerializerMinimal*>(serializer))
+		{
+			clonedNode->setSerializerMinimal();
+		}
 	}
-	if (dynamic_cast<ElementSerializerMinimal*>(serializer))
-	{
-		clonedNode->setSerializerMinimal();
-	}
 
-
-	for (dom::NodeList::iterator i = getAttributes()->begin(); i != getChildNodes()->end(); i++)
+	for (dom::NamedNodeMap::iterator i = getAttributes()->begin(); i != getAttributes()->end(); i++)
 	{
-		dom::Node* clonedAtribute = (*i)->clone();
-		dynamic_cast<dom::Element*>(clonedNode)->setAttributeNode(dynamic_cast<dom::Attr*>(clonedAtribute));
+		dom::Node* clonedAttribute = (*i)->clone();
+		dynamic_cast<Node_Impl*>(clonedAttribute)->setParent(0);
+		dynamic_cast<dom::Element*>(clonedNode)->setAttributeNode(dynamic_cast<dom::Attr*>(clonedAttribute));
 	}
 
 	return Node_Impl::clone(clonedNode);
