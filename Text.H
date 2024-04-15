@@ -54,6 +54,7 @@ public:
 * Factory Pattern : Concrete Product
 * Strategy Pattern : Concrete Strategy
 * Strategy Pattern : Context
+* Prototype Pattern : Concrete Prototype
 */
 class Text_Impl : public virtual dom::Text, Node_Impl
 {
@@ -87,6 +88,8 @@ public:
 	virtual void setSerializerPretty();
 	virtual void setSerializerMinimal();
 	virtual int serialize(int indentationLevel, dom::OutputStream* out);
+
+	virtual Node* clone();	// Prototype patter clone method
 };
 
 /*

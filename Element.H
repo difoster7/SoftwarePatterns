@@ -69,6 +69,7 @@ public:
 * Strategy Pattern : Context
 * Decorator Pattern : Concrete Component
 * Chain of Responsibility : Concrete Handler
+* Prototype Pattern : Concrete Prototype
 */
 class Element_Impl : public virtual dom::Element, Node_Impl
 {
@@ -110,7 +111,7 @@ public:
 
 	virtual void handleEvent(std::string& request); // Chain of Responsibility
 
-
+	virtual dom::Node* clone();	// Prototype Pattern Clone method
 };
 
 class Element_Impl_Proxy : public virtual dom::Element, Node_Impl_Proxy

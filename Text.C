@@ -121,6 +121,25 @@ int Text_Impl::serialize(int indentationLevel, dom::OutputStream* out)
 	return serializer->serialize(indentationLevel, out);
 }
 
+// prototype pattern clone method
+dom::Node* Text_Impl::clone()
+{
+	dom::Node* clonedNode = new Text_Impl(getValue(), getOwnerDocument());
+
+	if (dynamic_cast<TextSerializerPretty*>(serializer))
+	{
+		clonedNode->setSerializerPretty();
+	}
+	if (dynamic_cast<TextSerializerMinimal*>(serializer))
+	{
+		clonedNode->setSerializerMinimal();
+	}
+
+	dynamic_cast<Text_Impl*>(clonedNode)->setData(getData());
+
+	return Node_Impl::clone(clonedNode);
+}
+
 //// strategy pattern algorithm interface implementation
 //int Text_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
 //{

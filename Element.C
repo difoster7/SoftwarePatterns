@@ -360,6 +360,30 @@ void Element_Impl::handleEvent(std::string& request)
 	}
 }
 
+// prototype pattern clone method
+dom::Node* Element_Impl::clone()
+{
+	dom::Node* clonedNode = new Element_Impl(getTagName(), getOwnerDocument());
+
+	if (dynamic_cast<ElementSerializerPretty*>(serializer))
+	{
+		clonedNode->setSerializerPretty();
+	}
+	if (dynamic_cast<ElementSerializerMinimal*>(serializer))
+	{
+		clonedNode->setSerializerMinimal();
+	}
+
+
+	for (dom::NodeList::iterator i = getAttributes()->begin(); i != getChildNodes()->end(); i++)
+	{
+		dom::Node* clonedAtribute = (*i)->clone();
+		dynamic_cast<dom::Element*>(clonedNode)->setAttributeNode(dynamic_cast<dom::Attr*>(clonedAtribute));
+	}
+
+	return Node_Impl::clone(clonedNode);
+}
+
 bool Element_Impl::hasAttributeByValue(const std::string& value)
 {
 	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)

@@ -41,6 +41,7 @@ public:
 * Factory pattern : Concrete Product
 * Strategy pattern : Concrete Strategy
 * Strategy pattern : Context
+* Prototype Pattern : Concrete Prototype
 */
 class Attr_Impl : public virtual dom::Attr, Node_Impl	// Factory method concrete product
 {
@@ -62,6 +63,8 @@ public:
 	virtual dom::Element *		getOwnerElement(void);
 	
 	virtual int serialize(int indentationLevel, dom::OutputStream* out);
+
+	virtual dom::Node* clone();	// Prototype Pattern Clone Method
 
 	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
 	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation

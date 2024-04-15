@@ -41,6 +41,14 @@ int Attr_Impl::serialize(int indentationLevel, dom::OutputStream* out)
 	return serializer->serialize(indentationLevel, out);
 }
 
+// prototype pattern clone method
+dom::Node* Attr_Impl::clone()
+{
+	dom::Node* clonedNode = new Attr_Impl(getName(), getValue(), getOwnerDocument());
+
+	return Node_Impl::clone(clonedNode);
+}
+
 //// Strategy pattern algorithm interface implementation
 //int Attr_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
 //{
