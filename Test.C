@@ -17,6 +17,7 @@
 #include "UserInterface.H"
 #include "Builder_State.H"
 #include "Director_State.H"
+#include "SerializerVisitor.H"
 
 void printUsage(void)
 {
@@ -28,6 +29,9 @@ void printUsage(void)
 	printf("\tTest d [file]\n");
 	printf("\tTest c [file]\n");
 	printf("\tTest m\n");
+	printf("\tTest r\n");
+	printf("\tTest A [file]\n");
+	printf("\tTest b [file1] [file2]\n");
 }
 
 int main(int argc, char** argv)
@@ -41,7 +45,7 @@ int main(int argc, char** argv)
 		exit(0);
 	}
 
-	switch(argv[1][0])
+	switch (argv[1][0])
 	{
 	case 'T':
 	case 't':
@@ -74,6 +78,10 @@ int main(int argc, char** argv)
 	case 'A':	// using A because I'm running out of letters
 	case 'a':
 		testState(argc, argv);
+		break;
+	case 'B':
+	case 'b':
+		testVisitor(argc, argv);
 		break;
 	}
 }
@@ -472,5 +480,83 @@ void testState(int argc, char** argv)
 	dom::OutputStream* outputPretty = new StdOutputStream();
 	XMLSerializer	xmlSerializer(outputPretty);
 	xmlSerializer.serializePretty(document);
+}
+
+void testVisitor(int argc, char** argv)
+{
+	//if (argc < 4)
+	//{
+	//	printUsage();
+	//	exit(0);
+	//}
+
+	//
+	// Create tree of this document:
+	// <? xml version="1.0" encoding="UTF-8"?>
+	// <document>
+	//   <element attribute="attribute value"/>
+	//   <element/>
+	//   <element attribute="attribute value" attribute2="attribute2 value">
+	//     Element Value
+	//   </element>
+	//   <element>
+	//   </element>
+	// </document>
+	//
+
+	dom::OutputStream* outputPretty;
+	dom::OutputStream* outputMinimal;
+
+	switch (argc)
+	{
+	case 2:
+		outputPretty = new StdOutputStream();
+		outputMinimal = new StdOutputStream();
+		break;
+
+	case 3:
+		outputPretty = new FileOutputStream(argv[2]);
+		outputMinimal = new StdOutputStream();
+		break;
+
+	case 4:
+		outputPretty = new FileOutputStream(argv[2]);
+		outputMinimal = new FileOutputStream(argv[3]);
+	}
+
+	dom::Document* document = new Document_Impl;
+	dom::Element* root = document->createElement("document");
+	document->appendChild(root);
+
+	dom::Element* child = document->createElement("element");
+	dom::Attr* attr = document->createAttribute("attribute");
+	attr->setValue("attribute value");
+	child->setAttributeNode(attr);
+	root->appendChild(child);
+
+	child = document->createElement("element");
+	root->appendChild(child);
+
+	child = document->createElement("element");
+	child->setAttribute("attribute", "attribute value");
+	child->setAttribute("attribute2", "attribute2 value");
+	dom::Text* text = document->createTextNode("Element Value");
+	child->appendChild(text);
+	root->appendChild(child);
+
+	child = document->createElement("element");
+	root->appendChild(child);
+
+	//
+	// Serialize
+	//
+	SerializerVisitor* prettyVisitor = new PrettySerializerVistor(outputPretty);
+	SerializerVisitor* minimalVisitor = new MinimalSerializerVistor(outputMinimal);
+
+	printf("Pretty Serialization:\n\n");
+	document->accept(prettyVisitor);
+
+	printf("\nMinimal Serialization:\n\n");
+	document->accept(minimalVisitor);
 }
 

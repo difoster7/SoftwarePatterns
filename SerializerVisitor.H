@@ -7,6 +7,7 @@
 #include "Attr.H"
 #include "Text.H"
 
+// Visitor Pattern : Abstract Visitor
 class SerializerVisitor
 {
 protected:
@@ -16,12 +17,13 @@ protected:
 
 public:
 	virtual void serializeDocument(dom::Document* doc) = 0;
-	virtual void serializeElement(dom::Element* doc) = 0;
-	virtual void serializeAttr(dom::Attr* doc) = 0;
-	virtual void serializeText(dom::Text* doc) = 0;
+	virtual void serializeElement(dom::Element* ele) = 0;
+	virtual void serializeAttr(dom::Attr* attr) = 0;
+	virtual void serializeText(dom::Text* text) = 0;
 
 };
 
+// Visitor Pattern : Concrete Visitor
 class PrettySerializerVistor : public virtual SerializerVisitor
 {
 private:
@@ -31,20 +33,21 @@ public:
 	PrettySerializerVistor(dom::OutputStream* out) : SerializerVisitor(out) {}
 
 	void serializeDocument(dom::Document* doc);
-	void serializeElement(dom::Element* doc);
-	void serializeAttr(dom::Attr* doc);
-	void serializeText(dom::Text* doc);
+	void serializeElement(dom::Element* ele);
+	void serializeAttr(dom::Attr* attr);
+	void serializeText(dom::Text* text);
 };
 
+// Visitor Pattern : Concrete Visitor
 class MinimalSerializerVistor : public virtual SerializerVisitor
 {
 public:
 	MinimalSerializerVistor(dom::OutputStream* out) : SerializerVisitor(out) {}
 
 	void serializeDocument(dom::Document* doc);
-	void serializeElement(dom::Element* doc);
-	void serializeAttr(dom::Attr* doc);
-	void serializeText(dom::Text* doc);
+	void serializeElement(dom::Element* ele);
+	void serializeAttr(dom::Attr* attr);
+	void serializeText(dom::Text* text);
 };
 
 #endif // !SERIALIZER_VISITOR_H
