@@ -45,4 +45,4 @@ target_sources(Patterns PUBLIC
 	Builder_State.H
 	Builder_State.C
 	Director_State.H
-	Director_State.C "State.H" "State.C")
+	Director_State.C "State.H" "State.C" "SerializerVisitor.H" "SerializerVisitor.C")

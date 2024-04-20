@@ -55,6 +55,7 @@ public:
 * Strategy Pattern : Concrete Strategy
 * Strategy Pattern : Context
 * Prototype Pattern : Concrete Prototype
+* * Visitor Pattern : Concrete Element
 */
 class Text_Impl : public virtual dom::Text, Node_Impl
 {
@@ -90,6 +91,9 @@ public:
 	virtual int serialize(int indentationLevel, dom::OutputStream* out);
 
 	virtual Node* clone();	// Prototype patter clone method
+
+	virtual void accept(SerializerVisitor* serialV);	// Visitor pattern : Accept Method
+
 };
 
 /*

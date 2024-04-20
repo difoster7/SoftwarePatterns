@@ -3,6 +3,7 @@
 #include "Text.H"
 #include "Attr.H"
 #include "NodeList.H"
+#include "SerializerVisitor.H"
 
 Document_Impl::Document_Impl(void) : Node_Impl("", dom::Node::DOCUMENT_NODE)
 {
@@ -70,6 +71,12 @@ dom::Node* Document_Impl::clone()
 	}
 
 	return Node_Impl::clone(clonedNode);
+}
+
+// Visitor Pattern : accept method
+void Document_Impl::accept(SerializerVisitor* serialV)
+{
+	serialV->serializeDocument(this);
 }
 
 //// Strategy pattern algorithm interface implementation

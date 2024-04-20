@@ -52,6 +52,7 @@ public:
 * Decorator Pattern : Concrete Component
 * Abstract Facotry Pattern : Concrete Factory
 * Prototype Pattern : Concrete prototype
+* Visitor Pattern : Concrete Element
 */
 class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 {
@@ -76,6 +77,8 @@ public:
 	virtual int serialize(int indentationLevel, dom::OutputStream* out);
 	
 	virtual dom::Node* clone();	// prototype pattern clone method
+
+	virtual void accept(SerializerVisitor* serialV);	// Visitor pattern : Accept Method
 
 };
 

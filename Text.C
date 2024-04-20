@@ -1,4 +1,5 @@
 #include "Text.H"
+#include "SerializerVisitor.H"
 #include <stdexcept>
 
 Text_Impl::Text_Impl(const std::string value, dom::Document * document) : Node_Impl("", dom::Node::TEXT_NODE)
@@ -141,6 +142,12 @@ dom::Node* Text_Impl::clone()
 	dynamic_cast<Text_Impl*>(clonedNode)->setData(getData());
 
 	return Node_Impl::clone(clonedNode);
+}
+
+// Visitor Pattern : Accept Method
+void Text_Impl::accept(SerializerVisitor* serialV)
+{
+	serialV->serializeText(this);
 }
 
 //// strategy pattern algorithm interface implementation

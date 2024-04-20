@@ -6,6 +6,8 @@
 #include "NodeList.H"
 #include "OutputStream.H"
 
+class SerializerVisitor;
+
 namespace dom
 {
 	class Document;
@@ -16,6 +18,7 @@ namespace dom
 	* Decorator Pattern : Component
 	* Chain of Responsibility : Abstract Handler
 	* Prototype Pattern : Abstract Prototype
+	* Visitor Pattern : Abstract Element
 	*/
 	class Node
 	{
@@ -57,6 +60,8 @@ namespace dom
 
 		virtual Node* clone() = 0;	// Prototype Pattern Clone method
 		virtual Node* clone(Node* clonedNode) = 0;
+
+		virtual void accept(SerializerVisitor* serialV) = 0;	// Visitor pattern : Accept Method
 	};
 
 	class DOMException
@@ -140,6 +145,8 @@ public:
 	virtual Node* clone();	// Prototype pattern clone method
 	virtual Node* clone(Node* clonedNode);
 
+	virtual void accept(SerializerVisitor* serialV) {};	// Visitor pattern : Accept Method
+
 };
 
 // Abstract proxy to Node_Impl, built for the purposes of inheriting setParent method in Element_Proxy
@@ -183,6 +190,7 @@ public:
 	virtual Node* clone() = 0;
 	virtual Node* clone(Node* clonedNode) = 0;
 
+	virtual void accept(SerializerVisitor* serialV) = 0;	// Visitor pattern : Accept Method
 };
 
 #endif // NODE_H

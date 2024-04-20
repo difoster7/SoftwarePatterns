@@ -42,6 +42,7 @@ public:
 * Strategy pattern : Concrete Strategy
 * Strategy pattern : Context
 * Prototype Pattern : Concrete Prototype
+* Visitor Pattern : Concrete Element
 */
 class Attr_Impl : public virtual dom::Attr, Node_Impl	// Factory method concrete product
 {
@@ -68,6 +69,8 @@ public:
 
 	//virtual int serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out);	// Strategy pattern algorithm interface implementation
 	//virtual void serializeMinimalAlgorithm(dom::OutputStream* out);	// Strategy Pattern Algorithm interface implementation
+
+	virtual void accept(SerializerVisitor* serialV);	// Visitor pattern : Accept Method
 
 };
 

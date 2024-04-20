@@ -1,6 +1,7 @@
 #include "Element.H"
 #include "Attr.H"
 #include "Document.H"
+#include "SerializerVisitor.H"
 
 Element_Impl::Element_Impl(const std::string & tagName, dom::Document * document) : Node_Impl(tagName, dom::Node::ELEMENT_NODE),
   attributes(document)
@@ -385,6 +386,11 @@ dom::Node* Element_Impl::clone()
 	}
 
 	return Node_Impl::clone(clonedNode);
+}
+
+void Element_Impl::accept(SerializerVisitor* serialV)
+{
+	serialV->serializeElement(this);
 }
 
 bool Element_Impl::hasAttributeByValue(const std::string& value)

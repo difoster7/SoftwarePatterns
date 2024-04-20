@@ -53,7 +53,7 @@ public:
 	virtual Node* clone() { return node->clone(); };
 	virtual Node* clone(Node* clonedNode) { return node->clone(node); };
 
-
+	virtual void accept(SerializerVisitor* serialV) { return node->accept(serialV); };
 };
 
 /*

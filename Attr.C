@@ -1,4 +1,5 @@
 #include "Attr.H"
+#include "SerializerVisitor.H"
 
 Attr_Impl::Attr_Impl(const std::string & tagName, dom::Document * document) : Node_Impl(tagName, dom::Node::ATTRIBUTE_NODE)
 {
@@ -33,7 +34,7 @@ void			Attr_Impl::setValue(const std::string & value)
 
 dom::Element *		Attr_Impl::getOwnerElement(void)
 {
-	return (dom::Element *)Node_Impl::getParentNode();
+	return dynamic_cast<dom::Element*>(Node_Impl::getParentNode());
 }
 
 int Attr_Impl::serialize(int indentationLevel, dom::OutputStream* out)
@@ -48,6 +49,12 @@ dom::Node* Attr_Impl::clone()
 	dynamic_cast<Node_Impl*>(clonedNode)->setParent(0);
 
 	return Node_Impl::clone(clonedNode);
+}
+
+// Visitor Pattern : accept method
+void Attr_Impl::accept(SerializerVisitor* serialV)
+{
+	serialV->serializeAttr(this);
 }
 
 //// Strategy pattern algorithm interface implementation
