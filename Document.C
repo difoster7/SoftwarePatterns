@@ -103,6 +103,7 @@ void DocumentSerializerPretty::writeOpener(dom::OutputStream* out)
 
 void DocumentSerializerPretty::setNextSerializer()
 {
+	dom::Node* foo = doc->getDocumentElement();
 	doc->getDocumentElement()->setSerializerPretty();
 }
 

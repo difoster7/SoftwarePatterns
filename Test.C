@@ -15,6 +15,8 @@
 #include "NodeList.H"
 #include "Tests.H";
 #include "UserInterface.H"
+#include "Builder_State.H"
+#include "Director_State.H"
 
 void printUsage(void)
 {
@@ -68,6 +70,10 @@ int main(int argc, char** argv)
 	case 'R':	// using R for "replica" to test clone because c is already taken
 	case 'r':
 		testClone(argc, argv);
+		break;
+	case 'A':	// using A because I'm running out of letters
+	case 'a':
+		testState(argc, argv);
 		break;
 	}
 }
@@ -453,5 +459,18 @@ void testClone(int argc, char** argv)
 	printf("\nNow printing cloned document\n\n");
 	xmlSerializer.serializePretty(document2);
 
+}
+
+void testState(int argc, char** argv)
+{
+	dom::Document* document = new Document_Impl;
+	Builder_State		builder(document);
+	Director_State	director(argv[2], &builder);
+	//std::fstream	file(argv[3], std::ios_base::out);
+	//XMLSerializer	xmlSerializer(&file);
+	//xmlSerializer.serializePretty(document);
+	dom::OutputStream* outputPretty = new StdOutputStream();
+	XMLSerializer	xmlSerializer(outputPretty);
+	xmlSerializer.serializePretty(document);
 }
 
