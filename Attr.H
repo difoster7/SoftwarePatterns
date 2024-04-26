@@ -75,6 +75,7 @@ public:
 
 };
 
+// Flyweight pattern : Concrete Flyweight
 class AttrFlyweight : public virtual dom::Attr, public virtual Attr_Impl, public virtual NodeFlyweight_Impl 
 {
 protected:

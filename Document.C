@@ -84,11 +84,13 @@ void Document_Impl::accept(SerializerVisitor* serialV)
 	serialV->serializeDocument(this);
 }
 
+// Flyweight Pattern : getFlyweight method
 ElementFlyweight* Document_Impl::createElementFlyweight(const std::string& tagName)
 {
 	return new ElementFlyweight(tagName, this);
 }
 
+// Flyweight Pattern : getFlyweight method
 TextFlyweight* Document_Impl::createTextFlyweight(const std::string& data)
 {
 	TextFlyweight* text;
@@ -106,6 +108,7 @@ TextFlyweight* Document_Impl::createTextFlyweight(const std::string& data)
 	return text;
 }
 
+// Flyweight Pattern : getFlyweight method
 AttrFlyweight* Document_Impl::createAttrFlyweight(const std::string& name)
 {
 	AttrFlyweight* attr;

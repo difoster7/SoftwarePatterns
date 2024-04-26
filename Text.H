@@ -123,6 +123,7 @@ public:
 	TextSerializerMinimal(dom::Text* text) : TextSerializer(text) {};
 };
 
+// Flyweight Pattern : Concrete Flyweight
 class TextFlyweight : public virtual dom::Text, public virtual Text_Impl, public virtual NodeFlyweight_Impl 
 {
 protected:

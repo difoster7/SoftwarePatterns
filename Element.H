@@ -219,6 +219,7 @@ public:
 	ElementSerializerMinimal(dom::Element* ele) : ElementSerializer(ele) {};
 };
 
+// Flyweight pattern : Unshared Concrete Flyweight
 class ElementFlyweight : public virtual dom::Element, public virtual Element_Impl, public virtual NodeFlyweight_Impl
 {
 protected:

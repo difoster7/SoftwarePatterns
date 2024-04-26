@@ -32,6 +32,7 @@ void printUsage(void)
 	printf("\tTest r\n");
 	printf("\tTest A [file]\n");
 	printf("\tTest b [file1] [file2]\n");
+	printf("\tTest F\n");
 }
 
 int main(int argc, char** argv)
@@ -82,6 +83,10 @@ int main(int argc, char** argv)
 	case 'B':
 	case 'b':
 		testVisitor(argc, argv);
+		break;
+	case 'F':
+	case 'f':
+		testFlyweight(argc, argv);
 		break;
 	}
 }
@@ -560,3 +565,39 @@ void testVisitor(int argc, char** argv)
 	document->accept(minimalVisitor);
 }
 
+void testFlyweight(int argc, char** argv)
+{
+	dom::Document* document = new Document_Impl;
+	dom::Element* root = document->createElementFlyweight("document");
+	document->appendChild(root);
+
+	dom::Element* child = document->createElementFlyweight("element");
+	dom::Attr* attr = document->createAttrFlyweight("attribute");
+	attr->setValue("attribute value");
+	child->setAttributeNode(attr);
+	root->appendChild(child);
+
+	child = document->createElementFlyweight("element");
+	root->appendChild(child);
+
+	child = document->createElementFlyweight("element");
+	child->setAttribute("attribute", "attribute value");
+	child->setAttribute("attribute2", "attribute2 value");
+	dom::Text* text = document->createTextFlyweight("Element Value");
+	child->appendChild(text);
+	root->appendChild(child);
+
+	child = document->createElementFlyweight("element");
+	root->appendChild(child);
+
+	dom::Node* document2 = document->clone();
+
+	printf("\nNow printing original document\n\n");
+	dom::OutputStream* outputPretty = new StdOutputStream();
+	XMLSerializer	xmlSerializer(outputPretty);
+	xmlSerializer.serializePretty(document);
+
+	printf("\nNow printing cloned document\n\n");
+	xmlSerializer.serializePretty(document2);
+
+}

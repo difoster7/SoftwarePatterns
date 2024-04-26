@@ -43,4 +43,5 @@ dom::Node* NodeFlyweight_Impl::getParentNode(std::string name)
 
 void NodeFlyweight_Impl::setParent(dom::Node* parent)
 {
+	parent = 0;
 }

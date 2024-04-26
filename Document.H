@@ -63,6 +63,7 @@ public:
 * Abstract Facotry Pattern : Concrete Factory
 * Prototype Pattern : Concrete prototype
 * Visitor Pattern : Concrete Element
+* Flyweight Pattern : Flyweight Factory
 */
 class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 {
@@ -93,9 +94,9 @@ public:
 
 	virtual void accept(SerializerVisitor* serialV);	// Visitor pattern : Accept Method
 
-	virtual ElementFlyweight* createElementFlyweight(const std::string& tagName);
-	virtual TextFlyweight* createTextFlyweight(const std::string& data);
-	virtual AttrFlyweight* createAttrFlyweight(const std::string& name);
+	virtual ElementFlyweight* createElementFlyweight(const std::string& tagName); // Flyweight Pattern : getFlyweight method
+	virtual TextFlyweight* createTextFlyweight(const std::string& data); // Flyweight Pattern : getFlyweight method
+	virtual AttrFlyweight* createAttrFlyweight(const std::string& name); // Flyweight Pattern : getFlyweight method
 };
 
 /*

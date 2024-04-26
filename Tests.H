@@ -7,3 +7,4 @@ void testMemento(int argc, char** argv);
 void testClone(int argc, char** argv);
 void testState(int argc, char** argv);
 void testVisitor(int argc, char** argv);
+void testFlyweight(int argc, char** argv);
