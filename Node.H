@@ -108,6 +108,8 @@ protected:
 	dom::Document *	document;
 
 	Node_Impl(const std::string & name, short type);
+
+	Node_Impl() {};
 public:
 	virtual ~Node_Impl();
 	virtual const std::string &	getNodeName(void);

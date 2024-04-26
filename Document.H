@@ -4,13 +4,19 @@
 #include <string>
 #include "Node.H"
 
+class ElementFlyweight;
+class TextFlyweight;
+class AttrFlyweight;
+
+
 namespace dom
 {
 	class Element;
 	class Text;
 	class Attr;
 	class NodeList;
-
+	class NamedNodeMap;
+	
 	/* 
 	* Document Class has the following roles
 	* Factory Pattern : Creator Interface
@@ -24,6 +30,10 @@ namespace dom
 		virtual Text *		createTextNode(const std::string & data)	= 0;	// Factory pattern creator method
 		virtual Attr *		createAttribute(const std::string & name)	= 0;	// Factory pattern creator method
 		virtual Element *	getDocumentElement()				= 0;
+
+		virtual ElementFlyweight* createElementFlyweight(const std::string& tagName) = 0;
+		virtual TextFlyweight* createTextFlyweight(const std::string& data) = 0;
+		virtual AttrFlyweight* createAttrFlyweight(const std::string& name) = 0;
 	};
 };
 
@@ -59,6 +69,9 @@ class Document_Impl : public virtual dom::Document, public virtual Node_Impl
 private:
 	DocumentSerializer* serializer;
 
+	dom::NamedNodeMap* textFlyweights;
+	dom::NamedNodeMap* attrFlyweights;
+
 public:
 	Document_Impl(void);
 
@@ -80,6 +93,9 @@ public:
 
 	virtual void accept(SerializerVisitor* serialV);	// Visitor pattern : Accept Method
 
+	virtual ElementFlyweight* createElementFlyweight(const std::string& tagName);
+	virtual TextFlyweight* createTextFlyweight(const std::string& data);
+	virtual AttrFlyweight* createAttrFlyweight(const std::string& name);
 };
 
 /*

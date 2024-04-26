@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Node.H"
+#include "NodeFlyweight.H"
 
 namespace dom
 {
@@ -120,6 +121,16 @@ protected:
 
 public:
 	TextSerializerMinimal(dom::Text* text) : TextSerializer(text) {};
+};
+
+class TextFlyweight : public virtual dom::Text, public virtual Text_Impl, public virtual NodeFlyweight_Impl 
+{
+protected:
+	TextFlyweight(const std::string value, dom::Document* document) : Text_Impl(value, document) {}
+
+public: 
+	friend class Document_Impl;
+
 };
 
 #endif // TEXT_H

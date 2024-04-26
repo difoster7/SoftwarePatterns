@@ -1,7 +1,7 @@
 #include "NodeFlyweight.H"
 #include "Document.H"
 
-dom::Node * dom::NodeFlyweight::findChild(dom::Node * parent, std::string name)
+dom::Node * NodeFlyweight_Impl::findChild(dom::Node * parent, std::string name)
 {
 	dom::Node* parentMaybe;
 
@@ -24,12 +24,12 @@ dom::Node * dom::NodeFlyweight::findChild(dom::Node * parent, std::string name)
 	return 0;
 }
 
-dom::Node* dom::NodeFlyweight::getParentNode(void)
+dom::Node* NodeFlyweight_Impl::getParentNode(void)
 {
 	return getParentNode(getNodeName());
 }
 
-dom::Node* dom::NodeFlyweight::getParentNode(std::string name)
+dom::Node* NodeFlyweight_Impl::getParentNode(std::string name)
 {
 	dom::Node* parent;
 
@@ -39,4 +39,8 @@ dom::Node* dom::NodeFlyweight::getParentNode(std::string name)
 	}
 
 	return 0;
+}
+
+void NodeFlyweight_Impl::setParent(dom::Node* parent)
+{
 }

@@ -219,4 +219,17 @@ public:
 	ElementSerializerMinimal(dom::Element* ele) : ElementSerializer(ele) {};
 };
 
+class ElementFlyweight : public virtual dom::Element, public virtual Element_Impl, public virtual NodeFlyweight_Impl
+{
+protected:
+	ElementFlyweight(const std::string& tagName, dom::Document* document) : Element_Impl(tagName, document) {}
+
+public:
+	friend class Document_Impl;
+
+	virtual dom::Node* getParentNode(void);
+	virtual dom::Node* getParentNode(std::string name);
+	virtual void setParent(dom::Node* parent);
+};
+
 #endif // ELEMENT_H

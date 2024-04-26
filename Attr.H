@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Node.H"
+#include "NodeFlyweight.H"
 
 namespace dom
 {
@@ -72,6 +73,15 @@ public:
 
 	virtual void accept(SerializerVisitor* serialV);	// Visitor pattern : Accept Method
 
+};
+
+class AttrFlyweight : public virtual dom::Attr, public virtual Attr_Impl, public virtual NodeFlyweight_Impl 
+{
+protected:
+	AttrFlyweight(const std::string& tagName, dom::Document* document) : Attr_Impl(tagName, document) {}
+
+public:
+	friend class Document_Impl;
 };
 
 #endif // ATTR_H

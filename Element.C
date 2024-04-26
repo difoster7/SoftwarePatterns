@@ -405,3 +405,18 @@ bool Element_Impl::hasAttributeByValue(const std::string& value)
 
 	return false;
 }
+
+dom::Node* ElementFlyweight::getParentNode(void)
+{
+	return Node_Impl::getParentNode();
+}
+
+dom::Node* ElementFlyweight::getParentNode(std::string name)
+{
+	return Node_Impl::getParentNode();
+}
+
+void ElementFlyweight::setParent(dom::Node* parent)
+{
+	Node_Impl::setParent(parent);
+}

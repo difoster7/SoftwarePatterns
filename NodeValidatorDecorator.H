@@ -76,6 +76,9 @@ public:
 
 	virtual dom::Node* appendChild(Node* newChild);	// overriden decorated function
 
+	virtual ElementFlyweight* createElementFlyweight(const std::string& tagName) { return doc->createElementFlyweight(tagName); };
+	virtual TextFlyweight* createTextFlyweight(const std::string& data) { return doc->createTextFlyweight(data); };
+	virtual AttrFlyweight* createAttrFlyweight(const std::string& name) { return doc->createAttrFlyweight(name); };
 };
 
 /*

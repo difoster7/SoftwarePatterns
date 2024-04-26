@@ -4,10 +4,15 @@
 #include "Attr.H"
 #include "NodeList.H"
 #include "SerializerVisitor.H"
+#include "NamedNodeMap.H"
+
 
 Document_Impl::Document_Impl(void) : Node_Impl("", dom::Node::DOCUMENT_NODE)
 {
 	Node_Impl::document	= this;
+
+	textFlyweights = new NamedNodeMap_Impl(this);
+	attrFlyweights = new NamedNodeMap_Impl(this);
 }
 
 Document_Impl::~Document_Impl() {}
@@ -77,6 +82,45 @@ dom::Node* Document_Impl::clone()
 void Document_Impl::accept(SerializerVisitor* serialV)
 {
 	serialV->serializeDocument(this);
+}
+
+ElementFlyweight* Document_Impl::createElementFlyweight(const std::string& tagName)
+{
+	return new ElementFlyweight(tagName, this);
+}
+
+TextFlyweight* Document_Impl::createTextFlyweight(const std::string& data)
+{
+	TextFlyweight* text;
+
+	if (textFlyweights->getNamedItem(data))
+	{
+		text = dynamic_cast<TextFlyweight*>(textFlyweights->getNamedItem(data));
+	}
+	else
+	{
+		text = new TextFlyweight(data, this);
+		textFlyweights->push_back(text);
+	}
+
+	return text;
+}
+
+AttrFlyweight* Document_Impl::createAttrFlyweight(const std::string& name)
+{
+	AttrFlyweight* attr;
+
+	if (attrFlyweights->getNamedItem(name))
+	{
+		attr = dynamic_cast<AttrFlyweight*>(attrFlyweights->getNamedItem(name));
+	}
+	else
+	{
+		attr = new AttrFlyweight(name, this);
+		attrFlyweights->push_back(attr);
+	}
+
+	return attr;
 }
 
 //// Strategy pattern algorithm interface implementation
