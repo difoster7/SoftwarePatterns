@@ -20,8 +20,7 @@
 #include "Director_State.H"
 #include "SerializerVisitor.H"
 
-class Director;
-
+// Facade pattern : Facade
 class xmlFacade
 {
 private:
