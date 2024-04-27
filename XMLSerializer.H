@@ -1,3 +1,8 @@
+#ifndef XMLSERIALIZER_H
+#define XMLSERIALIZER_H
+
+
+
 #include <string>
 #include <fstream>
 #include <ios>
@@ -22,3 +27,5 @@ public:
 	virtual void		serializePretty(dom::Node * node);	// Strategy pattern context interface
 	virtual void		serializeMinimal(dom::Node * node);	// Strategy pattern context interface
 };
+
+#endif // !XMLSERIALIZER_H

@@ -16,10 +16,11 @@
 #include "EventHandler.H"
 #include "NodeList.H"
 #include "Tests.H";
-#include "UserInterface.H"
 #include "Builder_State.H"
 #include "Director_State.H"
 #include "SerializerVisitor.H"
+
+class Director;
 
 class xmlFacade
 {
@@ -44,7 +45,7 @@ public:
 		Tokenizer,
 		Serializer,
 		Validator,
-		Director,
+		DirectorTest,
 		CoR,
 		Memento,
 		Clone,

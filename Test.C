@@ -14,11 +14,10 @@
 #include "EventHandler.H"
 #include "NodeList.H"
 #include "Tests.H";
-#include "UserInterface.H"
 #include "Builder_State.H"
 #include "Director_State.H"
 #include "SerializerVisitor.H"
-//#include "xmlFacade.H";
+#include "xmlFacade.H";
 
 void printUsage(void)
 {
@@ -38,63 +37,69 @@ void printUsage(void)
 
 int main(int argc, char** argv)
 {
-
-	if (argc < 2)
-	{
-		UserInterface* ui = new UserInterface();
-		ui->run();
-		//printUsage();
-		exit(0);
-	}
+	xmlFacade facade;
 
 	switch (argv[1][0])
 	{
 	case 'T':
 	case 't':
-		testTokenizer(argc, argv);
+		//testTokenizer(argc, argv);
+		facade.runTest(xmlFacade::TestTypes::Tokenizer, argc, argv);
 		break;
 	case 'S':
 	case 's':
-		testSerializer(argc, argv);
+		//testSerializer(argc, argv);
+		facade.runTest(xmlFacade::TestTypes::Serializer, argc, argv);
 		break;
 	case 'V':
 	case 'v':
-		testValidator(argc, argv);
+		//testValidator(argc, argv);
+		facade.runTest(xmlFacade::TestTypes::Validator, argc, argv);
 		break;
 	case 'D':
 	case 'd':
-		testDirector(argc, argv);
+		//testDirector(argc, argv);
+		facade.runTest(xmlFacade::TestTypes::DirectorTest, argc, argv);
 		break;
 	case 'C':
 	case 'c':
-		testCoR(argc, argv);
+		//testCoR(argc, argv);
+		facade.runTest(xmlFacade::TestTypes::CoR, argc, argv);
 		break;
 	case 'M':
 	case 'm':
-		testMemento(argc, argv);
+		//testMemento(argc, argv);
+		facade.runTest(xmlFacade::TestTypes::Memento, argc, argv);
 		break;
 	case 'R':	// using R for "replica" to test clone because c is already taken
 	case 'r':
-		testClone(argc, argv);
+		//testClone(argc, argv);
+		facade.runTest(xmlFacade::TestTypes::Clone, argc, argv);
 		break;
 	case 'A':	// using A because I'm running out of letters
 	case 'a':
-		testState(argc, argv);
+		//testState(argc, argv);
+		facade.runTest(xmlFacade::TestTypes::State, argc, argv);
 		break;
 	case 'B':
 	case 'b':
-		testVisitor(argc, argv);
+		//testVisitor(argc, argv);
+		facade.runTest(xmlFacade::TestTypes::Visitor, argc, argv);
 		break;
 	case 'F':
 	case 'f':
-		testFlyweight(argc, argv);
+		//testFlyweight(argc, argv);
+		facade.runTest(xmlFacade::TestTypes::Flyweight, argc, argv);
 		break;
 	case 'I':
 	case 'i':
-		testInterpreter(argc, argv);
+		//testInterpreter(argc, argv);
+		facade.runTest(xmlFacade::TestTypes::Interpreter, argc, argv);
 		break;
 	}
 }
+
+/*
 
 // testTokenizer is the Builder Pattern Director
 void testTokenizer(int argc, char** argv)
@@ -610,3 +615,5 @@ void testInterpreter(int argc, char** argv)
 
 	printf("Value is: %d\n", builder->getDoc()->calculateValue());
 }
+
+*/

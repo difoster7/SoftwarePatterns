@@ -37,12 +37,15 @@ target_sources(Patterns PUBLIC
 	Observer.H
 	Observer.C
 	EventHandler.H
-	Command.H
-	Command.C
-	Tests.H
-	UserInterface.H
-	UserInterface.C
 	Builder_State.H
 	Builder_State.C
 	Director_State.H
-	Director_State.C "State.H" "State.C" "SerializerVisitor.H" "SerializerVisitor.C" "NodeFlyweight.H" "NodeFlyweight.C" "xmlFacade.H" "xmlFacade.C")
+	Director_State.C
+	State.H
+	State.C
+	SerializerVisitor.H
+	SerializerVisitor.C
+	NodeFlyweight.H
+	NodeFlyweight.C
+	xmlFacade.H
+	xmlFacade.C)

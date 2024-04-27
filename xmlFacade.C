@@ -13,7 +13,7 @@ void xmlFacade::runTest(TestTypes test, int argc, char** argv)
 	case Validator:
 		testValidator(argc, argv);
 		break;
-	case Director:
+	case DirectorTest:
 		testDirector(argc, argv);
 		break;
 	case CoR:
