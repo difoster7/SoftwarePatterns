@@ -88,6 +88,10 @@ int main(int argc, char** argv)
 	case 'f':
 		testFlyweight(argc, argv);
 		break;
+	case 'I':
+	case 'i':
+		testInterpreter(argc, argv);
+		break;
 	}
 }
 
@@ -600,4 +604,14 @@ void testFlyweight(int argc, char** argv)
 	printf("\nNow printing cloned document\n\n");
 	xmlSerializer.serializePretty(document2);
 
+}
+
+void testInterpreter(int argc, char** argv)
+{
+	DOMBuilder* builder = new DOMBuilder_Impl();
+	std::string s1 = argv[2];
+	Director director(s1, builder);
+	director.build();
+
+	printf("Value is: %d\n", builder->getDoc()->calculateValue());
 }

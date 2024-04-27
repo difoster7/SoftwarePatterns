@@ -19,6 +19,7 @@ namespace dom
 	* Chain of Responsibility : Abstract Handler
 	* Prototype Pattern : Abstract Prototype
 	* Visitor Pattern : Abstract Element
+	* Interpreter Pattern : Abstract Expression
 	*/
 	class Node
 	{
@@ -62,6 +63,8 @@ namespace dom
 		virtual Node* clone(Node* clonedNode) = 0;
 
 		virtual void accept(SerializerVisitor* serialV) = 0;	// Visitor pattern : Accept Method
+
+		virtual int calculateValue() = 0;	// Intepreter pattern : Interpret Method
 	};
 
 	class DOMException
@@ -93,6 +96,7 @@ namespace dom
 * Decorator Pattern : Concrete Component
 * Chain of Responsibility : Concrete Handler
 * Prototype Pattern : Concrete Prototype
+* Interpreter Pattern : Nonterminal Expression
 */
 class Node_Impl : public virtual dom::Node
 {
@@ -149,6 +153,8 @@ public:
 
 	virtual void accept(SerializerVisitor* serialV) {};	// Visitor pattern : Accept Method
 
+	virtual int calculateValue();	// Intepreter pattern : Interpret Method
+
 };
 
 // Abstract proxy to Node_Impl, built for the purposes of inheriting setParent method in Element_Proxy
@@ -193,6 +199,8 @@ public:
 	virtual Node* clone(Node* clonedNode) = 0;
 
 	virtual void accept(SerializerVisitor* serialV) = 0;	// Visitor pattern : Accept Method
+	virtual int calculateValue() = 0;	// Intepreter pattern : Interpret Method
+
 };
 
 #endif // NODE_H

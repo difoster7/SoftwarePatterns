@@ -393,6 +393,44 @@ void Element_Impl::accept(SerializerVisitor* serialV)
 	serialV->serializeElement(this);
 }
 
+int Element_Impl::calculateValue()
+{
+	int returnValue = 0;
+
+	std::string operatr = getAttributeNode(" type=")->getValue();
+
+	if (strcmp("+", operatr.c_str()))
+	{
+		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
+		{
+			returnValue += (*i)->calculateValue();
+		}
+	}
+	else if (strcmp("-", operatr.c_str()))
+	{
+		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
+		{
+			returnValue -= (*i)->calculateValue();
+		}
+	}
+	else if (strcmp("*", operatr.c_str()))
+	{
+		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
+		{
+			returnValue *= (*i)->calculateValue();
+		}
+	}
+	else if (strcmp("/", operatr.c_str()))
+	{
+		for (dom::NodeList::iterator i = getChildNodes()->begin(); i != getChildNodes()->end(); i++)
+		{
+			returnValue /= (*i)->calculateValue();
+		}
+	}
+
+	return returnValue;
+}
+
 bool Element_Impl::hasAttributeByValue(const std::string& value)
 {
 	for (dom::NodeList::iterator i = attributes.begin(); i != attributes.end(); i++)

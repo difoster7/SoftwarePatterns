@@ -150,6 +150,11 @@ void Text_Impl::accept(SerializerVisitor* serialV)
 	serialV->serializeText(this);
 }
 
+int Text_Impl::calculateValue()
+{
+	return stoi(getData());
+}
+
 //// strategy pattern algorithm interface implementation
 //int Text_Impl::serializePrettyAlgorithm(int indentationLevel, dom::OutputStream* out)
 //{

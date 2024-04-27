@@ -56,7 +56,8 @@ public:
 * Strategy Pattern : Concrete Strategy
 * Strategy Pattern : Context
 * Prototype Pattern : Concrete Prototype
-* * Visitor Pattern : Concrete Element
+* Visitor Pattern : Concrete Element
+* Interpreter Pattern : Terminal Expression
 */
 class Text_Impl : public virtual dom::Text, Node_Impl
 {
@@ -94,6 +95,8 @@ public:
 	virtual Node* clone();	// Prototype patter clone method
 
 	virtual void accept(SerializerVisitor* serialV);	// Visitor pattern : Accept Method
+
+	virtual int calculateValue();	// Interpreter Pattern : Interpret Method
 
 };
 

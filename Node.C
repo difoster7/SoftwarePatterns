@@ -229,3 +229,13 @@ dom::Node* Node_Impl::clone(Node* clonedNode)
 	 
 	return clonedNode;
 }
+
+int Node_Impl::calculateValue()
+{
+	if (hasChildNodes())
+	{
+		return getFirstChild()->calculateValue();
+	}
+
+	return 0;
+}

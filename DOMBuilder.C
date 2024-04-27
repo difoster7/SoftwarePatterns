@@ -14,12 +14,21 @@ void DOMBuilder_Impl::addElement(const std::string& tagName)
 
 void DOMBuilder_Impl::addAttr(const std::string& name, const std::string& value)
 {
-	dynamic_cast<dom::Element*>(curNode)->setAttribute(name, value);
+	std::string valueTrimmed = value.c_str();
+	valueTrimmed = valueTrimmed.substr(1, valueTrimmed.size() - 2);
+
+	valueTrimmed.erase(std::remove_if(valueTrimmed.begin(), valueTrimmed.end(), std::isspace), valueTrimmed.end());
+
+	dynamic_cast<dom::Element*>(curNode)->setAttribute(name, valueTrimmed);
 }
 
 void DOMBuilder_Impl::addText(const std::string& value)
 {
-	dom::Text* text = doc->createTextNode(value);
+	std::string valueTrimmed = value.c_str();
+
+	valueTrimmed.erase(std::remove_if(valueTrimmed.begin(), valueTrimmed.end(), std::isspace), valueTrimmed.end());
+
+	dom::Text* text = doc->createTextNode(valueTrimmed);
 	dynamic_cast<dom::Element*>(curNode)->appendChild(text);
 
 	ChangeManager* chgMngr = new ChangeManager_Impl();

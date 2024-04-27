@@ -71,6 +71,7 @@ public:
 * Chain of Responsibility : Concrete Handler
 * Prototype Pattern : Concrete Prototype
 * Visitor Pattern : Concrete Element
+* Interpreter Patter : Nonterminal Expression
 */
 class Element_Impl : public virtual dom::Element, Node_Impl
 {
@@ -115,6 +116,8 @@ public:
 	virtual dom::Node* clone();	// Prototype Pattern Clone method
 
 	virtual void accept(SerializerVisitor* serialV);	// Visitor pattern : Accept Method
+
+	virtual int calculateValue();	// Intepreter pattern : Interpret Method
 
 };
 

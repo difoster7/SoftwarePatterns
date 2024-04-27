@@ -54,6 +54,9 @@ public:
 	virtual Node* clone(Node* clonedNode) { return node->clone(node); };
 
 	virtual void accept(SerializerVisitor* serialV) { return node->accept(serialV); };
+
+	virtual int calculateValue() { return node->calculateValue(); };	// Intepreter pattern : Interpret Method
+
 };
 
 /*
