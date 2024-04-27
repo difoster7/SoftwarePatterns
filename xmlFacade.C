@@ -1,115 +1,59 @@
-#include <stdio.h>
-#include "Attr.H"
-#include "Document.H"
-#include "Element.H"
-#include "Text.H"
-#include "XMLTokenizer.H"
-#include "XMLSerializer.H"
-#include "XMLValidator.H"
-#include "OutputStream.H"
-#include "NodeValidatorDecorator.H"
-#include "DOMBuilder.H"
-#include "Director.H"
-#include "Observer.H"
-#include "EventHandler.H"
-#include "NodeList.H"
-#include "Tests.H";
-#include "UserInterface.H"
-#include "Builder_State.H"
-#include "Director_State.H"
-#include "SerializerVisitor.H"
-#include "xmlFacade.H";
+#include "xmlFacade.H"
 
-void printUsage(void)
+void xmlFacade::runTest(TestTypes test, int argc, char** argv)
 {
-	printf("Usage:\n");
-	printf("\tTest t [file] ...\n");
-	printf("\tTest s [file1] [file2]\n");
-	printf("\tTest s\n");
-	printf("\tTest v [file]\n");
-	printf("\tTest d [file]\n");
-	printf("\tTest c [file]\n");
-	printf("\tTest m\n");
-	printf("\tTest r\n");
-	printf("\tTest A [file]\n");
-	printf("\tTest b [file1] [file2]\n");
-	printf("\tTest F\n");
-}
-
-int main(int argc, char** argv)
-{
-
-	if (argc < 2)
+	switch (test)
 	{
-		UserInterface* ui = new UserInterface();
-		ui->run();
-		//printUsage();
-		exit(0);
-	}
-
-	switch (argv[1][0])
-	{
-	case 'T':
-	case 't':
+	case Tokenizer:
 		testTokenizer(argc, argv);
 		break;
-	case 'S':
-	case 's':
+	case Serializer:
 		testSerializer(argc, argv);
 		break;
-	case 'V':
-	case 'v':
+	case Validator:
 		testValidator(argc, argv);
 		break;
-	case 'D':
-	case 'd':
+	case Director:
 		testDirector(argc, argv);
 		break;
-	case 'C':
-	case 'c':
+	case CoR:
 		testCoR(argc, argv);
 		break;
-	case 'M':
-	case 'm':
+	case Memento:
 		testMemento(argc, argv);
 		break;
-	case 'R':	// using R for "replica" to test clone because c is already taken
-	case 'r':
+	case Clone:
 		testClone(argc, argv);
 		break;
-	case 'A':	// using A because I'm running out of letters
-	case 'a':
+	case State:
 		testState(argc, argv);
 		break;
-	case 'B':
-	case 'b':
+	case Visitor:
 		testVisitor(argc, argv);
 		break;
-	case 'F':
-	case 'f':
+	case Flyweight:
 		testFlyweight(argc, argv);
 		break;
-	case 'I':
-	case 'i':
+	case Interpreter:
 		testInterpreter(argc, argv);
 		break;
 	}
 }
 
-// testTokenizer is the Builder Pattern Director
-void testTokenizer(int argc, char** argv)
+void xmlFacade::testTokenizer(int argc, char** argv)
 {
+
 	if (argc < 3)
 	{
 		printUsage();
 		exit(0);
 	}
 
-	dom::Document *	document	= new Document_Impl;
+	dom::Document* document = new Document_Impl;
 
-	dom::Element *	element	= document->createElement("NewElement");
-	dom::Text *	text	= document->createTextNode("Text Data");
-	dom::Attr *	attr	= document->createAttribute("NewAttribute");
+	dom::Element* element = document->createElement("NewElement");
+	dom::Text* text = document->createTextNode("Text Data");
+	dom::Attr* attr = document->createAttribute("NewAttribute");
 
 	printf("Element Tag = '%s'\n", element->getTagName().c_str());
 	printf("Text Data = '%s'\n", text->getValue().c_str());
@@ -131,8 +75,8 @@ void testTokenizer(int argc, char** argv)
 	{
 		XMLTokenizer	tokenizer(argv[i]);
 
-		XMLTokenizer::XMLToken *	token	= 0;
-		int docLevel  = 0;
+		XMLTokenizer::XMLToken* token = 0;
+		int docLevel = 0;
 		bool ignoreNextElement = false;
 
 		printf("File:  '%s'\n", argv[i]);
@@ -140,10 +84,10 @@ void testTokenizer(int argc, char** argv)
 		do
 		{
 			delete	token;
-			token	= tokenizer.getNextToken();
+			token = tokenizer.getNextToken();
 
 			printf("\tLine %d:  %s = '%s'\n", tokenizer.getLineNumber(),
-			  token->toString(), token->getToken().size() == 0 ? "" : token->getToken().c_str());
+				token->toString(), token->getToken().size() == 0 ? "" : token->getToken().c_str());
 
 			switch (token->getTokenType())
 			{
@@ -153,14 +97,14 @@ void testTokenizer(int argc, char** argv)
 					builder->addElement(token->getToken().c_str());
 					docLevel++;
 				}
-				else 
+				else
 				{
 					ignoreNextElement = false;
 				}
 				break;
 
 			case XMLTokenizer::XMLToken::ATTRIBUTE:
-				if(docLevel) attrName = token->getToken();
+				if (docLevel) attrName = token->getToken();
 				break;
 
 			case XMLTokenizer::XMLToken::ATTRIBUTE_VALUE:
@@ -189,28 +133,8 @@ void testTokenizer(int argc, char** argv)
 	}
 }
 
-void testSerializer(int argc, char** argv)
+void xmlFacade::testSerializer(int argc, char** argv)
 {
-	//if (argc < 4)
-	//{
-	//	printUsage();
-	//	exit(0);
-	//}
-
-	//
-	// Create tree of this document:
-	// <? xml version="1.0" encoding="UTF-8"?>
-	// <document>
-	//   <element attribute="attribute value"/>
-	//   <element/>
-	//   <element attribute="attribute value" attribute2="attribute2 value">
-	//     Element Value
-	//   </element>
-	//   <element>
-	//   </element>
-	// </document>
-	//
-
 	dom::OutputStream* outputPretty;
 	dom::OutputStream* outputMinimal;
 
@@ -231,27 +155,27 @@ void testSerializer(int argc, char** argv)
 		outputMinimal = new FileOutputStream(argv[3]);
 	}
 
-	dom::Document *	document	= new Document_Impl;
-	dom::Element *	root		= document->createElement("document");
+	dom::Document* document = new Document_Impl;
+	dom::Element* root = document->createElement("document");
 	document->appendChild(root);
 
-	dom::Element *	child		= document->createElement("element");
-	dom::Attr *	attr		= document->createAttribute("attribute");
+	dom::Element* child = document->createElement("element");
+	dom::Attr* attr = document->createAttribute("attribute");
 	attr->setValue("attribute value");
 	child->setAttributeNode(attr);
 	root->appendChild(child);
 
-	child				= document->createElement("element");
+	child = document->createElement("element");
 	root->appendChild(child);
 
-	child				= document->createElement("element");
+	child = document->createElement("element");
 	child->setAttribute("attribute", "attribute value");
 	child->setAttribute("attribute2", "attribute2 value");
-	dom::Text *	text		= document->createTextNode("Element Value");
+	dom::Text* text = document->createTextNode("Element Value");
 	child->appendChild(text);
 	root->appendChild(child);
 
-	child				= document->createElement("element");
+	child = document->createElement("element");
 	root->appendChild(child);
 
 	//
@@ -265,7 +189,7 @@ void testSerializer(int argc, char** argv)
 	// delete Document and tree.
 }
 
-void testValidator(int argc, char** argv)
+void xmlFacade::testValidator(int argc, char** argv)
 {
 	if (argc < 3)
 	{
@@ -273,30 +197,12 @@ void testValidator(int argc, char** argv)
 		exit(0);
 	}
 
-	//
-	// Create tree of this document:
-	// <? xml version="1.0" encoding="UTF-8"?>
-	// <document>
-	//   <element attribute="attribute value"/>
-	//   <element/>
-	//   <element attribute="attribute value" attribute2="attribute2 value">
-	//     Element Value
-	//   </element>
-	//   <element>
-	//   </element>
-	// </document>
-	//
-	// Schema for this document:
-	// document contains:  element
-	// element contains:  element
-	// element contains attributes:  attribute, attribute2
-	//
 	XMLValidator	xmlValidator;
-	ValidChildren *	schemaElement	= xmlValidator.addSchemaElement("");
+	ValidChildren* schemaElement = xmlValidator.addSchemaElement("");
 	schemaElement->addValidChild("document", false);
-	schemaElement	= xmlValidator.addSchemaElement("document");
+	schemaElement = xmlValidator.addSchemaElement("document");
 	schemaElement->addValidChild("element", false);
-	schemaElement	= xmlValidator.addSchemaElement("element");
+	schemaElement = xmlValidator.addSchemaElement("element");
 	schemaElement->addValidChild("element", false);
 	schemaElement->addValidChild("attribute", true);
 	schemaElement->addValidChild("attribute2", true);
@@ -309,7 +215,7 @@ void testValidator(int argc, char** argv)
 
 	root = new ElementValidatorDecorator(&xmlValidator, document->createElement("document"));
 	document->appendChild(root->getElement());
-	
+
 	child = new ElementValidatorDecorator(&xmlValidator, document->createElement("element"));
 	attr = document->createAttribute("attribute");
 	attr->setValue("attribute value");
@@ -326,7 +232,7 @@ void testValidator(int argc, char** argv)
 	dom::Text* text = document->createTextNode("Element Value");
 	child->appendChild(text);
 	root->appendChild(child->getElement());
-	
+
 	child = new ElementValidatorDecorator(&xmlValidator, document->createElement("element"));
 	root->appendChild(child->getElement());
 
@@ -340,7 +246,7 @@ void testValidator(int argc, char** argv)
 	// delete Document and tree.
 }
 
-void testDirector(int argc, char** argv)
+void xmlFacade::testDirector(int argc, char** argv)
 {
 	Observer* newNodeObserver = new NewNodeObserver_Impl();
 	Observer* nodeCompleteObserver = new NodeCompleteObserver_Impl();
@@ -355,7 +261,7 @@ void testDirector(int argc, char** argv)
 	xmlSerializer.serializePretty(builder->getDoc());
 }
 
-void testCoR(int argc, char** argv)
+void xmlFacade::testCoR(int argc, char** argv)
 {
 	DOMBuilder* builder = new DOMBuilder_Impl();
 	std::string s1 = argv[2];
@@ -382,10 +288,9 @@ void testCoR(int argc, char** argv)
 	for (dom::NodeList::iterator i = handlerList->begin(); i != handlerList->end(); i++) {
 		(*i)->handleEvent(eventType);
 	}
-			
 }
 
-void testMemento(int argc, char** argv)
+void xmlFacade::testMemento(int argc, char** argv)
 {
 	XMLValidator	xmlValidator;
 	ValidChildren* schemaElement = xmlValidator.addSchemaElement("");
@@ -442,7 +347,7 @@ void testMemento(int argc, char** argv)
 	xmlSerializer.serializePretty(document);
 }
 
-void testClone(int argc, char** argv)
+void xmlFacade::testClone(int argc, char** argv)
 {
 	dom::Document* document = new Document_Impl;
 	dom::Element* root = document->createElement("document");
@@ -476,44 +381,20 @@ void testClone(int argc, char** argv)
 
 	printf("\nNow printing cloned document\n\n");
 	xmlSerializer.serializePretty(document2);
-
 }
 
-void testState(int argc, char** argv)
+void xmlFacade::testState(int argc, char** argv)
 {
 	dom::Document* document = new Document_Impl;
 	Builder_State		builder(document);
 	Director_State	director(argv[2], &builder);
-	//std::fstream	file(argv[3], std::ios_base::out);
-	//XMLSerializer	xmlSerializer(&file);
-	//xmlSerializer.serializePretty(document);
 	dom::OutputStream* outputPretty = new StdOutputStream();
 	XMLSerializer	xmlSerializer(outputPretty);
 	xmlSerializer.serializePretty(document);
 }
 
-void testVisitor(int argc, char** argv)
+void xmlFacade::testVisitor(int argc, char** argv)
 {
-	//if (argc < 4)
-	//{
-	//	printUsage();
-	//	exit(0);
-	//}
-
-	//
-	// Create tree of this document:
-	// <? xml version="1.0" encoding="UTF-8"?>
-	// <document>
-	//   <element attribute="attribute value"/>
-	//   <element/>
-	//   <element attribute="attribute value" attribute2="attribute2 value">
-	//     Element Value
-	//   </element>
-	//   <element>
-	//   </element>
-	// </document>
-	//
-
 	dom::OutputStream* outputPretty;
 	dom::OutputStream* outputMinimal;
 
@@ -570,7 +451,7 @@ void testVisitor(int argc, char** argv)
 	document->accept(minimalVisitor);
 }
 
-void testFlyweight(int argc, char** argv)
+void xmlFacade::testFlyweight(int argc, char** argv)
 {
 	dom::Document* document = new Document_Impl;
 	dom::Element* root = document->createElementFlyweight("document");
@@ -607,7 +488,7 @@ void testFlyweight(int argc, char** argv)
 
 }
 
-void testInterpreter(int argc, char** argv)
+void xmlFacade::testInterpreter(int argc, char** argv)
 {
 	DOMBuilder* builder = new DOMBuilder_Impl();
 	std::string s1 = argv[2];
