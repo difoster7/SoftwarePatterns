@@ -40,6 +40,22 @@ void xmlFacade::runTest(TestTypes test, int argc, char** argv)
 	}
 }
 
+void xmlFacade::printUsage()
+{
+	printf("Usage:\n");
+	printf("\tTest t [file] ...\n");
+	printf("\tTest s [file1] [file2]\n");
+	printf("\tTest s\n");
+	printf("\tTest v [file]\n");
+	printf("\tTest d [file]\n");
+	printf("\tTest c [file]\n");
+	printf("\tTest m\n");
+	printf("\tTest r\n");
+	printf("\tTest A [file]\n");
+	printf("\tTest b [file1] [file2]\n");
+	printf("\tTest F\n");
+}
+
 void xmlFacade::testTokenizer(int argc, char** argv)
 {
 

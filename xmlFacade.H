@@ -1,3 +1,6 @@
+#ifndef XMLFACADE_H
+#define XMLFACADE_H
+
 #include "Attr.H"
 #include "Document.H"
 #include "Element.H"
@@ -21,6 +24,8 @@
 class xmlFacade
 {
 private:
+	void printUsage();
+
 	void testTokenizer(int argc, char** argv);
 	void testSerializer(int argc, char** argv);
 	void testValidator(int argc, char** argv);
@@ -52,3 +57,5 @@ public:
 	void runTest(TestTypes test, int argc, char** argv);
 
 };
+
+#endif // !XMLFACADE_H

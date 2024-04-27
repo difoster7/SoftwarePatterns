@@ -18,7 +18,7 @@
 #include "Builder_State.H"
 #include "Director_State.H"
 #include "SerializerVisitor.H"
-#include "xmlFacade.H";
+//#include "xmlFacade.H";
 
 void printUsage(void)
 {
@@ -597,13 +597,7 @@ void testFlyweight(int argc, char** argv)
 
 	dom::Node* document2 = document->clone();
 
-	printf("\nNow printing original document\n\n");
-	dom::OutputStream* outputPretty = new StdOutputStream();
-	XMLSerializer	xmlSerializer(outputPretty);
-	xmlSerializer.serializePretty(document);
-
-	printf("\nNow printing cloned document\n\n");
-	xmlSerializer.serializePretty(document2);
+	printf("\nGetting parent node of attribute: %s\n", attr->getParentNode()->getNodeName().c_str());
 
 }
 
